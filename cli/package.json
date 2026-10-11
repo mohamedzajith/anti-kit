@@ -4,6 +4,9 @@
   "description": "CLI tool to install Antigravity Kit - AI Agent templates",
   "main": "bin/index.js",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=18"
   },
