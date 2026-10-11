@@ -124,8 +124,8 @@ export const landingEn: LandingDictionary = {
     title: "Everything in one toolkit",
     items: [
       "20 Agents",
-      "47 Skills",
-      "13 Workflows",
+      "48 Skills",
+      "14 Workflows",
       "CLI",
       "Merge-safe",
       "Open source",
@@ -891,8 +891,8 @@ export const landingJa: LandingDictionary = {
     title: "すべてが 1 つのツールキットに",
     items: [
       "20 Agents",
-      "47 Skills",
-      "13 Workflows",
+      "48 Skills",
+      "14 Workflows",
       "CLI",
       "安全な更新",
       "オープンソース",

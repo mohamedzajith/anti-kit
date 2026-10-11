@@ -24,6 +24,10 @@
         "description": "Improve existing code"
     },
     {
+        "command": "/frontend-master",
+        "description": "Full-cycle frontend engineering"
+    },
+    {
         "command": "/orchestrate",
         "description": "Multi-agent coordination"
     },

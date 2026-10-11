@@ -9,8 +9,8 @@
 Anti-Kit is a modular Antigravity workspace system consisting of:
 
 - **20 Specialist Agents** — role-based AI personas and orchestration roles;
-- **47 Skills** — domain knowledge modules with progressive conditional loading;
-- **13 Workflows** — slash-command procedures;
+- **48 Skills** — domain knowledge modules with progressive conditional loading;
+- **14 Workflows** — slash-command procedures;
 - **6 Rules** — workspace routing, coding, design, safety, and quick-reference constraints;
 - **Antigravity runtime layer** — contract, native hook, MCP helper, plugin builder, Doctor, schemas, and tests.
 
@@ -122,7 +122,7 @@ Specialist AI personas for different domains.
 
 ---
 
-## 🧩 Skills (47)
+## 🧩 Skills (48)
 
 Modular knowledge domains that agents can load on-demand based on task context. Each skill has a `when_to_use` frontmatter field for conditional/intelligent loading.
 
@@ -131,6 +131,7 @@ Modular knowledge domains that agents can load on-demand based on task context. 
 | Skill                   | Description                                                           |
 | ----------------------- | --------------------------------------------------------------------- |
 | `design-spec`           | DESIGN.md token format — required design source-of-truth before UI    |
+| `atomic-design`         | **NEW** Atomic Design hierarchy (quarks, atoms, molecules, organisms, templates, pages) and strict import boundaries |
 | `nextjs-react-expert`   | React & Next.js performance optimization (Vercel - 58 rules)          |
 | `frontend-architecture` | Frontend code organization — layers, state tiers, services (React/Vue) |
 | `web-design-guidelines` | Web UI audit - 100+ rules for accessibility, UX, performance (Vercel) |
@@ -240,7 +241,7 @@ Modular knowledge domains that agents can load on-demand based on task context. 
 
 ---
 
-## 🔄 Workflows (13)
+## 🔄 Workflows (14)
 
 Slash command procedures. Invoke with `/command`.
 
@@ -252,6 +253,7 @@ Slash command procedures. Invoke with `/command`.
 | `/debug`         | Debug issues                                   |
 | `/deploy`        | Deploy application                             |
 | `/enhance`       | Improve existing code                          |
+| `/frontend-master` | **NEW** Full-cycle frontend engineering      |
 | `/orchestrate`   | Multi-agent coordination                       |
 | `/plan`          | Task breakdown                                 |
 | `/preview`       | Preview changes                                |
@@ -367,8 +369,8 @@ For command details and prerequisites, see [scripts/README.md](scripts/README.md
 | Metric              | Value                             |
 | ------------------- | --------------------------------- |
 | **Total Agents**    | 20 (1 major upgrade in 2026.5.13) |
-| **Total Skills**    | 47                                |
-| **Total Workflows** | 13 (+2 new in 2026.5.13)          |
+| **Total Skills**    | 48                                |
+| **Total Workflows** | 14 (+1 new in 2026.8.31)          |
 | **Toolkit Utilities** | 7 user-facing + 2 internal modules |
 | **Antigravity Utilities** | 4 runtime utilities              |
 | **Total Skill Scripts** | 18                              |
