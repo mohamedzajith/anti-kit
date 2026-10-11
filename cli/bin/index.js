@@ -22,7 +22,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const pkg = await fse.readJson(path.join(__dirname, "..", "package.json"));
 
-const REPO = "github:vudovn/ag-kit";
+const REPO = "github:mohamedzajith/anti-kit";
 const AGENT_FOLDER = ".agents";
 const TEMP_FOLDER = ".temp_ag_kit";
 
@@ -61,7 +61,7 @@ const checkUpdate = async (quiet = false) => {
     try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 1500);
-        const response = await fetch("https://registry.npmjs.org/@vudovn/ag-kit/latest", {
+        const response = await fetch("https://registry.npmjs.org/@mohamedzajith/anti-kit/latest", {
             signal: controller.signal,
         });
         clearTimeout(timeoutId);
@@ -79,7 +79,7 @@ const showUpdateNotification = (latestVersion) => {
         chalk.yellow(`
   ┌────────────────────────────────────────────────────────┐
   │  Update available: ${chalk.red(pkg.version)} → ${chalk.green(latestVersion)}
-  │  Run: ${chalk.cyan("npm install -g @vudovn/ag-kit")}
+  │  Run: ${chalk.cyan("npm install -g @mohamedzajith/anti-kit")}
   └────────────────────────────────────────────────────────┘
   `),
     );

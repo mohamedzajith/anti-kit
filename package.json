@@ -4,11 +4,11 @@
   "description": "Antigravity-first AI agent engineering kit with rules, skills, workflows, orchestration, MCP guidance, and safety hooks",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vudovn/ag-kit.git"
+    "url": "git+https://github.com/mohamedzajith/anti-kit.git"
   },
-  "homepage": "https://github.com/vudovn/ag-kit#readme",
+  "homepage": "https://github.com/mohamedzajith/anti-kit#readme",
   "bugs": {
-    "url": "https://github.com/vudovn/ag-kit/issues"
+    "url": "https://github.com/mohamedzajith/anti-kit/issues"
   },
   "keywords": [
     "ag-kit",
@@ -19,7 +19,7 @@
     "skills",
     "workflows"
   ],
-  "author": "vudovn",
+  "author": "Mohamed Zajith",
   "license": "MIT",
   "private": true,
   "engines": {

@@ -1,5 +1,5 @@
 {
-  "name": "@vudovn/ag-kit",
+  "name": "@mohamedzajith/anti-kit",
   "version": "2026.8.31",
   "description": "CLI tool to install Antigravity Kit - AI Agent templates",
   "main": "bin/index.js",
@@ -11,6 +11,7 @@
     "test": "node --test test/*.test.js"
   },
   "bin": {
+    "anti-kit": "bin/index.js",
     "ag-kit": "bin/index.js"
   },
   "files": [
@@ -19,11 +20,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vudovn/ag-kit.git"
+    "url": "git+https://github.com/mohamedzajith/anti-kit.git"
   },
-  "homepage": "https://ag-kit.unikorn.vn/docs",
+  "homepage": "https://github.com/mohamedzajith/anti-kit#readme",
   "bugs": {
-    "url": "https://github.com/vudovn/ag-kit/issues"
+    "url": "https://github.com/mohamedzajith/anti-kit/issues"
   },
   "keywords": [
     "antigravity",
@@ -33,7 +34,7 @@
     "gemini",
     "skills"
   ],
-  "author": "Do Van Vu",
+  "author": "Mohamed Zajith",
   "license": "MIT",
   "dependencies": {
     "chalk": "^5.6.2",
