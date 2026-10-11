@@ -14,8 +14,7 @@
     "test": "node --test test/*.test.js"
   },
   "bin": {
-    "anti-kit": "bin/index.js",
-    "ag-kit": "bin/index.js"
+    "anti-kit": "bin/index.js"
   },
   "files": [
     "bin",
