@@ -1,5 +1,21 @@
 [
     {
+        "version": "2026.10.12",
+        "date": "2026-10-12",
+        "summary": "Release 2026.10.12: introduces /frontend-master full-cycle workflow, atomic-design component engineering skill suite, and Anti-Kit package rebranding.",
+        "changes": {
+            "Added": [
+                "Full-cycle /frontend-master engineering workflow covering anti-slop design reads, DESIGN.md design tokens, component architecture, sensory implementation, and automated UX/accessibility/performance audits.",
+                "Comprehensive atomic-design skill suite with subskills for quarks, atoms, molecules, organisms, templates, fundamentals, and framework integration.",
+                "Automated ESLint hierarchical import boundaries and composition law recipes for atomic components."
+            ],
+            "Changed": [
+                "Advanced toolkit version to 2026.10.12 across all packages, locks, and manifest.",
+                "Rebranded package distribution and repository configuration to @mohamedzajith/anti-kit."
+            ]
+        }
+    },
+    {
         "version": "2026.8.31",
         "date": "2026-08-31",
         "summary": "Release 2026.8.31: upgrades app-builder with mandatory DESIGN.md gatekeeper, AI SDK/Chatbot patterns, Game developer routing, and template consistency.",

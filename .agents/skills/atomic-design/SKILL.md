@@ -1,41 +1,37 @@
 ---
 name: atomic-design
-description: Architecting and organizing UI components using Brad Frost's Atomic Design methodology extended with Quarks (design tokens). Enforces hierarchical import boundaries, component classification (quarks, atoms, molecules, organisms, templates, pages), and component colocation.
-when_to_use: "When organizing, creating, or refactoring UI components into an atomic hierarchy (quarks, atoms, molecules, organisms, templates, pages); setting up design system component folders; enforcing strict upward/downward import boundaries between component levels; or designing scalable component libraries. Pair with frontend-architecture for layer separation and design-spec for token definitions."
+description: Architecting and organizing UI components using Brad Frost's Atomic Design methodology extended with Quarks (design tokens). Enforces hierarchical import boundaries, component classification (quarks, atoms, molecules, organisms, templates, pages), and subskill routing.
+when_to_use: "When organizing, creating, or refactoring UI components into an atomic hierarchy (quarks, atoms, molecules, organisms, templates, pages); setting up design system component folders; enforcing strict upward/downward import boundaries between component levels; or designing scalable component libraries. Routes to specialized subskills for fundamentals, quarks, atoms, molecules, organisms, templates, and framework integration."
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 version: 1.0.0
 ---
 
-# Atomic Design — Component Hierarchy & Architectural Boundaries
+# Atomic Design — Component Hierarchy & Subskill Orchestrator
 
-> Extended Brad Frost Atomic Design methodology featuring **Quarks (Design Tokens)** and **Strict Hierarchical Import Validation**.
-> Synthesized from production design systems and [TheBushidoCollective/han](https://github.com/TheBushidoCollective/han).
-
----
-
-## 📑 Quick Navigation
-
-- [1. Overview & The Six Stages](#1-overview--the-six-stages)
-- [2. The Six Levels in Depth](#2-the-six-levels-in-depth)
-  - [Level 0: Quarks (Design Tokens)](#level-0-quarks-design-tokens)
-  - [Level 1: Atoms (Primitives)](#level-1-atoms-primitives)
-  - [Level 2: Molecules (Functional Units)](#level-2-molecules-functional-units)
-  - [Level 3: Organisms (Standalone Sections)](#level-3-organisms-standalone-sections)
-  - [Level 4: Templates (Layout Wireframes)](#level-4-templates-layout-wireframes)
-  - [Level 5: Pages (Concrete Views)](#level-5-pages-concrete-views)
-- [3. Hierarchical Import Rules (The Dependency Law)](#3-hierarchical-import-rules-the-dependency-law)
-- [4. Recommended Directory Structure](#4-recommended-directory-structure)
-- [5. Component Colocation & Anatomy](#5-component-colocation--anatomy)
-- [6. State & Logic Distribution](#6-state--logic-distribution)
-- [7. Data Colocation Pattern (RSC / GraphQL / REST)](#7-data-colocation-pattern)
-- [8. ESLint & Quality Enforcement](#8-eslint--quality-enforcement)
-- [9. Common Anti-Patterns to Avoid](#9-common-anti-patterns-to-avoid)
+> Extended Brad Frost Atomic Design methodology featuring **Quarks (Design Tokens)**, **Strict Hierarchical Import Validation**, and **Specialized Modular Subskills**.
+> Master router providing foundational principles, architectural boundaries, and direct routing to deep-dive subskills.
 
 ---
 
-## 1. Overview & The Six Stages
+## 📑 Subskill Routing (Specialized Knowledge)
 
-Atomic Design models user interfaces hierarchically, inspired by natural chemistry. By introducing **Quarks** below Atoms, design tokens become first-class citizens:
+Atomic Design in Anti-Kit is organized into modular subskills. Use this routing matrix to load the exact deep-dive guide needed:
+
+| Subskill | Focus Area & When to Read | Quick Link |
+|---|---|---|
+| **Fundamentals** | Core philosophy, the 6 stages, naming standards, barrel exports, and composition rules | [Read Fundamentals](./fundamentals/SKILL.md) |
+| **Quarks** | Design tokens, color scales, spacing aliases, typography scales, shadows, CSS variables, and theme contracts | [Read Quarks](./quarks/SKILL.md) |
+| **Atoms** | Indivisible UI primitives (Button, Input, Label, Icon, Avatar, Badge, Checkbox, Typography) | [Read Atoms](./atoms/SKILL.md) |
+| **Molecules** | Functional combinations of atoms (FormField, SearchInput, MediaObject, NavItem, CardHeader, StatItem) | [Read Molecules](./molecules/SKILL.md) |
+| **Organisms** | Standalone complex sections (Header, Footer, ProductCard, CommentSection, Sidebar, DataTable) | [Read Organisms](./organisms/SKILL.md) |
+| **Templates** | Page layout skeletons, slot-based architectures, responsive layout grids, and placeholder systems | [Read Templates](./templates/SKILL.md) |
+| **Integration** | Framework patterns (React, Vue 3, Angular), Storybook workshops, Vitest/RTL unit tests, and path aliases | [Read Integration](./integration/SKILL.md) |
+
+---
+
+## 1. The Six Stages Overview
+
+Atomic Design models user interfaces hierarchically, inspired by chemistry:
 
 ```
 [Level 0: Quarks]      Design tokens (colors, spacing, typography scales, radii, shadows)
@@ -51,250 +47,37 @@ Atomic Design models user interfaces hierarchically, inspired by natural chemist
 [Level 5: Pages]       Concrete route views populated with real data (HomePage, DashboardPage)
 ```
 
-### Core Principles
+### Core Hierarchy Definitions
 
-1. **Unidirectional Dependency Flow**: Code only imports from equal or lower levels. Upward imports are strictly prohibited.
-2. **Context Independence at the Base**: Atoms and molecules know nothing about domain business logic; they only know visual styling and user events.
-3. **Colocation of Concerns**: Types, styles, tests, and documentation live alongside the component file.
-4. **Token-First Styling**: All visual styles trace back to Quarks (or `DESIGN.md`), preventing rogue magic values.
+1. **Quarks (Level 0)**: Pure design values and constants (not UI elements). Colors, typography clamp scales, spacing increments, elevation shadows. See [Quarks Subskill](./quarks/SKILL.md).
+2. **Atoms (Level 1)**: Smallest functional UI elements that cannot be broken down further without losing utility (`<Button>`, `<Input>`, `<Icon>`). See [Atoms Subskill](./atoms/SKILL.md).
+3. **Molecules (Level 2)**: Focused combinations of multiple atoms acting together as a single functional unit (`<FormField>` = Label + Input + Error). See [Molecules Subskill](./molecules/SKILL.md).
+4. **Organisms (Level 3)**: Distinct, self-contained sections of an interface that could stand alone (`<Header>`, `<DataTable>`, `<ProductCard>`). See [Organisms Subskill](./organisms/SKILL.md).
+5. **Templates (Level 4)**: Page-level skeletal layouts that position organisms into responsive grids using slots or children, without real data. See [Templates Subskill](./templates/SKILL.md).
+6. **Pages (Level 5)**: Concrete route instances of templates hydrated with live data, route parameters, and API queries.
 
 ---
 
-## 2. The Six Levels in Depth
+## 2. Component Classification Decision Tree
 
-### Level 0: Quarks (Design Tokens)
+When building or reviewing a component, use this mental flow to classify it into the correct atomic layer:
 
-Quarks are the sub-atomic building blocks of the visual language. They are **pure values and constants**, not UI components.
-
-- **Examples:** Color palettes (`primary-500`, `neutral-900`), spacing scales (`4px`, `8px`, `16px`), typography tokens (font families, weights, fluid clamp scales), border radii, elevation shadows, animation curves, breakpoints.
-- **Lives in:** `src/theme.ts`, `src/tokens/`, `DESIGN.md`, or Tailwind `@theme` CSS tokens.
-- **Rule:** Quarks cannot import anything. They represent the foundational axioms of your design system.
-
-```typescript
-// theme.ts or tokens/colors.ts
-export const colors = {
-  primary: { 50: '#f0fdf4', 500: '#22c55e', 700: '#15803d' },
-  neutral: { 50: '#fafafa', 200: '#e5e5e5', 900: '#171717' },
-  danger: { 500: '#ef4444' },
-} as const;
-
-export const spacing = {
-  xs: '0.25rem',
-  sm: '0.5rem',
-  md: '1rem',
-  lg: '1.5rem',
-  xl: '2rem',
-} as const;
 ```
-
----
-
-### Level 1: Atoms (Primitives)
-
-Atoms are the smallest functional UI elements. They cannot be broken down further without losing their essential identity or utility.
-
-- **Examples:**
-  - *Interactive:* `Button`, `IconButton`, `Checkbox`, `Radio`, `Input`, `Switch`, `Link`.
-  - *Display:* `Badge`, `Avatar`, `Spinner`, `Skeleton`, `Divider`, `Kbd`.
-  - *Typography:* `Heading`, `Text`, `Label`, `CodeBlock`.
-  - *Layout Primitives:* `Box`, `Flex`, `HStack`, `VStack`, `Center`, `Container`.
-- **Characteristics:**
-  - Consumes only Quarks (via classes, CSS variables, or styled tokens).
-  - Purely presentational (stateless or minimal controlled props).
-  - Built with accessibility (ARIA roles, focus-visible states) baked in.
-  - Zero domain knowledge (accepts `src` and `alt`, never a domain entity like `user: User`).
-
-```tsx
-// components/atoms/Button/Button.tsx
-import React, { forwardRef } from 'react';
-import type { ButtonHTMLAttributes } from 'react';
-import styles from './Button.module.css';
-
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
-  isLoading?: boolean;
-}
-
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'primary', size = 'md', isLoading, children, disabled, ...props }, ref) => (
-    <button
-      ref={ref}
-      disabled={disabled || isLoading}
-      className={`${styles.button} ${styles[variant]} ${styles[size]}`}
-      {...props}
-    >
-      {isLoading ? <span className={styles.spinner} aria-hidden="true" /> : null}
-      {children}
-    </button>
-  )
-);
-Button.displayName = 'Button';
+Is it a raw design value (color, spacing, font, shadow) without DOM elements?
+  ├── YES → QUARK (Level 0)
+  └── NO  → Does it render HTML?
+             ├── Can it be decomposed into smaller functional UI elements?
+             │     ├── NO  → ATOM (Level 1)
+             │     └── YES → Does it represent a standalone, full-featured UI section?
+             │                ├── NO  → Is it a tight group of atoms with a single purpose (e.g. search bar)?
+             │                │          ├── YES → MOLECULE (Level 2)
+             │                │          └── NO  → ORGANISM (Level 3)
+             │                └── YES → Does it define entire viewport layout with placeholders?
+             │                           ├── YES → TEMPLATE (Level 4)
+             │                           └── NO  → Does it bind real data / route parameters?
+             │                                      ├── YES → PAGE (Level 5)
+             │                                      └── NO  → ORGANISM (Level 3)
 ```
-
----
-
-### Level 2: Molecules (Functional Units)
-
-Molecules combine multiple atoms to form a single, focused, functional unit with a single responsibility.
-
-- **Examples:**
-  - *Form:* `FormField` (`Label` + `Input` + `ErrorMessage`), `SearchInput` (`Input` + `SearchIcon` + `ClearButton`).
-  - *Navigation:* `NavLink` (`Icon` + `Text` + `Badge`), `BreadcrumbItem` (`Link` + `SeparatorIcon`).
-  - *Display:* `StatItem` (`LabelText` + `ValueText` + `TrendBadge`), `MediaObject` (`Avatar` + `Heading` + `Subtext`).
-  - *Actions:* `ButtonGroup`, `DropdownTrigger` (`Button` + `ChevronIcon`).
-- **Characteristics:**
-  - Composed strictly of **Atoms** and styled by **Quarks**.
-  - **Never imports other molecules** (if it needs multiple molecules, it is an Organism).
-  - May encapsulate minor transient UI state (e.g., input focused, hover disclosure).
-
-```tsx
-// components/molecules/FormField/FormField.tsx
-import React, { useId } from 'react';
-import { Label } from '@/components/atoms/Label';
-import { Input, type InputProps } from '@/components/atoms/Input';
-import { Text } from '@/components/atoms/Text';
-
-export interface FormFieldProps extends InputProps {
-  label: string;
-  error?: string;
-  hint?: string;
-}
-
-export function FormField({ label, error, hint, id: customId, ...inputProps }: FormFieldProps) {
-  const autoId = useId();
-  const fieldId = customId || autoId;
-  const errorId = `${fieldId}-error`;
-  const hintId = `${fieldId}-hint`;
-
-  return (
-    <div className="flex flex-col gap-1.5">
-      <Label htmlFor={fieldId}>{label}</Label>
-      <Input
-        id={fieldId}
-        aria-invalid={Boolean(error)}
-        aria-describedby={error ? errorId : hint ? hintId : undefined}
-        {...inputProps}
-      />
-      {error && (
-        <Text id={errorId} variant="caption" className="text-danger-500">
-          {error}
-        </Text>
-      )}
-      {!error && hint && (
-        <Text id={hintId} variant="caption" className="text-neutral-500">
-          {hint}
-        </Text>
-      )}
-    </div>
-  );
-}
-```
-
----
-
-### Level 3: Organisms (Standalone Sections)
-
-Organisms are complex, self-contained sections of an interface composed of molecules, atoms, and sometimes other organisms. They represent distinct modular sections that could exist on their own.
-
-- **Examples:**
-  - *Global Chrome:* `Header`, `Footer`, `SidebarNavigation`.
-  - *Content Cards:* `ProductCard`, `UserProfileCard`, `SessionListItem`.
-  - *Data Presentation:* `DataTable`, `MetricsGrid`, `VirtualList`, `ActivityTimeline`.
-  - *Forms & Modals:* `RegistrationForm`, `ConfirmationModal`, `CheckoutSummary`.
-- **Characteristics:**
-  - Composed of **Molecules**, **Atoms**, and **Quarks**.
-  - May compose sibling organisms (`=organisms`, e.g., `Header` containing `UserMenuDropdown`).
-  - Can manage composite UI state (tabs, modals, accordion states) or custom hooks (`useHeaderNavigation`).
-  - Can accept data entities or fragment references to populate internal molecules.
-
-```tsx
-// components/organisms/Header/Header.tsx
-import React from 'react';
-import { HStack, Center } from '@/components/atoms/Layout';
-import { Button } from '@/components/atoms/Button';
-import { NavLink } from '@/components/molecules/NavLink';
-import { SearchInput } from '@/components/molecules/SearchInput';
-import { UserMenu } from '@/components/organisms/UserMenu';
-
-export interface HeaderProps {
-  currentPath: string;
-  onSearch?: (term: string) => void;
-}
-
-export function Header({ currentPath, onSearch }: HeaderProps) {
-  return (
-    <header className="sticky top-0 z-40 w-full border-b border-neutral-200 bg-white/80 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
-        <HStack gap="md" align="center">
-          <Center className="font-bold text-lg">Acme Corp</Center>
-          <nav className="flex items-center gap-1">
-            <NavLink href="/dashboard" active={currentPath === '/dashboard'}>Dashboard</NavLink>
-            <NavLink href="/projects" active={currentPath === '/projects'}>Projects</NavLink>
-          </nav>
-        </HStack>
-        <HStack gap="sm" align="center">
-          <SearchInput onSubmit={onSearch} placeholder="Quick search..." />
-          <UserMenu />
-        </HStack>
-      </div>
-    </header>
-  );
-}
-```
-
----
-
-### Level 4: Templates (Layout Wireframes)
-
-Templates define the skeletal layout structure of a page. They arrange organisms, molecules, and layout atoms into a cohesive viewport system without binding to specific, concrete data.
-
-- **Examples:** `PageLayout`, `DashboardTemplate`, `AuthSplitTemplate`, `DocumentationTemplate`.
-- **Characteristics:**
-  - Content-agnostic: accepts content through React `children` or named slots.
-  - Dictates responsive breakpoints, grid columns, sidebars, headers, and footers.
-  - Zero data fetching and zero network business logic.
-
-```tsx
-// components/templates/DashboardTemplate/DashboardTemplate.tsx
-import React, { type ReactNode } from 'react';
-
-export interface DashboardTemplateProps {
-  header: ReactNode;
-  sidebar: ReactNode;
-  children: ReactNode;
-  banner?: ReactNode;
-}
-
-export function DashboardTemplate({ header, sidebar, children, banner }: DashboardTemplateProps) {
-  return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-900">
-      {header}
-      {banner}
-      <div className="mx-auto flex max-w-7xl px-4 py-8">
-        <aside className="w-64 shrink-0 hidden md:block pr-6">
-          {sidebar}
-        </aside>
-        <main className="flex-1 min-w-0">
-          {children}
-        </main>
-      </div>
-    </div>
-  );
-}
-```
-
----
-
-### Level 5: Pages (Concrete Views)
-
-Pages are specific instances of templates hydrated with real application data, routing parameters, and API queries.
-
-- **Examples:** `DashboardPage`, `SessionDetailPage`, `SettingsProfilePage`.
-- **Characteristics:**
-  - Lives in `src/pages/` or Next.js `app/[route]/page.tsx`.
-  - Connects Server Components, queries (TanStack Query, SWR, Relay), or route params.
-  - Handles page-level metadata, loading skeletons, and error boundaries.
 
 ---
 
@@ -302,31 +85,31 @@ Pages are specific instances of templates hydrated with real application data, r
 
 The foundational rule of Atomic Design is **unidirectional downward imports**. A component may only import from its own level (if explicitly permitted) or lower levels:
 
-| Level | Allowed Imports | Forbidden Imports |
+| Level | Allowed Imports | Strictly Forbidden Imports |
 |---|---|---|
-| **Quarks** (Tokens) | *(None - foundational)* | Atoms, Molecules, Organisms, Templates, Pages |
+| **Quarks** (Tokens) | *(None - foundational axioms)* | Atoms, Molecules, Organisms, Templates, Pages |
 | **Atoms** | Quarks | Molecules, Organisms, Templates, Pages |
 | **Molecules** | Quarks, Atoms | Organisms, Templates, Pages |
-| **Organisms** | Quarks, Atoms, Molecules, other Organisms (`=organisms`) | Templates, Pages |
+| **Organisms** | Quarks, Atoms, Molecules, sibling Organisms (`=organisms`) | Templates, Pages |
 | **Templates** | Quarks, Atoms, Molecules, Organisms | Pages |
-| **Pages** | Quarks, Atoms, Molecules, Organisms, Templates | *(Top level - consumer only)* |
+| **Pages** | Quarks, Atoms, Molecules, Organisms, Templates | *(Top-level view consumer)* |
 
-### Forbidden Import Examples
+### Forbidden vs. Allowed Import Examples
 
 ```tsx
-// ❌ WRONG: Atom importing a Molecule (Upward import violation)
+// ❌ ILLEGAL: Atom importing a Molecule (Upward import violation)
 // src/components/atoms/Button/Button.tsx
-import { FormField } from '@/components/molecules/FormField'; // ILLEGAL
+import { FormField } from '@/components/molecules/FormField'; // ERROR
 
-// ❌ WRONG: Molecule importing an Organism (Upward import violation)
+// ❌ ILLEGAL: Molecule importing an Organism (Upward import violation)
 // src/components/molecules/SearchBar/SearchBar.tsx
-import { Header } from '@/components/organisms/Header'; // ILLEGAL
+import { Header } from '@/components/organisms/Header'; // ERROR
 
-// ❌ WRONG: Molecule importing another Molecule (Molecules compose Atoms only)
+// ❌ ILLEGAL: Molecule importing another Molecule (Molecules compose Atoms only)
 // src/components/molecules/StatItem/StatItem.tsx
-import { SearchInput } from '@/components/molecules/SearchInput'; // ILLEGAL
+import { SearchInput } from '@/components/molecules/SearchInput'; // ERROR
 
-// ✅ CORRECT: Organism composing Molecules, Atoms, and sibling Organisms
+// ✅ LEGAL: Organism composing Molecules, Atoms, and sibling Organisms
 // src/components/organisms/ProductCard/ProductCard.tsx
 import { Button } from '@/components/atoms/Button';
 import { Badge } from '@/components/atoms/Badge';
@@ -336,18 +119,39 @@ import { UserAvatarMini } from '@/components/organisms/UserAvatarMini';
 
 ---
 
-## 4. Recommended Directory Structure
+## 4. State & Logic Distribution Matrix
+
+Distribute state across the hierarchy according to responsibility:
+
+| Level | State Type Allowed | Handling Pattern |
+|---|---|---|
+| **Atoms** | None | Pure controlled component via props (`value`, `onChange`, `isOpen`, `disabled`) |
+| **Molecules** | Ephemeral UI State | Local `useState` for focus, hover, disclosure, or search debouncing |
+| **Organisms** | Composite UI State | Custom hooks (`useHeaderNavigation`, `useTableSort`), local UI reducers |
+| **Templates** | Responsive Layout State | Media query hooks, sidebar collapse toggle, slot layout state |
+| **Pages** | Application & Server State | Server Components, TanStack Query, URL `searchParams`, Zustand/Redux |
+
+---
+
+## 5. Recommended Directory Structure
 
 ```text
 src/
-├── theme/                        # Level 0: Quarks
+├── quarks/                       # Level 0: Design Tokens
 │   ├── colors.ts
 │   ├── spacing.ts
 │   ├── typography.ts
+│   ├── shadows.ts
 │   └── index.ts
 ├── components/
 │   ├── atoms/                    # Level 1: Atoms
 │   │   ├── Button/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Button.types.ts
+│   │   │   ├── Button.module.css
+│   │   │   ├── Button.test.tsx
+│   │   │   ├── Button.stories.tsx
+│   │   │   └── index.ts
 │   │   ├── Input/
 │   │   ├── Badge/
 │   │   └── index.ts              # Barrel export for atoms
@@ -364,108 +168,95 @@ src/
 │   ├── templates/                # Level 4: Templates
 │   │   ├── PageLayout/
 │   │   ├── DashboardTemplate/
-│   │   └── index.ts
-│   └── index.ts                  # Root component export (optional)
-└── pages/                        # Level 5: Pages (or Next.js app/)
-    ├── DashboardPage.tsx
-    └── SessionDetailPage.tsx
+│   │   └── index.ts              # Barrel export for templates
+│   └── index.ts                  # Unified component barrel
+└── pages/                        # Level 5: Pages (or app/ in Next.js)
+    ├── HomePage.tsx
+    └── DashboardPage.tsx
 ```
 
 ---
 
-## 5. Component Colocation & Anatomy
+## 6. Automated ESLint & Boundary Enforcement
 
-Every atom, molecule, and organism should be self-contained in its own directory:
+Enforce hierarchical import boundaries automatically in your project's ESLint configuration:
 
-```text
-components/atoms/Button/
-├── Button.tsx             # Component implementation & display name
-├── Button.types.ts        # TypeScript props, variants, and enums
-├── Button.module.css      # Scoped CSS module (or Tailwind classes)
-├── Button.test.tsx        # Unit tests with React Testing Library / Vitest
-├── Button.stories.tsx     # Storybook / component workshop documentation
-└── index.ts               # Clean export: export * from './Button'
-```
-
----
-
-## 6. State & Logic Distribution
-
-Distribute state across the hierarchy according to responsibility:
-
-| Level | State Type Allowed | Handling Pattern |
-|---|---|---|
-| **Atoms** | None | Pure controlled component via props (`value`, `onChange`, `isOpen`) |
-| **Molecules** | Ephemeral UI State | Local `useState` for focus, hover, or disclosure animations |
-| **Organisms** | Composite UI State | Custom hooks (`useHeaderState`, `useTableSort`), local UI reducers |
-| **Templates** | Responsive Layout State | Media query hooks, sidebar collapsed toggles, layout slot state |
-| **Pages** | Application & Server State | React Server Components, TanStack Query, URL `searchParams`, global store |
-
----
-
-## 7. Data Colocation Pattern
-
-When using React Server Components, GraphQL (Relay/Apollo), or API services:
-
-1. **Pages fetch**: The route page handles the primary data loading or suspense boundary.
-2. **Organisms declare data requirements**: Organisms define the shape or fragment of data they need (`ProductCardFragment` or `interface ProductCardData`).
-3. **Molecules & Atoms receive primitives**: Never pass a top-level entity into an atom. Deconstruct into primitive types (`label: string`, `src: string`).
-
-```tsx
-// ❌ WRONG: Leaking full domain entity into an Atom
-<Avatar user={userRecord} />
-
-// ✅ CORRECT: Primitive props for Atoms
-<Avatar src={userRecord.avatarUrl} alt={userRecord.displayName} size="md" />
-```
-
----
-
-## 8. ESLint & Quality Enforcement
-
-Enforce hierarchical import boundaries automatically in your project's ESLint configuration using `eslint-plugin-boundaries` or `eslint-plugin-atomic-design`:
+### Option A: `eslint-plugin-boundaries` (Recommended for modern ESLint flat config)
 
 ```javascript
-// .eslintrc.js or eslint.config.js
-module.exports = {
-  plugins: ['boundaries'],
-  settings: {
-    'boundaries/elements': [
-      { type: 'quarks', pattern: 'src/theme/**' },
-      { type: 'atoms', pattern: 'src/components/atoms/**' },
-      { type: 'molecules', pattern: 'src/components/molecules/**' },
-      { type: 'organisms', pattern: 'src/components/organisms/**' },
-      { type: 'templates', pattern: 'src/components/templates/**' },
-      { type: 'pages', pattern: 'src/{pages,app}/**' },
-    ],
+// eslint.config.js
+import boundaries from 'eslint-plugin-boundaries';
+
+export default [
+  {
+    plugins: { boundaries },
+    settings: {
+      'boundaries/elements': [
+        { type: 'quarks', pattern: 'src/quarks/**' },
+        { type: 'atoms', pattern: 'src/components/atoms/**' },
+        { type: 'molecules', pattern: 'src/components/molecules/**' },
+        { type: 'organisms', pattern: 'src/components/organisms/**' },
+        { type: 'templates', pattern: 'src/components/templates/**' },
+        { type: 'pages', pattern: 'src/{pages,app}/**' },
+      ],
+    },
+    rules: {
+      'boundaries/element-types': [
+        'error',
+        {
+          default: 'disallow',
+          rules: [
+            { from: 'quarks', allow: [] },
+            { from: 'atoms', allow: ['quarks'] },
+            { from: 'molecules', allow: ['quarks', 'atoms'] },
+            { from: 'organisms', allow: ['quarks', 'atoms', 'molecules', 'organisms'] },
+            { from: 'templates', allow: ['quarks', 'atoms', 'molecules', 'organisms'] },
+            { from: 'pages', allow: ['quarks', 'atoms', 'molecules', 'organisms', 'templates'] },
+          ],
+        },
+      ],
+    },
   },
-  rules: {
-    'boundaries/element-types': [
-      'error',
-      {
-        default: 'disallow',
-        rules: [
-          { from: 'quarks', allow: [] },
-          { from: 'atoms', allow: ['quarks'] },
-          { from: 'molecules', allow: ['quarks', 'atoms'] },
-          { from: 'organisms', allow: ['quarks', 'atoms', 'molecules', 'organisms'] },
-          { from: 'templates', allow: ['quarks', 'atoms', 'molecules', 'organisms'] },
-          { from: 'pages', allow: ['quarks', 'atoms', 'molecules', 'organisms', 'templates'] },
-        ],
-      },
-    ],
-  },
-};
+];
+```
+
+### Option B: `eslint-plugin-atomic-design`
+
+```json
+{
+  "plugins": ["atomic-design"],
+  "rules": {
+    "atomic-design/hierarchical-import": ["error", {
+      "levels": ["quarks", "atoms", "molecules", "=organisms", "templates", "pages"],
+      "excludes": ["node_modules"],
+      "module": "loose"
+    }]
+  }
+}
 ```
 
 ---
 
-## 9. Common Anti-Patterns to Avoid
+## 7. Common Anti-Patterns to Avoid
 
-| Anti-Pattern | Description | Remediation |
+| Anti-Pattern | Manifestation | Correct Remediation |
 |---|---|---|
-| **The Molecule Skip** | Jumping directly from atoms to 600-line organisms | Group related input/label/action pairs into reusable molecules |
-| **The God Organism** | Putting an entire page layout, data fetching, and 12 sections in one organism | Extract layout into a Template; break sections into separate organisms |
-| **Domain Leakage** | Passing complex backend DTOs into primitive atoms (`<Button order={order} />`) | Pass only UI props (`variant`, `onClick`, `children`) |
+| **The Molecule Skip** | Jumping directly from atoms to 800-line organisms without molecules | Group related input/label/action pairs into reusable molecules |
+| **The God Organism** | Putting an entire page layout, data fetching, and 12 sections into one organism | Extract layout into a Template; divide sections into independent organisms |
+| **Domain Leakage** | Passing complex backend DTOs into primitive atoms (`<Button order={order} />`) | Pass only UI primitives (`variant`, `onClick`, `children`, `disabled`) |
 | **Upward Leakage** | Importing a molecule inside an atom, or an organism inside a molecule | Refactor the composite component upward into an organism |
-| **Hardcoded Templates** | Writing text, API calls, and domain copy directly inside templates | Use slots (`children`, `header`, `sidebar`) and pass data from the Page |
+| **Hardcoded Templates** | Writing text, API calls, and domain copy directly inside templates | Use slots (`children`, `header`, `sidebar`) and pass content from the Page |
+
+---
+
+## 8. Subskill Quick Links
+
+For comprehensive implementations, code examples, TypeScript interfaces, and framework patterns:
+
+- [0. Quarks Deep Dive](./quarks/SKILL.md) — Design tokens, color scales, typography clamp scales, and CSS variables
+- [1. Atoms Deep Dive](./atoms/SKILL.md) — Button, Input, Checkbox, Avatar, Badge, Icon, and Typography components
+- [2. Molecules Deep Dive](./molecules/SKILL.md) — FormField, SearchForm, MediaObject, NavItem, CardHeader, and StatItem
+- [3. Organisms Deep Dive](./organisms/SKILL.md) — Header, Footer, ProductCard, CommentSection, Sidebar, and DataTable
+- [4. Templates Deep Dive](./templates/SKILL.md) — MainLayout, DashboardLayout, AuthLayout, BlogPostLayout, and slot patterns
+- [5. Fundamentals Deep Dive](./fundamentals/SKILL.md) — Methodology philosophy, barrel exports, and composition laws
+- [6. Framework Integration](./integration/SKILL.md) — React, Vue 3, Angular, Storybook, Vitest, RTL, and path aliases

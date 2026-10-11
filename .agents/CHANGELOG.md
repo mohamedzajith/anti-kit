@@ -1,4 +1,17 @@
-# AG Kit Toolkit Changelog
+# Anti-Kit Toolkit Changelog
+
+## 2026.10.12
+
+### Added
+
+- Added `/frontend-master` workflow (`.agents/workflows/frontend-master.md`): Full-cycle frontend engineering workflow covering anti-slop design reads, `DESIGN.md` design tokens, component architecture, sensory implementation, and automated UX, accessibility, and performance audits.
+- Added comprehensive `atomic-design` skill suite (`.agents/skills/atomic-design/`) including quarks, atoms, molecules, organisms, templates, fundamentals, and framework integration.
+- Added automated ESLint hierarchical import boundaries and composition laws for atomic components.
+
+### Changed
+
+- Advanced toolkit version to `2026.10.12`.
+- Synchronized component manifest and integrity lock across all agents, skills, workflows, and rules.
 
 ## 2026.8.31
 

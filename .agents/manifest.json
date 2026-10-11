@@ -431,7 +431,7 @@
     "rulesApi": "1.0.0",
     "workflowApi": "1.0.0"
   },
-  "kitVersion": "2026.8.31",
+  "kitVersion": "2026.10.12",
   "rules": {
     "code-rules": {
       "path": "rules/code-rules.md",

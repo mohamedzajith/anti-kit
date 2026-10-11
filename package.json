@@ -1,6 +1,6 @@
 {
   "name": "anti-kit",
-  "version": "2026.8.31",
+  "version": "2026.10.12",
   "description": "Antigravity-first AI agent engineering kit with rules, skills, workflows, orchestration, MCP guidance, and safety hooks",
   "repository": {
     "type": "git",

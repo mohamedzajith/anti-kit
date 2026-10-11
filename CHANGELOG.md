@@ -9,6 +9,17 @@ Starting with `2026.5.13`, this project uses calendar versioning in `YYYY.M.D` f
 
 No unreleased changes.
 
+## [2026.10.12] - 2026-10-12
+
+### Added
+- Added `/frontend-master` workflow (`.agents/workflows/frontend-master.md`): Full-cycle frontend engineering workflow covering anti-slop design reads, `DESIGN.md` design tokens, component architecture, sensory implementation, and automated UX, accessibility, and performance audits.
+- Added comprehensive `atomic-design` skill suite (`.agents/skills/atomic-design/`) including quarks, atoms, molecules, organisms, templates, fundamentals, and framework integration.
+- Added automated ESLint hierarchical import boundaries and composition laws for atomic components.
+
+### Changed
+- Advanced toolkit version to `2026.10.12` across all packages, locks, and manifest.
+- Rebranded CLI package and repository targets to `@mohamedzajith/anti-kit`.
+
 ## [2026.8.31] - 2026-08-31
 
 ### Added
@@ -384,7 +395,10 @@ No unreleased changes.
 - CLI tool for easy installation and updates.
 - Comprehensive documentation and architecture guide.
 
-[Unreleased]: https://github.com/vudovn/ag-kit/compare/v2026.7.26...HEAD
+[Unreleased]: https://github.com/mohamedzajith/anti-kit/compare/v2026.10.12...HEAD
+[2026.10.12]: https://github.com/mohamedzajith/anti-kit/compare/v2026.8.31...v2026.10.12
+[2026.8.31]: https://github.com/mohamedzajith/anti-kit/compare/v2026.7.27...v2026.8.31
+[2026.7.27]: https://github.com/vudovn/ag-kit/compare/v2026.7.26...v2026.7.27
 [2026.7.26]: https://github.com/vudovn/ag-kit/compare/v2026.7.18...v2026.7.26
 [2026.7.18]: https://github.com/vudovn/ag-kit/compare/v2026.7.12...v2026.7.18
 [2026.7.12]: https://github.com/vudovn/ag-kit/compare/v2026.7.10...v2026.7.12
