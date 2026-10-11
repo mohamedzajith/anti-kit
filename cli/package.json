@@ -1,6 +1,6 @@
 {
   "name": "@mohamedzajith/anti-kit",
-  "version": "2026.8.31",
+  "version": "2026.10.12",
   "description": "CLI tool to install Antigravity Kit - AI Agent templates",
   "main": "bin/index.js",
   "type": "module",
@@ -14,8 +14,7 @@
     "test": "node --test test/*.test.js"
   },
   "bin": {
-    "anti-kit": "bin/index.js",
-    "ag-kit": "bin/index.js"
+    "anti-kit": "bin/index.js"
   },
   "files": [
     "bin",

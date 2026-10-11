@@ -2,9 +2,9 @@
   "$schema": "schemas/manifest-lock.schema.json",
   "components": {
     "ARCHITECTURE.md": "29ff83016209edf7ad8541f6482b118e2a86bbb9540ab043e6fbbceb00e316dd",
-    "CHANGELOG.md": "c29cb325d278be44ad662d91c86c180cf01c05d008f77cf4b3f0bd42de8c46f8",
+    "CHANGELOG.md": "3f080490dc40c191f7a4a971ecf633b41db7698b1061b9060c9d8b68894ecf6b",
     "README.md": "0cd72c53379d92691d7fbb4cd9ef1741dfbe46b07c34a73b482a780ce23dac7e",
-    "VERSION": "94bc11e2a5617c66e6d2f849e14be6579c44c90d0f985d80ce4dc96dff46fa94",
+    "VERSION": "d39874eb8352c8b00efc44fa26a250ba8894a65885d6ee7c8014362c227ca911",
     "agent/backend-specialist.md": "65087ad56011ce55231f2754c3bdbb1c32ee14fa24ae9f389c0a7a67c178f1fd",
     "agent/code-archaeologist.md": "a0c654b885773c425f6a1c3f35ac7a1d509ed32e08a4e2daf373ddc5c6c805f3",
     "agent/database-architect.md": "1649c5ba554eca2674df75c50229cc00463aed1400d3b6d55131d8f4b12f3c76",
@@ -102,7 +102,14 @@
     "skills/architecture/pattern-selection.md": "6bdc74d7900a0574057d7c03b79afa3bf35b9efc4bc719cf6e198575373b879d",
     "skills/architecture/patterns-reference.md": "264d0c372a6b5d2a7bba506a4dd4d74855f69298d4dabf1ae046d51f2f49bd9d",
     "skills/architecture/trade-off-analysis.md": "14a0ceb22e88af2d39b24f06a9095312aa04bc72e8980f244bf2b42f8260abaa",
-    "skills/atomic-design/SKILL.md": "4de4270e93afb14ed0d894f627d26bd33ae50dddeeefc3cda93a57d2a1d6f8a4",
+    "skills/atomic-design/SKILL.md": "7c54d8aa4f9def99769bbce79c40ecabfa281ec69827c0b4f10916a0d2188d1b",
+    "skills/atomic-design/atoms/SKILL.md": "6d4e0c9127147801780b633838eb5101df3eecc53abb54cd0f1783eac3697c06",
+    "skills/atomic-design/fundamentals/SKILL.md": "4728ff757759ba82757b45467c40f37e4825bd6033c9d2657dbfe7479e01416b",
+    "skills/atomic-design/integration/SKILL.md": "6b011299984c14af5289f8354c6bcf9e7eb31257df82fa98d8f88fc9a36ae95f",
+    "skills/atomic-design/molecules/SKILL.md": "9c439d2ae792bf82d2a3aa0f5d91fe74a86a7801b4c2bf11b937017519370792",
+    "skills/atomic-design/organisms/SKILL.md": "fbb4a88d2389536721936fb7c3453a218e831df03c82c2c1b2a462407372add2",
+    "skills/atomic-design/quarks/SKILL.md": "2695b6b27537f22d83c3d2d8fbab22f3c6288ad407259e1a1dcb6b65948c7a6f",
+    "skills/atomic-design/templates/SKILL.md": "889cc982b26e2b7b373f44506361ffdd6c48c07e249f98f9272418973401536c",
     "skills/bash-linux/SKILL.md": "63885db9a511e5975d5323a74a661d134528486400a11100bec5775d9ef79784",
     "skills/batch-operations/SKILL.md": "da8b913ac1f900e84baf4edb8767b5cb6be15786a71f16ccfd4fb15ca91d9ad2",
     "skills/behavioral-modes/SKILL.md": "b7c314b48af3e7f38ca0ad4ebb870f721e94778caea207996601896ccc66f47b",
@@ -222,7 +229,7 @@
     "workflows/test.md": "bd06ae644376e3cc2661f1a623504247445c86a83dfb0df92ed5f0eccdef60ea",
     "workflows/verify.md": "2dc26bcbe24c7e71571953da75629521ea3d7a0a444a7101e3601b39864971fc"
   },
-  "kitVersion": "2026.8.31",
-  "manifestSha256": "6b9902a5594c4873ebe04ae7f9d0c7aecf41746efecd5839cfbe7fad426e8354",
+  "kitVersion": "2026.10.12",
+  "manifestSha256": "66828befb4b499f931fb02ac7a09b6446cd7c50771b53c465ee71b5efc586f9d",
   "schemaVersion": "1.0.0"
 }

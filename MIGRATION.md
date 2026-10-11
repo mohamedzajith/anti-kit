@@ -1,6 +1,15 @@
 # Migrating Anti-Kit
 
-This guide covers upgrades across Anti-Kit releases, including the Antigravity-native runtime layer and subsequent feature releases up to `2026.8.31`.
+This guide covers upgrades across Anti-Kit releases, including the Antigravity-native runtime layer and subsequent feature releases up to `2026.10.12`.
+
+## Upgrading to `2026.10.12`
+
+### What changes in `2026.10.12`
+- **Frontend Master Workflow**: Added `/frontend-master` workflow covering end-to-end design token extraction, atomic architecture, sensory implementation, and accessibility/performance audits.
+- **Atomic Design Skill Suite**: Full component breakdown into quarks, atoms, molecules, organisms, templates, and integration guidelines.
+- **Package & Namespace**: Rebranded npm package to `@mohamedzajith/anti-kit`.
+
+---
 
 ## Upgrading to `2026.8.31`
 
