@@ -61,8 +61,8 @@ When `--quiet` is used against an existing installation, `--force` is required b
 ## Included toolkit
 
 - **20 specialist agents**
-- **47 skills**
-- **13 workflows**
+- **48 skills**
+- **14 workflows**
 - Shared rules, persistent memory conventions, MCP configuration, and validation scripts
 
 ## Exit codes

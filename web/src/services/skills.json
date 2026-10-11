@@ -5,6 +5,11 @@
         "category": "Frontend & UI"
     },
     {
+        "name": "atomic-design",
+        "description": "Atomic Design hierarchy (quarks, atoms, molecules, organisms, templates, pages) and strict import boundaries",
+        "category": "Frontend & UI"
+    },
+    {
         "name": "nextjs-react-expert",
         "description": "Next.js & React performance optimization (Vercel - 58 rules)",
         "category": "Frontend & UI"

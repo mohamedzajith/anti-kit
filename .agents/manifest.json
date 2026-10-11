@@ -152,6 +152,7 @@
       "path": "agent/frontend-specialist.md",
       "requires": {
         "skills": {
+          "atomic-design": "^1.0.0",
           "clean-code": "^2.0.0",
           "design-spec": "^1.0.0",
           "frontend-architecture": "^1.0.0",
@@ -559,6 +560,19 @@
         "Grep"
       ],
       "path": "skills/architecture/SKILL.md",
+      "scripts": [],
+      "version": "1.0.0"
+    },
+    "atomic-design": {
+      "allowedTools": [
+        "Read",
+        "Write",
+        "Edit",
+        "Glob",
+        "Grep",
+        "Bash"
+      ],
+      "path": "skills/atomic-design/SKILL.md",
       "scripts": [],
       "version": "1.0.0"
     },
@@ -1210,6 +1224,32 @@
         "skills": [
           "simplify-code",
           "clean-code",
+          "verify-changes"
+        ]
+      },
+      "version": "1.0.0"
+    },
+    "frontend-master": {
+      "artifactOutputs": [
+        "design-commitment",
+        "design-spec",
+        "component-architecture",
+        "implementation-report",
+        "audit-report"
+      ],
+      "path": "workflows/frontend-master.md",
+      "requires": {
+        "agents": [
+          "frontend-specialist",
+          "orchestrator"
+        ],
+        "skills": [
+          "frontend-design",
+          "design-spec",
+          "atomic-design",
+          "frontend-architecture",
+          "nextjs-react-expert",
+          "web-design-guidelines",
           "verify-changes"
         ]
       },

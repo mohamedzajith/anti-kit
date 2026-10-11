@@ -1,7 +1,7 @@
 {
   "$schema": "schemas/manifest-lock.schema.json",
   "components": {
-    "ARCHITECTURE.md": "440356f31602599f4fb6183552c4800663a42bf393e86a83d8f8c891b77125f9",
+    "ARCHITECTURE.md": "29ff83016209edf7ad8541f6482b118e2a86bbb9540ab043e6fbbceb00e316dd",
     "CHANGELOG.md": "c29cb325d278be44ad662d91c86c180cf01c05d008f77cf4b3f0bd42de8c46f8",
     "README.md": "0cd72c53379d92691d7fbb4cd9ef1741dfbe46b07c34a73b482a780ce23dac7e",
     "VERSION": "94bc11e2a5617c66e6d2f849e14be6579c44c90d0f985d80ce4dc96dff46fa94",
@@ -12,7 +12,7 @@
     "agent/devops-engineer.md": "5be0ea4c3735f07fa7aa0f6a01cc687491f203d62474620b8921c3164b90d66f",
     "agent/documentation-writer.md": "81a9c80c4a2efbcf15422de72fa289d9a9889c8262af6e3ae69eb2a582826a72",
     "agent/explorer-agent.md": "e326feb00e9b609f167aa40ddf62561ded0b0e03fee385da760492c79ccb71d4",
-    "agent/frontend-specialist.md": "a381e047cec9f9bea3f96075e5b10ca087428d8dee2f6f42e94119968f476115",
+    "agent/frontend-specialist.md": "e931ede24c330cc6697c98f3a8dd0bd318b090793b0862fdbf20cbaeb9c7acba",
     "agent/game-developer.md": "dcf76d9bc8d220bb801094eed091255118b7aff9203a8a7b98e10128030dcfd8",
     "agent/mobile-developer.md": "cf9d2ebc6015dc3e2aab092711b111a22cb822e36b3f12d4e351818ecfab6677",
     "agent/orchestrator.md": "ad8bc39b0ea88df822df4597a0eec90424eb1cbd4418213c29a6f33ced3e5269",
@@ -102,6 +102,7 @@
     "skills/architecture/pattern-selection.md": "6bdc74d7900a0574057d7c03b79afa3bf35b9efc4bc719cf6e198575373b879d",
     "skills/architecture/patterns-reference.md": "264d0c372a6b5d2a7bba506a4dd4d74855f69298d4dabf1ae046d51f2f49bd9d",
     "skills/architecture/trade-off-analysis.md": "14a0ceb22e88af2d39b24f06a9095312aa04bc72e8980f244bf2b42f8260abaa",
+    "skills/atomic-design/SKILL.md": "4de4270e93afb14ed0d894f627d26bd33ae50dddeeefc3cda93a57d2a1d6f8a4",
     "skills/bash-linux/SKILL.md": "63885db9a511e5975d5323a74a661d134528486400a11100bec5775d9ef79784",
     "skills/batch-operations/SKILL.md": "da8b913ac1f900e84baf4edb8767b5cb6be15786a71f16ccfd4fb15ca91d9ad2",
     "skills/behavioral-modes/SKILL.md": "b7c314b48af3e7f38ca0ad4ebb870f721e94778caea207996601896ccc66f47b",
@@ -212,6 +213,7 @@
     "workflows/debug.md": "1a6fbfe0ea48a3590d08c8db842b7cf9b7906f953b10e24cd525b7fd6b53070d",
     "workflows/deploy.md": "f3141b4125f8c49c6cb34986a75473589a2b4d53ca9ac092b9677a0c0186c158",
     "workflows/enhance.md": "fd913ca826afb2e2cbd54a4e316cf3ea5d779d56e02ae3b0a8cc99feecdbc736",
+    "workflows/frontend-master.md": "9521ae3e47495238c58726457a512cfe78e1b9d4f2a139e9bdb15ae9ae02d8bd",
     "workflows/orchestrate.md": "00d3469acb4d465b8d7b54fb42524bb36cd45ee2cd2c8b997b2b57b35cdc8f6f",
     "workflows/plan.md": "4766b0ce3958eeb4050ad4099a61aa661747a39c2140eace148d3d5b4c480ddc",
     "workflows/preview.md": "94f948c78916a473838a04b15860b9490b25c2a8b39f0d211f63884ec33a8bd1",
@@ -221,6 +223,6 @@
     "workflows/verify.md": "2dc26bcbe24c7e71571953da75629521ea3d7a0a444a7101e3601b39864971fc"
   },
   "kitVersion": "2026.8.31",
-  "manifestSha256": "2f662eae86d5fe5842cb3daf8558395f50c541d43c692710e067386224531035",
+  "manifestSha256": "6b9902a5594c4873ebe04ae7f9d0c7aecf41746efecd5839cfbe7fad426e8354",
   "schemaVersion": "1.0.0"
 }
