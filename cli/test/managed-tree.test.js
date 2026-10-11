@@ -13,7 +13,7 @@ import {
 } from "../lib/managed-tree.js";
 
 const makeTempProject = async (t) => {
-    const root = await fse.mkdtemp(path.join(os.tmpdir(), "ag-kit-test-"));
+    const root = await fse.mkdtemp(path.join(os.tmpdir(), "anti-kit-test-"));
     t.after(async () => fse.remove(root));
     return root;
 };
@@ -116,7 +116,7 @@ test("merge updates clean files, preserves local files, and reports true conflic
     assert.equal(await fse.pathExists(path.join(currentDir, "obsolete.txt")), false);
     assert.equal(
         await fse.readFile(
-            path.join(currentDir, ".ag-kit", "conflicts", "merge-test", "b.txt.incoming"),
+            path.join(currentDir, ".anti-kit", "conflicts", "merge-test", "b.txt.incoming"),
             "utf8",
         ),
         "b-upstream",
@@ -174,8 +174,8 @@ test("malformed manifest paths are rejected before planning file operations", as
     const projectDir = await makeTempProject(t);
     const currentDir = path.join(projectDir, ".agents");
     await writeFiles(currentDir, { "safe.txt": "safe" });
-    await fse.ensureDir(path.join(currentDir, ".ag-kit"));
-    await fse.writeJson(path.join(currentDir, ".ag-kit", "manifest.json"), {
+    await fse.ensureDir(path.join(currentDir, ".anti-kit"));
+    await fse.writeJson(path.join(currentDir, ".anti-kit", "manifest.json"), {
         schemaVersion: 1,
         files: {
             "../../outside.txt": "0".repeat(64),

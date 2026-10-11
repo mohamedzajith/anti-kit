@@ -1,4 +1,4 @@
-# AG Kit Runtime Scripts
+# Anti-Kit Runtime Scripts
 
 ## Entry points
 

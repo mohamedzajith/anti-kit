@@ -52,7 +52,7 @@ export default function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <a href="https://github.com/vudovn/ag-kit" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                                <a href="https://github.com/mohamedzajith/anti-kit" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                                     {f.examples}
                                 </a>
                             </li>
@@ -69,22 +69,22 @@ export default function Footer() {
                         <h3 className="font-semibold text-foreground mb-4">{f.community}</h3>
                         <ul className="space-y-3 text-sm">
                             <li>
-                                <a href="https://github.com/vudovn/ag-kit" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                                <a href="https://github.com/mohamedzajith/anti-kit" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                                     {f.github}
                                 </a>
                             </li>
                             <li>
-                                <a href="https://github.com/vudovn/ag-kit/issues" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                                <a href="https://github.com/mohamedzajith/anti-kit/issues" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                                     {f.issues}
                                 </a>
                             </li>
                             <li>
-                                <a href="https://github.com/vudovn/ag-kit/discussions" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                                <a href="https://github.com/mohamedzajith/anti-kit/discussions" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                                     {f.discussions}
                                 </a>
                             </li>
                             <li>
-                                <a href="https://github.com/vudovn/ag-kit/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                                <a href="https://github.com/mohamedzajith/anti-kit/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                                     {f.contributing}
                                 </a>
                             </li>
@@ -96,7 +96,7 @@ export default function Footer() {
                         <h3 className="font-semibold text-foreground mb-4">{f.legal}</h3>
                         <ul className="space-y-3 text-sm">
                             <li>
-                                <a href="https://github.com/vudovn/ag-kit/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                                <a href="https://github.com/mohamedzajith/anti-kit/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                                     {f.license}
                                 </a>
                             </li>
@@ -131,7 +131,7 @@ export default function Footer() {
                     {/* Social Links */}
                     <div className="flex items-center gap-4">
                         <a
-                            href="https://github.com/vudovn/ag-kit"
+                            href="https://github.com/mohamedzajith/anti-kit"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-muted-foreground hover:text-foreground transition-colors"

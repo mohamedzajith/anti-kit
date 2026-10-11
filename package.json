@@ -1,5 +1,5 @@
 {
-  "name": "ag-kit",
+  "name": "anti-kit",
   "version": "2026.8.31",
   "description": "Antigravity-first AI agent engineering kit with rules, skills, workflows, orchestration, MCP guidance, and safety hooks",
   "repository": {
@@ -11,7 +11,7 @@
     "url": "https://github.com/mohamedzajith/anti-kit/issues"
   },
   "keywords": [
-    "ag-kit",
+    "anti-kit",
     "antigravity",
     "ai",
     "agent",

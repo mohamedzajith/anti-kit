@@ -1,4 +1,4 @@
-# AG Kit Architecture
+# Anti-Kit Architecture
 
 > Antigravity-native AI Agent Capability Toolkit — 2026.7.26
 
@@ -6,7 +6,7 @@
 
 ## 📋 Overview
 
-AG Kit is a modular Antigravity workspace system consisting of:
+Anti-Kit is a modular Antigravity workspace system consisting of:
 
 - **20 Specialist Agents** — role-based AI personas and orchestration roles;
 - **47 Skills** — domain knowledge modules with progressive conditional loading;
@@ -18,7 +18,7 @@ AG Kit is a modular Antigravity workspace system consisting of:
 
 ## 🔐 Managed Component Registry (2026.7.26)
 
-AG Kit uses dual-track versioning:
+Anti-Kit uses dual-track versioning:
 
 - Toolkit releases use **CalVer** in `VERSION` (`YYYY.M.D`).
 - Agents, skills, workflows, and rules use strict **SemVer** in frontmatter.
@@ -301,7 +301,7 @@ allowed-tools: Read, Grep, Glob
 
 ## 🛠️ Runtime Scripts
 
-AG Kit includes **7 user-facing top-level utilities**, **2 internal registry/runner modules**, **4 Antigravity runtime utilities**, and **18 skill-level scripts**.
+Anti-Kit includes **7 user-facing top-level utilities**, **2 internal registry/runner modules**, **4 Antigravity runtime utilities**, and **18 skill-level scripts**.
 
 ### Toolkit utilities
 

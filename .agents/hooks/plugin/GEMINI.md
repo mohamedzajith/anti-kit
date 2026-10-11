@@ -1,10 +1,10 @@
-# AG Kit for Google Antigravity
+# Anti-Kit for Google Antigravity
 
-Use the packaged AG Kit components as follows:
+Use the packaged Anti-Kit components as follows:
 
 1. Treat `rules/` as persistent engineering constraints.
 2. Discover `skills/*/SKILL.md` progressively and load only relevant skills.
-3. Use `commands/ag-kit/` for repeatable slash-command workflows.
+3. Use `commands/anti-kit/` for repeatable slash-command workflows.
 4. Use `agents/` as specialist role definitions when delegating with Antigravity subagents.
 5. Preserve user approval checkpoints in planning, deployment, destructive operations, and security-sensitive work.
 6. The bundled MCP file is an example only. Never activate placeholder credentials.

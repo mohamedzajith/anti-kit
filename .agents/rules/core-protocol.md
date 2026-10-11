@@ -5,7 +5,7 @@ priority: P0
 trigger: always_on
 ---
 
-# Core Protocol - AG Kit
+# Core Protocol - Anti-Kit
 
 > The highest-priority workspace rules. How the AI loads agents/skills and what it must do before any implementation.
 

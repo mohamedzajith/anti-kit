@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Self-validate an AG Kit installation.
+"""Self-validate an Anti-Kit installation.
 
 Checks machine-readable configuration, versioned frontmatter contracts,
 cross references, generated registries, local Markdown links, memory schema,
@@ -366,7 +366,7 @@ def validate(root: Path) -> list[Finding]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate AG Kit structure and cross references")
+    parser = argparse.ArgumentParser(description="Validate Anti-Kit structure and cross references")
     parser.add_argument("path", nargs="?", default=None, help="Path to .agents (defaults to this toolkit)")
     parser.add_argument("--json", action="store_true", dest="as_json")
     args = parser.parse_args()
@@ -385,7 +385,7 @@ def main() -> int:
     if args.as_json:
         print(json.dumps(payload, indent=2, ensure_ascii=False))
     else:
-        print(f"AG Kit self-validation: {root}")
+        print(f"Anti-Kit self-validation: {root}")
         for item in findings:
             print(f"[{item.severity.upper()}] {item.file}:{item.line} {item.code} - {item.message}")
         print(f"Summary: {len(errors)} error(s), {len(warnings)} warning(s)")

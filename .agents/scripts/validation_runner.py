@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Shared process runner for AG Kit validation entry points."""
+"""Shared process runner for Anti-Kit validation entry points."""
 from __future__ import annotations
 
 import json
@@ -81,7 +81,7 @@ def locate_toolkit_root(project: Path, caller_file: str) -> Path:
     if (embedded / "skills").is_dir() and (embedded / "scripts").is_dir():
         return embedded
     raise FileNotFoundError(
-        "AG Kit root was not found. Expected <project>/.agents, <project>/.agent, "
+        "Anti-Kit root was not found. Expected <project>/.agents, <project>/.agent, "
         "or a runner located inside the toolkit."
     )
 

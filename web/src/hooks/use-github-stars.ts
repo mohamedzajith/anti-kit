@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchGithubStars } from "@/lib/github";
 
 /**
- * Live GitHub star count for vudovn/ag-kit.
+ * Live GitHub star count for mohamedzajith/anti-kit.
  * Shared module cache avoids N buttons = N API calls.
  */
 export function useGithubStars() {

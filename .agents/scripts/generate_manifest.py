@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate or verify the AG Kit component registry and lock file."""
+"""Generate or verify the Anti-Kit component registry and lock file."""
 from __future__ import annotations
 
 import argparse
@@ -14,7 +14,7 @@ def check_file(path: Path, expected: str) -> bool:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate AG Kit manifest.json and manifest.lock.json")
+    parser = argparse.ArgumentParser(description="Generate Anti-Kit manifest.json and manifest.lock.json")
     parser.add_argument("path", nargs="?", default=None, help="Path to .agents")
     parser.add_argument("--check", action="store_true", help="Fail when generated files are stale")
     args = parser.parse_args()

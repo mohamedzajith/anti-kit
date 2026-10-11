@@ -145,7 +145,7 @@ export const landingEn: LandingDictionary = {
       {
         title: "Safer updates",
         description:
-          "Managed-file manifests, three-way conflict detection, and backups mean ag-kit update never silently wipes your local edits.",
+          "Managed-file manifests, three-way conflict detection, and backups mean anti-kit update never silently wipes your local edits.",
       },
       {
         title: "Workflows that stick",
@@ -330,7 +330,7 @@ export const landingEn: LandingDictionary = {
         value: "install",
         question: "How do I install it?",
         answer:
-          "Run npx @vudovn/ag-kit init in your project (or install the CLI globally). It downloads the toolkit into .agents and writes a managed-file manifest.",
+          "Run npx @mohamedzajith/anti-kit init in your project (or install the CLI globally). It downloads the toolkit into .agents and writes a managed-file manifest.",
       },
       {
         value: "update",
@@ -418,7 +418,7 @@ export const landingVi: LandingDictionary = {
       {
         title: "Cập nhật an toàn hơn",
         description:
-          "Manifest file được quản lý, phát hiện xung đột ba chiều và backup - ag-kit update không xóa im lặng chỉnh sửa cục bộ.",
+          "Manifest file được quản lý, phát hiện xung đột ba chiều và backup - anti-kit update không xóa im lặng chỉnh sửa cục bộ.",
       },
       {
         title: "Quy trình bám sát",
@@ -606,7 +606,7 @@ export const landingVi: LandingDictionary = {
         value: "install",
         question: "Cài đặt thế nào?",
         answer:
-          "Chạy npx @vudovn/ag-kit init trong dự án (hoặc cài CLI toàn cục). Toolkit được tải vào .agents và ghi managed-file manifest.",
+          "Chạy npx @mohamedzajith/anti-kit init trong dự án (hoặc cài CLI toàn cục). Toolkit được tải vào .agents và ghi managed-file manifest.",
       },
       {
         value: "update",
@@ -707,7 +707,7 @@ export const landingZh: LandingDictionary = {
       {
         title: "更安全的更新",
         description:
-          "托管文件清单、三方冲突检测与备份，确保 ag-kit update 不会悄悄覆盖你的本地修改。",
+          "托管文件清单、三方冲突检测与备份，确保 anti-kit update 不会悄悄覆盖你的本地修改。",
       },
       {
         title: "可持续的工作流",
@@ -824,7 +824,7 @@ export const landingZh: LandingDictionary = {
         value: "install",
         question: "如何安装？",
         answer:
-          "在项目中运行 npx @vudovn/ag-kit init（或全局安装 CLI）。它会把工具包下载到 .agents 并写入托管文件清单。",
+          "在项目中运行 npx @mohamedzajith/anti-kit init（或全局安装 CLI）。它会把工具包下载到 .agents 并写入托管文件清单。",
       },
       {
         value: "update",
@@ -930,7 +930,7 @@ export const landingJa: LandingDictionary = {
       {
         title: "より安全な更新",
         description:
-          "管理ファイルのマニフェスト、三方向の競合検出、バックアップにより、ag-kit update がローカル編集を静かに消すことはありません。",
+          "管理ファイルのマニフェスト、三方向の競合検出、バックアップにより、anti-kit update がローカル編集を静かに消すことはありません。",
       },
       {
         title: "定着するワークフロー",
@@ -1047,7 +1047,7 @@ export const landingJa: LandingDictionary = {
         value: "install",
         question: "インストール方法は？",
         answer:
-          "プロジェクトで npx @vudovn/ag-kit init を実行します（CLI のグローバルインストールも可）。ツールキットが .agents にダウンロードされ、管理ファイルのマニフェストが書き込まれます。",
+          "プロジェクトで npx @mohamedzajith/anti-kit init を実行します（CLI のグローバルインストールも可）。ツールキットが .agents にダウンロードされ、管理ファイルのマニフェストが書き込まれます。",
       },
       {
         value: "update",

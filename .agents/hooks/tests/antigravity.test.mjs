@@ -34,7 +34,7 @@ test('hook process returns non-zero for blocked command', () => {
     encoding: 'utf8'
   });
   assert.equal(result.status, 1);
-  assert.match(result.stderr, /BLOCKED by AG Kit/);
+  assert.match(result.stderr, /BLOCKED by Anti-Kit/);
 });
 
 test('doctor recognizes all six implementation phases', () => {
@@ -62,14 +62,14 @@ test('MCP sync detects placeholders and plans without writing', () => {
 });
 
 test('plugin builder creates manifest, commands, skills, and hook', () => {
-  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'ag-kit-plugin-'));
+  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'anti-kit-plugin-'));
   const output = path.join(temporary, 'plugin');
   const manifest = buildPlugin(root, output);
   assert.equal(manifest.runtime, 'antigravity');
   assert.ok(manifest.counts.skills > 0);
   assert.ok(manifest.counts.workflows > 0);
   assert.ok(fs.existsSync(path.join(output, 'gemini-extension.json')));
-  assert.ok(fs.existsSync(path.join(output, 'commands/ag-kit/orchestrate.toml')));
+  assert.ok(fs.existsSync(path.join(output, 'commands/anti-kit/orchestrate.toml')));
   assert.ok(fs.existsSync(path.join(output, 'hooks/hooks.json')));
   assert.ok(fs.existsSync(path.join(output, 'PLUGIN_CONTENTS.json')));
   const firstInventory = fs.readFileSync(path.join(output, 'PLUGIN_CONTENTS.json'), 'utf8');

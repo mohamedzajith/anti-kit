@@ -78,7 +78,7 @@ async function main() {
   try {
     raw = await readStdin();
   } catch (error) {
-    console.error(`AG Kit hook warning: ${error.message}`);
+    console.error(`Anti-Kit hook warning: ${error.message}`);
     return 0;
   }
 
@@ -86,23 +86,23 @@ async function main() {
   try {
     payload = JSON.parse(raw || '{}');
   } catch {
-    console.error('AG Kit hook warning: Antigravity sent invalid JSON; allowing the call to avoid a runtime-wide lockout.');
+    console.error('Anti-Kit hook warning: Antigravity sent invalid JSON; allowing the call to avoid a runtime-wide lockout.');
     return 0;
   }
 
   const command = extractCommand(payload);
   if (!command) {
-    console.log('AG Kit hook: no command payload detected; allowed.');
+    console.log('Anti-Kit hook: no command payload detected; allowed.');
     return 0;
   }
 
   const result = evaluateCommand(command);
   if (!result.allowed) {
-    console.error(`BLOCKED by AG Kit (${result.rule}): ${result.reason}.`);
+    console.error(`BLOCKED by Anti-Kit (${result.rule}): ${result.reason}.`);
     return 1;
   }
 
-  console.log('APPROVED by AG Kit: command passed the destructive-operation gate.');
+  console.log('APPROVED by Anti-Kit: command passed the destructive-operation gate.');
   return 0;
 }
 

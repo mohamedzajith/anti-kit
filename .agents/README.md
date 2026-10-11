@@ -1,6 +1,6 @@
-# AG Kit toolkit operator guide
+# Anti-Kit toolkit operator guide
 
-AG Kit is a modular `.agents/` toolkit for Google Antigravity. It routes software-engineering work to specialist roles, progressively loads focused skills, preserves durable project context, and verifies changes with executable checks.
+Anti-Kit is a modular `.agents/` toolkit for Google Antigravity. It routes software-engineering work to specialist roles, progressively loads focused skills, preserves durable project context, and verifies changes with executable checks.
 
 ## Runtime contract
 
@@ -92,7 +92,7 @@ Run full project verification when a preview URL exists:
 python .agents/scripts/verify_all.py . --url http://localhost:3000
 ```
 
-Verify AG Kit itself after editing agents, skills, rules, workflows, memory, runtime tooling, schemas, scripts, or links:
+Verify Anti-Kit itself after editing agents, skills, rules, workflows, memory, runtime tooling, schemas, scripts, or links:
 
 ```bash
 npm run generate:agents

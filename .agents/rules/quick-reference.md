@@ -6,7 +6,7 @@ trigger: model_decision
 description: Apply when you need a fast lookup of which agents, skills, or validation scripts exist — for routing decisions or recalling the master/key components of the kit.
 ---
 
-# Quick Reference - AG Kit
+# Quick Reference - Anti-Kit
 
 > A fast index of the most-used agents, skills, and scripts.
 

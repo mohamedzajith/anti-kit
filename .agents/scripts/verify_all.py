@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the complete AG Kit verification suite."""
+"""Run the complete Anti-Kit verification suite."""
 from __future__ import annotations
 
 import argparse
@@ -43,7 +43,7 @@ VERIFICATION_SUITE = (
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run the complete AG Kit verification suite")
+    parser = argparse.ArgumentParser(description="Run the complete Anti-Kit verification suite")
     parser.add_argument("project", nargs="?", default=".", help="Project path to validate")
     parser.add_argument("--url", help="Running application URL for Lighthouse and Playwright")
     parser.add_argument("--no-e2e", action="store_true", help="Skip Playwright")
@@ -70,7 +70,7 @@ def main() -> int:
         specs.append(spec)
 
     started = datetime.now(timezone.utc)
-    CONSOLE.header("AG KIT - FULL VERIFICATION")
+    CONSOLE.header("ANTI-KIT - FULL VERIFICATION")
     print(f"Project: {project}\nToolkit: {toolkit_root}\nURL: {args.url or 'not provided'}")
 
     results = execute_suite(specs, toolkit_root, project, args.url, args.stop_on_fail)

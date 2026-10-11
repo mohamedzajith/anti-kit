@@ -2,7 +2,7 @@
 
 ## Supported versions
 
-AG Kit uses calendar versioning. Security fixes are provided for the latest published release. Upgrade the CLI and toolkit before reporting an issue already fixed in a newer release.
+Anti-Kit uses calendar versioning. Security fixes are provided for the latest published release. Upgrade the CLI and toolkit before reporting an issue already fixed in a newer release.
 
 ## Reporting a vulnerability
 
@@ -10,7 +10,7 @@ Use GitHub private vulnerability reporting or the repository Security Advisory f
 
 Include only sanitized information:
 
-- affected AG Kit, CLI, web, and `.agents` versions;
+- affected Anti-Kit, CLI, web, and `.agents` versions;
 - Antigravity build/channel and operating system;
 - Node.js and Python versions;
 - affected hook, MCP server, plugin file, agent, skill, workflow, CLI command, CI job, or deployment path;
@@ -32,7 +32,7 @@ Primary risks:
 - upstream hook-payload changes causing false blocks or workspace lockout;
 - dependency or GitHub Actions supply-chain compromise.
 
-AG Kit reduces these risks but is not a sandbox. Keep Antigravity permissions, workspace trust, operating-system isolation, least-privilege credentials, code review, and human approval enabled.
+Anti-Kit reduces these risks but is not a sandbox. Keep Antigravity permissions, workspace trust, operating-system isolation, least-privilege credentials, code review, and human approval enabled.
 
 ## Native hook security boundary
 
@@ -48,7 +48,7 @@ Normal project cleanup such as deleting `dist/` or `node_modules/` is intentiona
 
 Recognized destructive commands fail closed with a non-zero exit code. Invalid JSON, oversized input, or an unrecognized payload shape fails open with a warning to avoid an upstream schema change locking every tool call. Treat such warnings as compatibility incidents and investigate before production use.
 
-To temporarily disable only the AG Kit hook, set `"enabled": false` in `.agents/hooks.json` and reopen the workspace. Do not disable Antigravity's own permission controls. Report false positives and payload-shape changes privately when data may be sensitive.
+To temporarily disable only the Anti-Kit hook, set `"enabled": false` in `.agents/hooks.json` and reopen the workspace. Do not disable Antigravity's own permission controls. Report false positives and payload-shape changes privately when data may be sensitive.
 
 ## MCP security boundary
 
@@ -78,7 +78,7 @@ Do not install an artifact when:
 
 ## Update and rollback safety
 
-`ag-kit update` uses a managed-file manifest and merge strategy by default. Local modifications are not silently overwritten. Conflicts produce an incoming copy and JSON report, while pre-update backups support `ag-kit rollback`.
+`anti-kit update` uses a managed-file manifest and merge strategy by default. Local modifications are not silently overwritten. Conflicts produce an incoming copy and JSON report, while pre-update backups support `anti-kit rollback`.
 
 Global MCP synchronization has a separate timestamped backup and must be restored separately when rolling back the toolkit.
 

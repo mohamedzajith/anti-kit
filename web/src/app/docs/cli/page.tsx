@@ -30,7 +30,7 @@ export default function CLIPage() {
                     {t.cliPage.overviewTitle}
                 </h2>
                 <p className="text-base text-muted-foreground mb-6">
-                    {t.cliPage.overviewPa}<code className="px-1.5 py-0.5 rounded bg-muted text-sm font-mono">ag-kit</code>{t.cliPage.overviewPb}
+                    {t.cliPage.overviewPa}<code className="px-1.5 py-0.5 rounded bg-muted text-sm font-mono">anti-kit</code>{t.cliPage.overviewPb}
                 </p>
             </section>
 
@@ -44,7 +44,7 @@ export default function CLIPage() {
                     {/* init */}
                     <div>
                         <h3 className="text-xl font-semibold text-foreground mb-3">
-                            <code className="font-mono">ag-kit init</code>
+                            <code className="font-mono">anti-kit init</code>
                         </h3>
                         <p className="text-base text-muted-foreground mb-4">
                             {t.cliPage.initDescA}<code className="px-1.5 py-0.5 rounded bg-muted text-sm font-mono">.agents</code>{t.cliPage.initDescB}
@@ -52,7 +52,7 @@ export default function CLIPage() {
 
                         <div className="relative group mb-4">
                             <pre className="p-4 rounded-lg bg-code overflow-x-auto border border-code-border font-mono text-sm">
-                                <code className="text-code-foreground">ag-kit init</code>
+                                <code className="text-code-foreground">anti-kit init</code>
                             </pre>
                         </div>
 
@@ -69,7 +69,7 @@ export default function CLIPage() {
                     {/* update */}
                     <div>
                         <h3 className="text-xl font-semibold text-foreground mb-3">
-                            <code className="font-mono">ag-kit update</code>
+                            <code className="font-mono">anti-kit update</code>
                         </h3>
                         <p className="text-base text-muted-foreground mb-4">
                             {t.cliPage.updateDesc}
@@ -77,7 +77,7 @@ export default function CLIPage() {
 
                         <div className="relative group mb-4">
                             <pre className="p-4 rounded-lg bg-code overflow-x-auto border border-code-border font-mono text-sm">
-                                <code className="text-code-foreground">ag-kit update</code>
+                                <code className="text-code-foreground">anti-kit update</code>
                             </pre>
                         </div>
 
@@ -91,7 +91,7 @@ export default function CLIPage() {
                     {/* rollback */}
                     <div>
                         <h3 className="text-xl font-semibold text-foreground mb-3">
-                            <code className="font-mono">ag-kit rollback</code>
+                            <code className="font-mono">anti-kit rollback</code>
                         </h3>
                         <p className="text-base text-muted-foreground mb-4">
                             {t.cliPage.rollbackDesc}
@@ -99,7 +99,7 @@ export default function CLIPage() {
 
                         <div className="relative group mb-4">
                             <pre className="p-4 rounded-lg bg-code overflow-x-auto border border-code-border font-mono text-sm">
-                                <code className="text-code-foreground">ag-kit rollback</code>
+                                <code className="text-code-foreground">anti-kit rollback</code>
                             </pre>
                         </div>
 
@@ -116,7 +116,7 @@ export default function CLIPage() {
                     {/* status */}
                     <div>
                         <h3 className="text-xl font-semibold text-foreground mb-3">
-                            <code className="font-mono">ag-kit status</code>
+                            <code className="font-mono">anti-kit status</code>
                         </h3>
                         <p className="text-base text-muted-foreground mb-4">
                             {t.cliPage.statusDesc}
@@ -124,7 +124,7 @@ export default function CLIPage() {
 
                         <div className="relative group mb-4">
                             <pre className="p-4 rounded-lg bg-code overflow-x-auto border border-code-border font-mono text-sm">
-                                <code className="text-code-foreground">ag-kit status</code>
+                                <code className="text-code-foreground">anti-kit status</code>
                             </pre>
                         </div>
 
@@ -242,7 +242,7 @@ export default function CLIPage() {
                         </h3>
                         <div className="relative group">
                             <pre className="p-4 rounded-lg bg-code overflow-x-auto border border-code-border font-mono text-sm">
-                                <code className="text-code-foreground">ag-kit init --force</code>
+                                <code className="text-code-foreground">anti-kit init --force</code>
                             </pre>
                         </div>
                     </div>
@@ -253,7 +253,7 @@ export default function CLIPage() {
                         </h3>
                         <div className="relative group">
                             <pre className="p-4 rounded-lg bg-code overflow-x-auto border border-code-border font-mono text-sm">
-                                <code className="text-code-foreground">ag-kit init --path ./my-project</code>
+                                <code className="text-code-foreground">anti-kit init --path ./my-project</code>
                             </pre>
                         </div>
                     </div>
@@ -264,7 +264,7 @@ export default function CLIPage() {
                         </h3>
                         <div className="relative group">
                             <pre className="p-4 rounded-lg bg-code overflow-x-auto border border-code-border font-mono text-sm">
-                                <code className="text-code-foreground">ag-kit init --branch dev</code>
+                                <code className="text-code-foreground">anti-kit init --branch dev</code>
                             </pre>
                         </div>
                     </div>
@@ -275,7 +275,7 @@ export default function CLIPage() {
                         </h3>
                         <div className="relative group">
                             <pre className="p-4 rounded-lg bg-code overflow-x-auto border border-code-border font-mono text-sm">
-                                <code className="text-code-foreground">ag-kit init --quiet --force</code>
+                                <code className="text-code-foreground">anti-kit init --quiet --force</code>
                             </pre>
                         </div>
                     </div>
@@ -286,7 +286,7 @@ export default function CLIPage() {
                         </h3>
                         <div className="relative group">
                             <pre className="p-4 rounded-lg bg-code overflow-x-auto border border-code-border font-mono text-sm">
-                                <code className="text-code-foreground">ag-kit update --dry-run</code>
+                                <code className="text-code-foreground">anti-kit update --dry-run</code>
                             </pre>
                         </div>
                     </div>
@@ -297,7 +297,7 @@ export default function CLIPage() {
                         </h3>
                         <div className="relative group">
                             <pre className="p-4 rounded-lg bg-code overflow-x-auto border border-code-border font-mono text-sm">
-                                <code className="text-code-foreground">ag-kit update --strategy replace</code>
+                                <code className="text-code-foreground">anti-kit update --strategy replace</code>
                             </pre>
                         </div>
                     </div>
@@ -308,7 +308,7 @@ export default function CLIPage() {
                         </h3>
                         <div className="relative group">
                             <pre className="p-4 rounded-lg bg-code overflow-x-auto border border-code-border font-mono text-sm">
-                                <code className="text-code-foreground">ag-kit rollback</code>
+                                <code className="text-code-foreground">anti-kit rollback</code>
                             </pre>
                         </div>
                     </div>

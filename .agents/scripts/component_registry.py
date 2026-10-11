@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build deterministic AG Kit component and runtime metadata."""
+"""Build deterministic Anti-Kit component and runtime metadata."""
 from __future__ import annotations
 
 import hashlib

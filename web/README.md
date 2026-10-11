@@ -2,10 +2,10 @@
   <img src="https://raw.githubusercontent.com/vudovn/ag-kit/main/web/public/images/logo.png" width="128" height="128" alt="AGKIT">
 </p>
 
-<h1 align="center">AG Kit - Web Application</h1>
+<h1 align="center">Anti-Kit - Web Application</h1>
 
 <p align="center">
-    Next.js documentation and dashboard portal for AG Kit — AI Agent templates with Skills, Agents, and Workflows.
+    Next.js documentation and dashboard portal for Anti-Kit — AI Agent templates with Skills, Agents, and Workflows.
 </p>
 
 ---
@@ -41,7 +41,7 @@ The `web/` directory contains the official online documentation site and interac
 
 ## 📦 What gets installed by the CLI
 
-When downstream developers run `npx @vudovn/ag-kit init`, they install a `.agents/` folder at their project root:
+When downstream developers run `npx @mohamedzajith/anti-kit init`, they install a `.agents/` folder at their project root:
 
 | Directory | Count | Description |
 | :--- | :--- | :--- |
@@ -54,7 +54,7 @@ When downstream developers run `npx @vudovn/ag-kit init`, they install a `.agent
 ## 📚 Online Documentation
 
 *   **[Official Documentation Portal](https://ag-kit.unikorn.vn/docs)**
-*   **[GitHub Repository](https://github.com/vudovn/ag-kit)**
+*   **[GitHub Repository](https://github.com/mohamedzajith/anti-kit)**
 
 ---
 

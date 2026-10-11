@@ -1,4 +1,4 @@
-export const GITHUB_REPO = "vudovn/ag-kit";
+export const GITHUB_REPO = "mohamedzajith/anti-kit";
 export const GITHUB_REPO_URL = `https://github.com/${GITHUB_REPO}`;
 export const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}`;
 export const GITHUB_CONTRIBUTORS_URL = `${GITHUB_API_URL}/contributors?per_page=100`;
@@ -54,7 +54,7 @@ export async function fetchGithubStars(): Promise<number | null> {
       const response = await fetch(GITHUB_API_URL, {
         headers: {
           Accept: "application/vnd.github+json",
-          "User-Agent": "ag-kit-web",
+          "User-Agent": "anti-kit-web",
         },
         // Next.js server cache; ignored in the browser.
         next: { revalidate: 60 },
@@ -99,7 +99,7 @@ export async function fetchGithubContributors(): Promise<GithubContributor[]> {
       const response = await fetch(GITHUB_CONTRIBUTORS_URL, {
         headers: {
           Accept: "application/vnd.github+json",
-          "User-Agent": "ag-kit-web",
+          "User-Agent": "anti-kit-web",
         },
         next: { revalidate: 60 },
       });

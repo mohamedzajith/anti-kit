@@ -20,12 +20,12 @@ test("CLI runs when invoked through an npm bin symlink", async (t) => {
     const { promisify } = await import("node:util");
     const run = promisify(execFile);
 
-    const dir = await mkdtemp(path.join(tmpdir(), "ag-kit-symlink-"));
+    const dir = await mkdtemp(path.join(tmpdir(), "anti-kit-symlink-"));
     t.after(() => rm(dir, { recursive: true, force: true }));
 
     const binDir = path.join(dir, ".bin");
     await mkdir(binDir);
-    const link = path.join(binDir, "ag-kit");
+    const link = path.join(binDir, "anti-kit");
     await symlink(path.resolve("bin/index.js"), link);
 
     const { stdout } = await run(process.execPath, [link, "--version"]);

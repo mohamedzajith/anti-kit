@@ -20,15 +20,15 @@ File bạn thêm hoặc sửa **không** thuộc quản lý của kit, nên chi�
 <StepList>
   <Step number={1} title="Xem trước kế hoạch">
     ```bash
-    ag-kit update --dry-run
+    anti-kit update --dry-run
     ```
     Hiển thị file thêm, thay đổi, file cục bộ được giữ, và xung đột — không đụng gì cả.
   </Step>
   <Step number={2} title="Áp dụng merge">
     ```bash
-    ag-kit update
+    anti-kit update
     ```
-    Bản sao lưu được tạo trước. Thay đổi cục bộ được giữ; file xung đột giữ nguyên và bản mới được lưu tại `.agents/.ag-kit/conflicts/` để xem xét.
+    Bản sao lưu được tạo trước. Thay đổi cục bộ được giữ; file xung đột giữ nguyên và bản mới được lưu tại `.agents/.anti-kit/conflicts/` để xem xét.
   </Step>
   <Step number={3} title="Xem báo cáo">
     Mỗi lần chạy ghi báo cáo với run ID, chiến lược, và hành động từng file. Dùng `--conflict-report <file>` để ghi vào đường dẫn tùy chỉnh.
@@ -36,17 +36,17 @@ File bạn thêm hoặc sửa **không** thuộc quản lý của kit, nên chi�
 </StepList>
 
 <Callout type="info">
-  Muốn cây gốc từ upstream? Dùng `ag-kit update --strategy replace`. Bản sao lưu vẫn được tạo trước.
+  Muốn cây gốc từ upstream? Dùng `anti-kit update --strategy replace`. Bản sao lưu vẫn được tạo trước.
 </Callout>
 
 ## Rollback
 
 <Terminal>
-  <TerminalLine command="ag-kit rollback" />
+  <TerminalLine command="anti-kit rollback" />
   <TerminalBlock>
 {`? Restore backup 2026-07-26T16-03-21? (y/N) y
 Restored backup 2026-07-26T16-03-21
-Pre-rollback backup: .agents/.ag-kit/backups/...`}
+Pre-rollback backup: .agents/.anti-kit/backups/...`}
   </TerminalBlock>
 </Terminal>
 
@@ -55,5 +55,5 @@ Pre-rollback backup: .agents/.ag-kit/backups/...`}
 - Xem trước với `--dry-run`.
 
 <Callout type="warning">
-  Bản sao lưu nằm trong dự án tại `.agents/.ag-kit/`. Xóa thư mục này sẽ mất các điểm rollback.
+  Bản sao lưu nằm trong dự án tại `.agents/.anti-kit/`. Xóa thư mục này sẽ mất các điểm rollback.
 </Callout>

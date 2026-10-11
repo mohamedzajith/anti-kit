@@ -5,7 +5,7 @@ priority: P0
 trigger: always_on
 ---
 
-# Universal Rules (TIER 0) - AG Kit
+# Universal Rules (TIER 0) - Anti-Kit
 
 > Always-active rules that apply to every request, regardless of domain.
 

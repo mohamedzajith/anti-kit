@@ -24,14 +24,14 @@ const pkg = await fse.readJson(path.join(__dirname, "..", "package.json"));
 
 const REPO = "github:mohamedzajith/anti-kit";
 const AGENT_FOLDER = ".agents";
-const TEMP_FOLDER = ".temp_ag_kit";
+const TEMP_FOLDER = ".temp_anti_kit";
 
 const showBanner = (quiet = false) => {
     if (quiet) return;
     console.log(
         chalk.blueBright(`
     ╔══════════════════════════════════════╗
-    ║        ANTIGRAVITY KIT CLI           ║
+    ║             ANTI-KIT CLI             ║
     ╚══════════════════════════════════════╝
     `),
     );
@@ -152,7 +152,7 @@ export const installOrUpdate = async (options = {}, mode = "init") => {
     const exists = await fse.pathExists(agentDir);
 
     if (mode === "update" && !exists) {
-        throw new Error(`Could not find ${AGENT_FOLDER} at ${targetDir}. Run ag-kit init first.`);
+        throw new Error(`Could not find ${AGENT_FOLDER} at ${targetDir}. Run anti-kit init first.`);
     }
 
     const approved = await requireConfirmation({
@@ -250,7 +250,7 @@ export const installOrUpdate = async (options = {}, mode = "init") => {
             if (report.summary.conflicts) {
                 console.log(
                     chalk.yellow(
-                        `Incoming conflict copies are stored under ${AGENT_FOLDER}/.ag-kit/conflicts/${runId}`,
+                        `Incoming conflict copies are stored under ${AGENT_FOLDER}/.anti-kit/conflicts/${runId}`,
                     ),
                 );
             }
@@ -352,7 +352,7 @@ export const statusCommand = async (options) => {
         console.log(chalk.gray("────────────────────────────────────────\n"));
     } else {
         console.log(chalk.red("[X] Not installed"));
-        console.log(chalk.yellow(`Run ${chalk.cyan("ag-kit init")} to install.\n`));
+        console.log(chalk.yellow(`Run ${chalk.cyan("anti-kit init")} to install.\n`));
     }
 
     const latestVersion = await updatePromise;
@@ -368,8 +368,8 @@ export const buildProgram = () => {
     ).choices(["merge", "replace"]).default("merge");
 
     program
-        .name("ag-kit")
-        .description("CLI tool to install and safely manage Antigravity Kit")
+        .name("anti-kit")
+        .description("CLI tool to install and safely manage Anti-Kit")
         .version(pkg.version, "-v, --version", "Display version number");
 
     program

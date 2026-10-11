@@ -20,15 +20,15 @@ Files you add or modify are **not** kit-managed, so the default `merge` strategy
 <StepList>
   <Step number={1} title="Preview the plan">
     ```bash
-    ag-kit update --dry-run
+    anti-kit update --dry-run
     ```
     Shows adds, changes, preserved local files, and conflicts — without touching anything.
   </Step>
   <Step number={2} title="Apply the merge">
     ```bash
-    ag-kit update
+    anti-kit update
     ```
-    A backup is created first. Local changes are preserved; conflicting files are kept and incoming copies are stored under `.agents/.ag-kit/conflicts/` for review.
+    A backup is created first. Local changes are preserved; conflicting files are kept and incoming copies are stored under `.agents/.anti-kit/conflicts/` for review.
   </Step>
   <Step number={3} title="Review the report">
     Each run writes a report with the run ID, strategy, and per-file actions. Use `--conflict-report <file>` to write it to a custom path.
@@ -36,17 +36,17 @@ Files you add or modify are **not** kit-managed, so the default `merge` strategy
 </StepList>
 
 <Callout type="info">
-  Want a pristine upstream tree instead? Use `ag-kit update --strategy replace`. A backup is still created first.
+  Want a pristine upstream tree instead? Use `anti-kit update --strategy replace`. A backup is still created first.
 </Callout>
 
 ## Rolling back
 
 <Terminal>
-  <TerminalLine command="ag-kit rollback" />
+  <TerminalLine command="anti-kit rollback" />
   <TerminalBlock>
 {`? Restore backup 2026-07-26T16-03-21? (y/N) y
 Restored backup 2026-07-26T16-03-21
-Pre-rollback backup: .agents/.ag-kit/backups/...`}
+Pre-rollback backup: .agents/.anti-kit/backups/...`}
   </TerminalBlock>
 </Terminal>
 
@@ -55,5 +55,5 @@ Pre-rollback backup: .agents/.ag-kit/backups/...`}
 - Preview with `--dry-run`.
 
 <Callout type="warning">
-  Backups live inside your project under `.agents/.ag-kit/`. Deleting that folder removes your rollback points.
+  Backups live inside your project under `.agents/.anti-kit/`. Deleting that folder removes your rollback points.
 </Callout>

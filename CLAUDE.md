@@ -4,10 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-AG Kit is an Antigravity-first AI agent engineering kit. The product is the `.agents/` workspace contract itself (rules, skills, agents, workflows, memory, hooks) — Markdown + JSON consumed by the Google Antigravity runtime, not compiled code. Three deliverables live in one repo:
+Anti-Kit is an Antigravity-first AI agent engineering kit. The product is the `.agents/` workspace contract itself (rules, skills, agents, workflows, memory, hooks) — Markdown + JSON consumed by the Google Antigravity runtime, not compiled code. Three deliverables live in one repo:
 
 - `.agents/` — the toolkit: 20 specialist agents (`agent/`), ~50 skills (`skills/`), 13 slash-command workflows (`workflows/`), 6 rules (`rules/`), persistent memory templates (`memory/`), plus the Antigravity runtime layer (`antigravity.json` contract, `hooks.json` PreToolUse safety gate, `hooks/*.mjs` tooling, JSON schemas).
-- `cli/` — published npm package `@vudovn/ag-kit` (Node ≥18, ESM). Installs the kit into user projects via `giget`. Entry: `cli/bin/index.js`, managed-tree logic in `cli/lib/managed-tree.js`.
+- `cli/` — published npm package `@mohamedzajith/anti-kit` (Node ≥18, ESM). Installs the kit into user projects via `giget`. Entry: `cli/bin/index.js`, managed-tree logic in `cli/lib/managed-tree.js`.
 - `web/` — docs site (Next.js 16 + MDX + Tailwind 4, React 19). Content data lives in JSON catalogs under `web/src`.
 
 Python ≥3.10 (with PyYAML) runs the toolkit validators; Node ≥22 runs the Antigravity tooling.

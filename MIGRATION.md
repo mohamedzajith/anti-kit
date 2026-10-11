@@ -1,6 +1,6 @@
-# Migrating AG Kit
+# Migrating Anti-Kit
 
-This guide covers upgrades across AG Kit releases, including the Antigravity-native runtime layer and subsequent feature releases up to `2026.8.31`.
+This guide covers upgrades across Anti-Kit releases, including the Antigravity-native runtime layer and subsequent feature releases up to `2026.8.31`.
 
 ## Upgrading to `2026.8.31`
 
@@ -10,7 +10,7 @@ This guide covers upgrades across AG Kit releases, including the Antigravity-nat
 - **Template & CSS Paths**: Standardized `src/app/globals.css` across Next.js templates and updated `@prisma/client` runtime dependencies.
 - **Web & SEO**: Schema.org JSON-LD structured data (`SoftwareApplication`, `FAQPage`), Web App Manifest, and custom 404 page.
 
-All existing user code, custom agents, and modified skills are preserved by `ag-kit update` using the default merge strategy.
+All existing user code, custom agents, and modified skills are preserved by `anti-kit update` using the default merge strategy.
 
 ---
 
@@ -29,7 +29,7 @@ The only behavior enabled by default is a narrow `PreToolUse` safety gate for th
 ## Before upgrading
 
 1. Commit or stash project work.
-2. Confirm the current AG Kit installation is healthy:
+2. Confirm the current Anti-Kit installation is healthy:
 
 ```bash
 npm run check:agents
@@ -38,7 +38,7 @@ npm run check:agents
 3. Preview the update:
 
 ```bash
-ag-kit update --dry-run
+anti-kit update --dry-run
 ```
 
 4. Review any locally modified `.agents` files shown by the plan.
@@ -46,10 +46,10 @@ ag-kit update --dry-run
 ## Upgrade
 
 ```bash
-ag-kit update
+anti-kit update
 ```
 
-AG Kit creates a backup before changing managed files. It does not silently replace locally modified managed files; conflicts receive an incoming copy and a machine-readable report.
+Anti-Kit creates a backup before changing managed files. It does not silently replace locally modified managed files; conflicts receive an incoming copy and a machine-readable report.
 
 ## Post-upgrade validation
 
@@ -113,7 +113,7 @@ Rules:
 
 The hook fails open when Antigravity sends invalid JSON or an unrecognized command payload. This avoids locking the entire workspace after an upstream payload change. Valid, recognized destructive commands fail closed with a non-zero exit code.
 
-To temporarily disable only the AG Kit hook:
+To temporarily disable only the Anti-Kit hook:
 
 ```json
 {
@@ -140,10 +140,10 @@ The repository-native `.agents/` directory remains the project source of truth. 
 To restore the pre-upgrade toolkit backup:
 
 ```bash
-ag-kit rollback
+anti-kit rollback
 ```
 
-After rollback, reopen Antigravity so it reloads the previous workspace configuration. If a global MCP file was explicitly synchronized, restore its timestamped `.ag-kit-backup-*` file separately.
+After rollback, reopen Antigravity so it reloads the previous workspace configuration. If a global MCP file was explicitly synchronized, restore its timestamped `.anti-kit-backup-*` file separately.
 
 ## Compatibility summary
 

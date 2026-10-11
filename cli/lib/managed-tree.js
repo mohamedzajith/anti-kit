@@ -3,9 +3,9 @@ import path from "node:path";
 import fse from "fs-extra";
 
 export const MANIFEST_SCHEMA_VERSION = 1;
-export const METADATA_DIR = ".ag-kit";
+export const METADATA_DIR = ".anti-kit";
 export const MANIFEST_FILE = path.join(METADATA_DIR, "manifest.json");
-export const BACKUP_ROOT = ".ag-kit-backups";
+export const BACKUP_ROOT = ".anti-kit-backups";
 
 const INTERNAL_PREFIXES = [
     `${METADATA_DIR}/`,

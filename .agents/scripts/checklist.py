@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the fast AG Kit validation checklist."""
+"""Run the fast Anti-Kit validation checklist."""
 from __future__ import annotations
 
 import argparse
@@ -39,7 +39,7 @@ URL_CHECKS = (
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run the fast AG Kit validation checklist")
+    parser = argparse.ArgumentParser(description="Run the fast Anti-Kit validation checklist")
     parser.add_argument("project", nargs="?", default=".", help="Project path to validate")
     parser.add_argument("--url", help="Running application URL for Lighthouse and Playwright")
     parser.add_argument("--skip-runtime", action="store_true", help="Skip URL-based runtime checks")
@@ -57,7 +57,7 @@ def main() -> int:
         parser.error(str(exc))
 
     started = datetime.now(timezone.utc)
-    CONSOLE.header("AG KIT - FAST CHECKLIST")
+    CONSOLE.header("ANTI-KIT - FAST CHECKLIST")
     print(f"Project: {project}\nToolkit: {toolkit_root}\nURL: {args.url or 'not provided'}")
 
     specs = list(CORE_CHECKS)

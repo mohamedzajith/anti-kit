@@ -1,18 +1,12 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/vudovn/ag-kit/main/web/public/images/logo.png" width="128" height="128" alt="AG Kit">
+  <img src="https://raw.githubusercontent.com/mohamedzajith/anti-kit/main/web/public/images/logo.png" width="128" height="128" alt="Anti-Kit">
 </p>
 
-<h1 align="center">AG KIT</h1>
+<h1 align="center">ANTI-KIT</h1>
 
 <p align="center">
   Antigravity-first agent engineering kit with rules, skills, specialist agents, workflows, persistent memory, MCP guidance, orchestration, and a native safety hook.
 </p>
-
-<div align="center">
-  <a href="https://unikorn.vn/p/antigravity-kit?ref=unikorn" target="_blank"><img src="https://unikorn.vn/api/widgets/badge/antigravity-kit?theme=dark" alt="AG Kit on Unikorn.vn" width="210" height="54" /></a>
-  <a href="https://trendshift.io/repositories/21490" target="_blank"><img src="https://trendshift.io/api/badge/repositories/21490" alt="AG Kit on Trendshift" width="250" height="55" /></a>
-  <a href="https://launch.j2team.dev/products/antigravity-kit" target="_blank"><img src="https://launch.j2team.dev/badge/antigravity-kit/dark" alt="AG Kit on J2TEAM Launch" width="250" height="54" /></a>
-</div>
 
 <p align="center">
   <strong>Primary runtime: Google Antigravity</strong><br/>
@@ -23,7 +17,7 @@
 
 ## Production profile
 
-AG Kit installs a complete `.agents/` workspace contract. Antigravity is the supported production runtime for this release. Other tools may read the Markdown components, but runtime behavior outside Antigravity is not part of the production compatibility guarantee.
+Anti-Kit installs a complete `.agents/` workspace contract. Antigravity is the supported production runtime for this release. Other tools may read the Markdown components, but runtime behavior outside Antigravity is not part of the production compatibility guarantee.
 
 | Capability | Production implementation |
 | --- | --- |
@@ -41,7 +35,7 @@ The native hook is deliberately narrow. It blocks root-filesystem deletion, driv
 ## Requirements
 
 - Node.js 22 or newer for repository-level Antigravity tooling.
-- Python 3.10 or newer for AG Kit validators and utility scripts.
+- Python 3.10 or newer for Anti-Kit validators and utility scripts.
 - A trusted Google Antigravity workspace.
 - Git for safe update, review, and rollback workflows.
 
@@ -52,14 +46,14 @@ The published CLI currently supports Node.js 18 or newer; the Antigravity integr
 ### Install into a project
 
 ```bash
-npx @vudovn/ag-kit init
+npx @mohamedzajith/anti-kit init
 ```
 
 Or install the CLI globally:
 
 ```bash
-npm install -g @vudovn/ag-kit
-ag-kit init
+npm install -g @mohamedzajith/anti-kit
+anti-kit init
 ```
 
 Do not add `.agents/` to the project `.gitignore` when Antigravity needs to index rules, skills, or workflows. To keep it local without disabling discovery, add `.agents/` to `.git/info/exclude` instead.
@@ -92,26 +86,26 @@ printf '%s' '{"tool_args":{"CommandLine":"rm -rf /"}}' \
   | node .agents/hooks/validate-tool-call.mjs
 ```
 
-The command must exit non-zero and print `BLOCKED by AG Kit`.
+The command must exit non-zero and print `BLOCKED by Anti-Kit`.
 
 ## Safe updates and rollback
 
-AG Kit updates are merge-aware. User-owned files and locally modified managed files are preserved by default.
+Anti-Kit updates are merge-aware. User-owned files and locally modified managed files are preserved by default.
 
 ```bash
-ag-kit update --dry-run          # Preview the exact plan
-ag-kit update                    # Merge safely and create a backup
-ag-kit update --strategy replace # Explicit full replacement, still backed up
-ag-kit rollback                  # Restore the newest pre-update backup
+anti-kit update --dry-run          # Preview the exact plan
+anti-kit update                    # Merge safely and create a backup
+anti-kit update --strategy replace # Explicit full replacement, still backed up
+anti-kit rollback                  # Restore the newest pre-update backup
 ```
 
-Update metadata is stored in `.agents/.ag-kit/`. Backups are stored in `.ag-kit-backups/` outside the managed toolkit tree. Read [MIGRATION.md](MIGRATION.md) before upgrading an existing installation to the Antigravity-native release.
+Update metadata is stored in `.agents/.anti-kit/`. Backups are stored in `.anti-kit-backups/` outside the managed toolkit tree. Read [MIGRATION.md](MIGRATION.md) before upgrading an existing installation to the Antigravity-native release.
 
 ## Antigravity-native integration
 
 ### Runtime contract
 
-`.agents/antigravity.json` declares the six supported integration phases and the documented Antigravity CLI capabilities used by AG Kit. It avoids inventing a minimum semantic version when upstream documentation does not define one.
+`.agents/antigravity.json` declares the six supported integration phases and the documented Antigravity CLI capabilities used by Anti-Kit. It avoids inventing a minimum semantic version when upstream documentation does not define one.
 
 ### Native safety hook
 
@@ -130,7 +124,7 @@ Antigravity loads `.agents/hooks.json`, which registers:
 }
 ```
 
-To temporarily disable the AG Kit hook while diagnosing a compatibility issue, set `"enabled": false`, reopen the workspace, and report the payload shape privately if it may contain sensitive data. Do not delete Antigravity's own permission controls.
+To temporarily disable the Anti-Kit hook while diagnosing a compatibility issue, set `"enabled": false`, reopen the workspace, and report the payload shape privately if it may contain sensitive data. Do not delete Antigravity's own permission controls.
 
 ### MCP configuration
 
@@ -212,7 +206,7 @@ Required GitHub checks:
 - Antigravity native contract
 - Dependency Review
 
-AG Kit never requires automatic merge, automatic deployment, or automatic MCP synchronization. Production changes should remain reviewable and reversible.
+Anti-Kit never requires automatic merge, automatic deployment, or automatic MCP synchronization. Production changes should remain reviewable and reversible.
 
 ## Documentation
 
@@ -227,7 +221,7 @@ AG Kit never requires automatic merge, automatic deployment, or automatic MCP sy
 
 ## References and attribution
 
-AG Kit is an original open-source implementation of Markdown-based agent engineering patterns. No proprietary source files are included. Runtime integration decisions are based on public Antigravity documentation and codelabs linked in [.agents/hooks/README.md](.agents/hooks/README.md).
+Anti-Kit is an original open-source implementation of Markdown-based agent engineering patterns. No proprietary source files are included. Runtime integration decisions are based on public Antigravity documentation and codelabs linked in [.agents/hooks/README.md](.agents/hooks/README.md).
 
 ## Support the project
 

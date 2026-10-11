@@ -32,7 +32,7 @@ export default function InstallationContent() {
         </p>
 
         <pre className="p-4 rounded-lg bg-code overflow-x-auto mb-4 text-sm font-mono text-code-foreground">
-          npx @vudovn/ag-kit init
+          npx @mohamedzajith/anti-kit init
         </pre>
 
         <Callout type="info">
@@ -45,15 +45,15 @@ export default function InstallationContent() {
           {t.installPage.globalTitle}
         </h2>
         <p className="text-base text-muted-foreground mb-6">
-          {t.installPage.globalPa}<code className="px-1.5 py-0.5 rounded bg-muted text-sm font-mono">ag-kit</code>{t.installPage.globalPb}
+          {t.installPage.globalPa}<code className="px-1.5 py-0.5 rounded bg-muted text-sm font-mono">anti-kit</code>{t.installPage.globalPb}
         </p>
 
         <pre className="p-4 rounded-lg bg-code overflow-x-auto mb-2 text-sm font-mono text-code-foreground">
-          npm install -g @vudovn/ag-kit
+          npm install -g @mohamedzajith/anti-kit
         </pre>
 
         <pre className="p-4 rounded-lg bg-code overflow-x-auto mb-4 text-sm font-mono text-code-foreground">
-          cd your-project && ag-kit init
+          cd your-project && anti-kit init
         </pre>
 
         <p className="text-sm text-muted-foreground mb-4">

@@ -5,7 +5,7 @@ priority: P0
 trigger: always_on
 ---
 
-# Request Routing - AG Kit
+# Request Routing - Anti-Kit
 
 > Always-active. Classify every request, then auto-route to the best specialist agent(s) before responding.
 

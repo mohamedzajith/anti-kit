@@ -64,8 +64,8 @@ test("public documentation reflects current paths and inventory", async () => {
     for (const file of ["README.md", "README-VI.md"]) {
         const content = await read(file);
         assert.match(content, /\|\s*(?:\*\*)?Skills(?:\*\*)?\s*\|\s*47\s*\|/);
-        assert.doesNotMatch(content, /ln -s ~\/\.ag-kit\/\.agents \.agent(?:\s|$)/);
-        assert.match(content, /ag-kit rollback/);
+        assert.doesNotMatch(content, /ln -s ~\/\.(?:ag-kit|anti-kit)\/\.agents \.agent(?:\s|$)/);
+        assert.match(content, /(?:ag-kit|anti-kit) rollback/);
     }
 });
 

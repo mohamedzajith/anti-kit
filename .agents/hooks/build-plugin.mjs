@@ -49,13 +49,13 @@ function tomlMultiline(value) {
 
 function convertWorkflows(root, output) {
   const source = path.join(root, '.agents', 'workflows');
-  const destination = path.join(output, 'commands', 'ag-kit');
+  const destination = path.join(output, 'commands', 'anti-kit');
   fs.mkdirSync(destination, {recursive: true});
   let count = 0;
   for (const name of fs.readdirSync(source).filter(item => item.endsWith('.md')).sort()) {
     const text = fs.readFileSync(path.join(source, name), 'utf8');
     const commandName = name.replace(/\.md$/, '');
-    const description = frontmatterDescription(text) || `Run AG Kit workflow ${commandName}`;
+    const description = frontmatterDescription(text) || `Run Anti-Kit workflow ${commandName}`;
     const prompt = `${text}\n\nUser arguments: {{args}}`;
     fs.writeFileSync(
       path.join(destination, `${commandName}.toml`),
@@ -107,7 +107,7 @@ export function buildPlugin(root, output) {
   fs.copyFileSync(path.join(root, '.agents', 'mcp_config.json'), path.join(output, 'mcp_config.example.json'));
 
   const manifest = {
-    name: 'ag-kit',
+    name: 'anti-kit',
     version,
     runtime: 'antigravity',
     counts,

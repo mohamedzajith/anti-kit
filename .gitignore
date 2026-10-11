@@ -8,7 +8,7 @@ coverage/
 
 # AG Kit temporary and backup data
 .temp_ag_kit/
-.ag-kit-backups/
+.anti-kit-backups/
 
 # Local editor / OS files
 .DS_Store
@@ -19,7 +19,7 @@ __pycache__/
 .ruff_cache/
 
 # Project-local/private directories
-/ag-kit-doc/
+/anti-kit-doc/
 /tests/
 /others/
 /.claude/

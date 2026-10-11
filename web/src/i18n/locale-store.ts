@@ -1,6 +1,6 @@
 "use client";
 
-export const LOCALE_KEY = "ag-kit-locale";
+export const LOCALE_KEY = "anti-kit-locale";
 export const LOCALES = ["en", "vi", "zh", "ja"] as const;
 export type Locale = (typeof LOCALES)[number];
 

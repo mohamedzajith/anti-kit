@@ -59,7 +59,7 @@ export function LandingHero() {
             </div>
             <pre className="overflow-x-auto p-5 font-mono text-sm leading-relaxed text-code-foreground md:p-6 md:text-[15px]">
               <code>
-                <span className="text-brand">$</span> npx @vudovn/ag-kit init
+                <span className="text-brand">$</span> npx @mohamedzajith/anti-kit init
                 {"\n"}
                 <span className="text-muted-foreground">
                   ✓ Downloaded toolkit
@@ -67,7 +67,7 @@ export function LandingHero() {
                   {"\n"}✓ Wrote managed-file manifest
                 </span>
                 {"\n\n"}
-                <span className="text-brand">$</span> ag-kit update
+                <span className="text-brand">$</span> anti-kit update
                 {"\n"}
                 <span className="text-muted-foreground">
                   Strategy: merge · Backup created
