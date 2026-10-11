@@ -31,3 +31,30 @@ test("CLI runs when invoked through an npm bin symlink", async (t) => {
     const { stdout } = await run(process.execPath, [link, "--version"]);
     assert.match(stdout.trim(), /^\d{4}\.\d+\.\d+$/);
 });
+
+test("CLI supports local source installation", async (t) => {
+    const { mkdtemp, rm } = await import("node:fs/promises");
+    const { tmpdir } = await import("node:os");
+    const path = await import("node:path");
+    const fse = (await import("fs-extra")).default;
+    const { installOrUpdate } = await import("../bin/index.js");
+
+    const testProjectDir = await mkdtemp(path.join(tmpdir(), "anti-kit-local-install-"));
+    t.after(() => rm(testProjectDir, { recursive: true, force: true }));
+
+    const repoRoot = path.resolve(import.meta.dirname, "..", "..");
+    const report = await installOrUpdate(
+        { path: testProjectDir, source: repoRoot, force: true, quiet: true },
+        "init",
+    );
+
+    assert.ok(report.installedAt || report.toolkitVersion);
+    const hasAtomicDesign = await fse.pathExists(
+        path.join(testProjectDir, ".agents", "skills", "atomic-design", "SKILL.md"),
+    );
+    assert.equal(hasAtomicDesign, true);
+    const hasFrontendMaster = await fse.pathExists(
+        path.join(testProjectDir, ".agents", "workflows", "frontend-master.md"),
+    );
+    assert.equal(hasFrontendMaster, true);
+});

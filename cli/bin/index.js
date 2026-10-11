@@ -172,12 +172,42 @@ export const installOrUpdate = async (options = {}, mode = "init") => {
         : ora({ text: "Preparing...", color: "cyan" }).start();
 
     try {
-        const incomingDir = await downloadToolkit({
-            tempDir,
-            branch: options.branch,
-            spinner,
-        });
-        const toolkitVersion = await readIncomingVersion(tempDir);
+        let incomingDir;
+        let toolkitVersion;
+
+        if (options.source) {
+            const resolvedSource = path.resolve(options.source);
+            const agentCandidate = path.join(resolvedSource, AGENT_FOLDER);
+            if (await fse.pathExists(agentCandidate)) {
+                incomingDir = agentCandidate;
+                toolkitVersion = await readIncomingVersion(resolvedSource);
+            } else if (
+                (await fse.pathExists(resolvedSource))
+                && ((await fse.pathExists(path.join(resolvedSource, "VERSION")))
+                    || path.basename(resolvedSource) === AGENT_FOLDER)
+            ) {
+                incomingDir = resolvedSource;
+                toolkitVersion = await readIncomingVersion(path.dirname(resolvedSource));
+            } else {
+                throw new Error(`Could not find ${AGENT_FOLDER} at source: ${options.source}`);
+            }
+        } else if (options.local) {
+            const localCandidate = path.resolve(__dirname, "..", "..", AGENT_FOLDER);
+            if (await fse.pathExists(localCandidate)) {
+                incomingDir = localCandidate;
+                toolkitVersion = await readIncomingVersion(path.resolve(__dirname, "..", ".."));
+            } else {
+                throw new Error(`Could not find local ${AGENT_FOLDER} folder relative to CLI`);
+            }
+        } else {
+            incomingDir = await downloadToolkit({
+                tempDir,
+                branch: options.branch,
+                spinner,
+            });
+            toolkitVersion = await readIncomingVersion(tempDir);
+        }
+
         const runId = createRunId();
 
         if (!exists) {
@@ -378,6 +408,8 @@ export const buildProgram = () => {
         .option("-f, --force", "Skip confirmation prompt", false)
         .option("-p, --path <dir>", "Path to the project directory", process.cwd())
         .option("-b, --branch <name>", "Select repository branch")
+        .option("-s, --source <dir>", "Use a local repository or folder providing .agents")
+        .option("--local", "Use local repository .agents relative to CLI instead of downloading")
         .option("-q, --quiet", "Suppress non-error output", false)
         .option("--dry-run", "Download and calculate changes without applying them", false)
         .option("--no-backup", "Do not create a pre-update backup")
@@ -391,6 +423,8 @@ export const buildProgram = () => {
         .option("-f, --force", "Skip confirmation prompt", false)
         .option("-p, --path <dir>", "Path to the project directory", process.cwd())
         .option("-b, --branch <name>", "Select repository branch")
+        .option("-s, --source <dir>", "Use a local repository or folder providing .agents")
+        .option("--local", "Use local repository .agents relative to CLI instead of downloading")
         .option("-q, --quiet", "Suppress non-error output", false)
         .option("--dry-run", "Download and calculate changes without applying them", false)
         .option("--no-backup", "Do not create a pre-update backup")
