@@ -12,7 +12,7 @@ Master the creation of atomic components — the foundational, indivisible build
 
 ## What Are Core UI Primitives (Atoms)?
 
-Core UI Primitives are the indivisible, lowest-level visual components that serve as the foundation for all molecules, organisms, and templates:
+Core UI Primitives are the indivisible, lowest-level visual components that serve as the foundation for all composites, sections, and layouts:
 
 - **Indivisible**: Cannot be broken down into smaller functional UI units without losing utility
 - **Lives in `components/core/`**: Structured cleanly as the design system's core component library
@@ -687,7 +687,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 ```
 
 ### 3. Strictly Presentation-Only
-Never make API calls, access routing contexts, or trigger side effects inside a Core primitive. All interactive state belongs in parent Molecules or Organisms.
+Never make API calls, access routing contexts, or trigger side effects inside a Core primitive. All interactive state belongs in parent Composites or Sections.
 
 ---
 
@@ -697,7 +697,7 @@ Never make API calls, access routing contexts, or trigger side effects inside a 
 |---|---|---|
 | **Custom CSS Island** | Creating `Button.module.css` | Use Tailwind CSS utility classes and `cva` |
 | **Direct Hex Colors** | `bg-[#2196f3]` | Use semantic theme tokens (`bg-primary`, `text-primary-foreground`) |
-| **Upward Import** | `import { SearchBar } from '@/components/molecules'` | Never import upward; Core primitives only import Quarks/tokens |
+| **Upward Import** | `import { SearchBar } from '@/components/composites'` | Never import upward; Core primitives only import Theme tokens |
 | **Hardcoded Sizing** | Fixed `w-[320px]` in Core button | Allow parent layout / fullWidth prop to govern width |
 
 ---
@@ -706,8 +706,8 @@ Never make API calls, access routing contexts, or trigger side effects inside a 
 
 - [Atomic Design Hub](../SKILL.md) — Master methodology and subskill routing
 - [Fundamentals](../fundamentals/SKILL.md) — Core hierarchy, directory layouts, and composition rules
-- [Quarks](../quarks/SKILL.md) — Tailwind v4 `@theme` tokens, CSS variables, and primitive values
-- [Molecules](../molecules/SKILL.md) — Functional combinations of core primitives (form fields, search inputs)
-- [Organisms](../organisms/SKILL.md) — Standalone UI sections (headers, footers, data tables)
-- [Templates](../templates/SKILL.md) — Page layout skeletons with slot-based content
+- [Theme & Tokens](../theme/SKILL.md) — Design tokens under `src/theme/`, Tailwind v4 `@theme` tokens, and CSS variables
+- [Composites](../composites/SKILL.md) — Functional combinations of core primitives (form fields, search inputs)
+- [Sections](../sections/SKILL.md) — Standalone UI sections (headers, footers, data tables)
+- [Layouts](../layouts/SKILL.md) — Page layout skeletons with slot-based content
 - [Integration](../integration/SKILL.md) — Framework integration (React/Next.js, Vue 3, Storybook, Vitest)

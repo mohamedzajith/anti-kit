@@ -1,30 +1,31 @@
 ---
-name: atomic-design-templates
-description: Page-level skeletal layouts with slot-based and placeholder content, establishing grid and responsive viewport structures with Tailwind CSS.
+name: atomic-design-layouts
+description: Page-level skeletal layouts with slot-based and placeholder content in src/components/layouts/, establishing grid and responsive viewport structures with Tailwind CSS.
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---
 
-# Atomic Design: Templates
+# Atomic Design: Layouts
 
-Master the creation of templates — page-level layouts that define content structure without actual content. Templates establish the skeletal structure that pages will use, built exclusively with **Tailwind CSS layout utilities** (`grid`, `flex`, `min-h-screen`, `container`), slot architectures, and the `cn()` helper without custom `.module.css` files.
+Master the creation of layouts (Level 4 — formerly known as Templates) — page-level layouts that define content structure without hardcoding domain content. Layouts establish the skeletal structure that pages will use, built exclusively with **Tailwind CSS layout utilities** (`grid`, `flex`, `min-h-screen`, `container`), slot architectures, and the `cn()` helper under **`src/components/layouts/`** without custom `.module.css` files.
 
 ---
 
-## What Are Templates?
+## What Are Layouts?
 
-Templates are the page-level components that place organisms and molecules into a structured viewport layout:
+Layouts are the page-level components that place sections, composites, and core primitives into a structured viewport layout:
 
-- **Composed of organisms and molecules**: Arrange organisms and core primitives into page skeletons
-- **Content-agnostic**: Use placeholder slots (`children`, `sidebarSlot`, `headerSlot`), not real business data
+- **Composed of sections and composites**: Arrange sections, composites, and core primitives into responsive page skeletons
+- **Located in `src/components/layouts/`**: Replaces legacy `components/templates/`
+- **Content-agnostic**: Use placeholder slots (`children`, `sidebarSlot`, `headerSlot`), not real business data or API queries
 - **Utility-first layout**: Built with responsive Tailwind CSS utilities (`min-h-screen`, `flex flex-col`, `grid grid-cols-12`)
-- **Reusable across routes**: The same template skeleton powers multiple concrete routes
+- **Reusable across routes**: The same layout skeleton powers multiple concrete routes
 - **Responsive by default**: Handles mobile drawers, responsive sidebars, and desktop container queries
 
 ---
 
-## Common Template Types
+## Common Layout Types
 
-| Template Category | Examples | Typical Slots |
+| Layout Category | Examples | Typical Slots |
 |---|---|---|
 | **Application** | DashboardLayout, SettingsLayout | Sidebar, Header, Breadcrumbs, Content Area |
 | **Marketing** | LandingLayout, MarketingPageLayout | Navbar, Hero Banner, Section Slots, Footer |
@@ -33,13 +34,13 @@ Templates are the page-level components that place organisms and molecules into 
 
 ---
 
-## 1. MainLayout Template Example
+## 1. MainLayout Example
 
 ```typescript
-// src/components/templates/MainLayout/MainLayout.tsx
+// src/components/layouts/MainLayout/MainLayout.tsx
 import React from 'react';
-import { Header, type HeaderProps } from '@/components/organisms/Header';
-import { Footer, type FooterProps } from '@/components/organisms/Footer';
+import { Header, type HeaderProps } from '@/components/sections/Header';
+import { Footer, type FooterProps } from '@/components/sections/Footer';
 import { cn } from '@/lib/utils';
 
 export interface MainLayoutProps {
@@ -111,15 +112,15 @@ MainLayout.displayName = 'MainLayout';
 
 ---
 
-## 2. DashboardLayout Template Example
+## 2. DashboardLayout Example
 
 Features a responsive collapsible sidebar, sticky top header, and fluid content grid:
 
 ```typescript
-// src/components/templates/DashboardLayout/DashboardLayout.tsx
+// src/components/layouts/DashboardLayout/DashboardLayout.tsx
 import React, { useState } from 'react';
-import { Sidebar, type SidebarProps } from '@/components/organisms/Sidebar';
-import { Header, type HeaderProps } from '@/components/organisms/Header';
+import { Sidebar, type SidebarProps } from '@/components/sections/Sidebar';
+import { Header, type HeaderProps } from '@/components/sections/Header';
 import { cn } from '@/lib/utils';
 
 export interface DashboardLayoutProps {
@@ -172,67 +173,39 @@ DashboardLayout.displayName = 'DashboardLayout';
 
 ---
 
-## 3. AuthLayout Template Example
+## 3. AuthLayout Example
 
 Two-column split view with responsive mobile stacking:
 
 ```typescript
-// src/components/templates/AuthLayout/AuthLayout.tsx
+// src/components/layouts/AuthLayout/AuthLayout.tsx
 import React from 'react';
 import { cn } from '@/lib/utils';
 
 export interface AuthLayoutProps {
-  /** Brand or illustration slot (left side on desktop) */
-  visualSlot?: React.ReactNode;
-  /** Logo element */
-  logo: React.ReactNode;
-  /** Title and subtitle */
-  title: string;
-  subtitle?: string;
-  /** Form content (children) */
   children: React.ReactNode;
-  /** Footer links (terms, privacy) */
-  footer?: React.ReactNode;
-  /** Custom wrapper class */
+  brandSlot?: React.ReactNode;
+  testimonialSlot?: React.ReactNode;
   className?: string;
 }
 
 export const AuthLayout: React.FC<AuthLayoutProps> = ({
-  visualSlot,
-  logo,
-  title,
-  subtitle,
   children,
-  footer,
+  brandSlot,
+  testimonialSlot,
   className,
 }) => {
   return (
-    <div className={cn('grid min-h-screen grid-cols-1 lg:grid-cols-2 bg-background', className)}>
-      {/* Visual / Brand Panel */}
-      <div className="hidden lg:flex flex-col justify-between bg-muted/50 p-12 border-r border-border">
-        <div>{logo}</div>
-        <div className="my-auto">{visualSlot}</div>
-        <div className="text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Anti-Kit. All rights reserved.
-        </div>
+    <div className={cn('grid min-h-screen w-full lg:grid-cols-2', className)}>
+      {/* Left Visual Brand Panel (hidden on mobile) */}
+      <div className="relative hidden h-full flex-col justify-between bg-zinc-900 p-10 text-white lg:flex">
+        <div className="flex items-center gap-2 font-medium">{brandSlot}</div>
+        {testimonialSlot && <div className="space-y-2">{testimonialSlot}</div>}
       </div>
 
-      {/* Form Panel */}
-      <div className="flex flex-col justify-between p-6 sm:p-12 lg:p-16">
-        <div className="lg:hidden">{logo}</div>
-
-        <div className="mx-auto w-full max-w-md my-auto space-y-6">
-          <div className="space-y-2 text-center">
-            <h1 className="text-2xl font-bold tracking-tight text-foreground">{title}</h1>
-            {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
-          </div>
-
-          <div className="rounded-lg border border-border bg-card p-6 shadow-xs">
-            {children}
-          </div>
-        </div>
-
-        {footer && <div className="mx-auto w-full max-w-md text-center text-xs text-muted-foreground">{footer}</div>}
+      {/* Right Interactive Form Area */}
+      <div className="flex items-center justify-center p-8 sm:p-12">
+        <div className="mx-auto w-full max-w-sm space-y-6">{children}</div>
       </div>
     </div>
   );
@@ -243,12 +216,10 @@ AuthLayout.displayName = 'AuthLayout';
 
 ---
 
-## 4. Slot-Based Layout Pattern
-
-Using typed slots for maximum flexibility:
+## 4. Generic SlotLayout Example
 
 ```typescript
-// src/components/templates/SlotLayout/SlotLayout.tsx
+// src/components/layouts/SlotLayout/SlotLayout.tsx
 import React from 'react';
 import { cn } from '@/lib/utils';
 
@@ -276,13 +247,13 @@ export const SlotLayout: React.FC<SlotLayoutProps> = ({ slots, className }) => (
 
 ---
 
-## Best Practices for Templates
+## Best Practices for Layouts
 
 ### 1. Purely Structural (No Domain Data)
-Templates must not fetch data, bind route params, or hardcode marketing copy. Pass content in through slots (`children`, `slots.*`).
+Layouts must not fetch data, bind route params, or hardcode marketing copy. Pass content in through slots (`children`, `slots.*`).
 
 ### 2. Full Responsive Viewports with Tailwind
-Build templates using flexible Tailwind layouts (`min-h-screen`, `grid-cols-1 lg:grid-cols-12`, `container mx-auto`). Avoid arbitrary pixel widths.
+Build layouts using flexible Tailwind layout utilities (`min-h-screen`, `grid-cols-1 lg:grid-cols-12`, `container mx-auto`). Avoid arbitrary fixed pixel widths.
 
 ### 3. Clear Slot Contracts
 Define TypeScript interfaces for every slot so concrete Pages know exactly what to provide without guessing.
@@ -293,8 +264,8 @@ Define TypeScript interfaces for every slot so concrete Pages know exactly what 
 
 - [Atomic Design Hub](../SKILL.md) — Master methodology and subskill routing
 - [Fundamentals](../fundamentals/SKILL.md) — Core hierarchy, directory layouts, and composition rules
-- [Quarks](../quarks/SKILL.md) — Tailwind v4 `@theme` tokens, CSS variables, and primitive values
-- [Atoms (Core UI)](../atoms/SKILL.md) — Indivisible Core UI primitives in `components/core/`
-- [Molecules](../molecules/SKILL.md) — Functional atom combinations (form fields, search inputs)
-- [Organisms](../organisms/SKILL.md) — Standalone UI sections (headers, footers, data tables)
+- [Theme & Tokens](../theme/SKILL.md) — Design tokens under `src/theme/`, Tailwind v4 `@theme` tokens, and CSS variables
+- [Core UI Primitives](../atoms/SKILL.md) — Indivisible Core UI primitives in `src/components/core/`
+- [Composites](../composites/SKILL.md) — Functional core primitive combinations (form fields, search inputs)
+- [Sections](../sections/SKILL.md) — Standalone UI sections (headers, footers, data tables)
 - [Integration](../integration/SKILL.md) — Framework integration (React/Next.js, Vue 3, Storybook, Vitest)

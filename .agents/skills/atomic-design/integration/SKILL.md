@@ -6,7 +6,13 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 
 # Atomic Design: Framework Integration
 
-Master the integration of modern Atomic Design with **Tailwind CSS (v4)**, `cva`, Next.js/React, and testing setups. In this architecture, atoms are structured as **Core UI primitives under `src/components/core/`**, styled with utility classes and merged via `cn()`.
+Master the integration of modern Atomic Design with **Tailwind CSS (v4)**, `cva`, Next.js/React, and testing setups. In this architecture:
+- Theme tokens are centralized under **`src/theme/`** and mapped to Tailwind v4 `@theme`.
+- Atoms are structured as **Core UI primitives under `src/components/core/`**.
+- Molecules are structured as **Composites under `src/components/composites/`**.
+- Organisms are structured as **Sections under `src/components/sections/`**.
+- Templates are structured as **Layouts under `src/components/layouts/`**.
+- Concrete routes reside in **`src/app/` or `src/pages/`**.
 
 ---
 
@@ -16,14 +22,23 @@ Master the integration of modern Atomic Design with **Tailwind CSS (v4)**, `cva`
 
 ```text
 src/
+├── theme/                        # Level 0: Theme & Tokens (replaces asset themes)
+│   ├── index.ts                  # Master theme contract
+│   ├── tokens.ts                 # Primitive design tokens
+│   ├── colors.ts                 # Semantic color palette
+│   ├── spacing.ts                # Spacing increments
+│   ├── typography.ts             # Font families & clamps
+│   ├── borders.ts                # Radii and border widths
+│   ├── shadows.ts                # Elevation tokens
+│   └── theme.css                 # Tailwind CSS v4 @theme directive & CSS vars
 ├── app/
-│   ├── globals.css               # Level 0: Quarks / Tailwind v4 @theme & CSS vars
+│   ├── globals.css               # Imports @/theme/theme.css & tailwindcss
 │   ├── layout.tsx                # App root layout
 │   └── page.tsx                  # Level 5: Concrete Page
 ├── lib/
 │   └── utils.ts                  # cn() helper: clsx + tailwind-merge
 ├── components/
-│   ├── core/                     # Level 1: Core UI Primitives (Atoms)
+│   ├── core/                     # Level 1: Core UI Primitives (replacing legacy Atoms)
 │   │   ├── Button/
 │   │   │   ├── Button.tsx        # Styled with cva & Tailwind classes
 │   │   │   ├── Button.test.tsx
@@ -36,24 +51,24 @@ src/
 │   │   ├── Checkbox/
 │   │   ├── Icon/
 │   │   └── index.ts              # Core primitives barrel
-│   ├── molecules/                # Level 2: Molecules
+│   ├── composites/               # Level 2: Composites (replacing legacy Molecules)
 │   │   ├── FormField/
 │   │   │   ├── FormField.tsx
 │   │   │   ├── FormField.test.tsx
 │   │   │   └── index.ts
 │   │   ├── SearchForm/
-│   │   └── index.ts              # Molecules barrel
-│   ├── organisms/                # Level 3: Organisms
+│   │   └── index.ts              # Composites barrel
+│   ├── sections/                 # Level 3: Sections (replacing legacy Organisms)
 │   │   ├── Header/
 │   │   │   ├── Header.tsx
 │   │   │   ├── useHeader.ts      # Custom state hook
 │   │   │   └── index.ts
-│   │   └── index.ts              # Organisms barrel
-│   ├── templates/                # Level 4: Templates
+│   │   └── index.ts              # Sections barrel
+│   ├── layouts/                  # Level 4: Layouts (replacing legacy Templates)
 │   │   ├── MainLayout/
 │   │   │   ├── MainLayout.tsx
 │   │   │   └── index.ts
-│   │   └── index.ts              # Templates barrel
+│   │   └── index.ts              # Layouts barrel
 │   └── index.ts                  # Unified components barrel
 ```
 
@@ -83,9 +98,9 @@ export { Checkbox } from './Checkbox/Checkbox';
 ```typescript
 // src/components/index.ts
 export * from './core';
-export * from './molecules';
-export * from './organisms';
-export * from './templates';
+export * from './composites';
+export * from './sections';
+export * from './layouts';
 ```
 
 ---
@@ -99,14 +114,14 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 export const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none cursor-pointer',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none cursor-pointer',
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground shadow hover:bg-primary/90',
-        secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
-        destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
-        outline: 'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
+        default: 'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90',
+        secondary: 'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
+        destructive: 'bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90',
+        outline: 'border border-border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
       },
@@ -123,7 +138,6 @@ export const buttonVariants = cva(
     defaultVariants: {
       variant: 'default',
       size: 'default',
-      fullWidth: false,
     },
   }
 );
@@ -132,45 +146,22 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   isLoading?: boolean;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      variant,
-      size,
-      fullWidth,
-      isLoading = false,
-      leftIcon,
-      rightIcon,
-      disabled,
-      children,
-      className,
-      type = 'button',
-      ...props
-    },
-    ref
-  ) => {
+  ({ className, variant, size, fullWidth, isLoading, children, disabled, ...props }, ref) => {
     return (
       <button
         ref={ref}
-        type={type}
+        className={cn(buttonVariants({ variant, size, fullWidth }), className)}
         disabled={disabled || isLoading}
         aria-busy={isLoading}
-        className={cn(buttonVariants({ variant, size, fullWidth, className }))}
         {...props}
       >
-        {isLoading ? (
+        {isLoading && (
           <span className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-        ) : (
-          <>
-            {leftIcon && <span className="inline-flex shrink-0">{leftIcon}</span>}
-            <span>{children}</span>
-            {rightIcon && <span className="inline-flex shrink-0">{rightIcon}</span>}
-          </>
         )}
+        {children}
       </button>
     );
   }
@@ -182,8 +173,6 @@ Button.displayName = 'Button';
 ---
 
 ## Storybook Integration
-
-Organize stories according to the modernized atomic tiers:
 
 ```typescript
 // src/components/core/Button/Button.stories.tsx
@@ -233,11 +222,11 @@ export const Loading: Story = {
 // Title format: "Tier/ComponentName"
 title: 'Core/Button'           // Level 1: Core primitives
 title: 'Core/Input'
-title: 'Molecules/FormField'   // Level 2: Molecules
-title: 'Molecules/SearchForm'
-title: 'Organisms/Header'      // Level 3: Organisms
-title: 'Organisms/ProductCard'
-title: 'Templates/Dashboard'   // Level 4: Templates
+title: 'Composites/FormField'  // Level 2: Composites
+title: 'Composites/SearchForm'
+title: 'Sections/Header'       // Level 3: Sections
+title: 'Sections/ProductCard'
+title: 'Layouts/Dashboard'     // Level 4: Layouts
 title: 'Pages/DashboardPage'   // Level 5: Pages
 ```
 
@@ -292,12 +281,14 @@ describe('Button', () => {
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
+      "@/theme/*": ["src/theme/*"],
+      "@/theme": ["src/theme/index.ts"],
       "@/components/*": ["src/components/*"],
       "@/core/*": ["src/components/core/*"],
       "@/core": ["src/components/core/index.ts"],
-      "@/molecules/*": ["src/components/molecules/*"],
-      "@/organisms/*": ["src/components/organisms/*"],
-      "@/templates/*": ["src/components/templates/*"],
+      "@/composites/*": ["src/components/composites/*"],
+      "@/sections/*": ["src/components/sections/*"],
+      "@/layouts/*": ["src/components/layouts/*"],
       "@/lib/*": ["src/lib/*"]
     }
   }
@@ -316,10 +307,11 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@/theme': path.resolve(__dirname, './src/theme'),
       '@/core': path.resolve(__dirname, './src/components/core'),
-      '@/molecules': path.resolve(__dirname, './src/components/molecules'),
-      '@/organisms': path.resolve(__dirname, './src/components/organisms'),
-      '@/templates': path.resolve(__dirname, './src/components/templates'),
+      '@/composites': path.resolve(__dirname, './src/components/composites'),
+      '@/sections': path.resolve(__dirname, './src/components/sections'),
+      '@/layouts': path.resolve(__dirname, './src/components/layouts'),
     },
   },
 });
@@ -331,8 +323,8 @@ export default defineConfig({
 
 - [Atomic Design Hub](../SKILL.md) — Master methodology and subskill routing
 - [Fundamentals](../fundamentals/SKILL.md) — Core hierarchy, directory layouts, and composition rules
-- [Quarks](../quarks/SKILL.md) — Tailwind v4 `@theme` tokens, CSS variables, and primitive values
-- [Atoms (Core UI)](../atoms/SKILL.md) — Indivisible Core UI primitives in `components/core/`
-- [Molecules](../molecules/SKILL.md) — Functional atom combinations (form fields, search inputs)
-- [Organisms](../organisms/SKILL.md) — Standalone UI sections (headers, footers, data tables)
-- [Templates](../templates/SKILL.md) — Page layout skeletons with slot-based content
+- [Theme & Tokens](../theme/SKILL.md) — Design tokens under `src/theme/`, Tailwind v4 `@theme` tokens, and CSS variables
+- [Core UI Primitives](../atoms/SKILL.md) — Indivisible Core UI primitives in `src/components/core/`
+- [Composites](../composites/SKILL.md) — Functional core primitive combinations (form fields, search inputs)
+- [Sections](../sections/SKILL.md) — Standalone UI sections (headers, footers, data tables)
+- [Layouts](../layouts/SKILL.md) — Page layout skeletons with slot-based content

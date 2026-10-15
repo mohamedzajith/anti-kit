@@ -6,7 +6,7 @@
     },
     {
         "name": "atomic-design",
-        "description": "Atomic Design hierarchy (quarks, atoms, molecules, organisms, templates, pages) and strict import boundaries",
+        "description": "Modernized Atomic Design hierarchy (theme tokens, core primitives, composites, sections, layouts, pages) and strict import boundaries",
         "category": "Frontend & UI"
     },
     {

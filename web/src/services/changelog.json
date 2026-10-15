@@ -6,7 +6,7 @@
         "changes": {
             "Added": [
                 "Full-cycle /frontend-master engineering workflow covering anti-slop design reads, DESIGN.md design tokens, component architecture, sensory implementation, and automated UX/accessibility/performance audits.",
-                "Comprehensive atomic-design skill suite with subskills for quarks, atoms, molecules, organisms, templates, fundamentals, and framework integration.",
+                "Comprehensive atomic-design skill suite modernized with subskills for theme & tokens (replacing asset themes), core primitives, composites, sections, layouts, fundamentals, and framework integration.",
                 "Automated ESLint hierarchical import boundaries and composition law recipes for atomic components."
             ],
             "Changed": [

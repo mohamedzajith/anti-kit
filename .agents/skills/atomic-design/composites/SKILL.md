@@ -1,45 +1,46 @@
 ---
-name: atomic-design-molecules
-description: Functional combinations of core primitives like form fields, search inputs, media objects, nav items, and stat widgets styled with Tailwind CSS.
+name: atomic-design-composites
+description: Functional combinations of core primitives like form fields, search inputs, media objects, nav items, and stat widgets in src/components/composites/ styled with Tailwind CSS.
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---
 
-# Atomic Design: Molecules
+# Atomic Design: Composites
 
-Master the creation of molecule components — functional groups of Core UI primitives (`src/components/core/`) that work together as a single unit. In this modernized architecture, molecules combine multiple core primitives using **Tailwind CSS utility layouts and `cn()`** — completely free of custom `.module.css` files.
+Master the creation of composite components (Level 2 — formerly known as Molecules) — functional groups of Core UI primitives (`src/components/core/`) that work together as a single unit. In this modernized architecture, composites combine multiple core primitives using **Tailwind CSS utility layouts and `cn()`** under **`src/components/composites/`** — completely free of custom `.module.css` files.
 
 ---
 
-## What Are Molecules?
+## What Are Composites?
 
-Molecules are the first level of composition in Atomic Design. They are:
+Composites are the first level of component composition in Atomic Design. They are:
 
-- **Composed of Core Primitives only**: Import exclusively from `src/components/core/` (never other molecules)
+- **Composed of Core Primitives only**: Import exclusively from `src/components/core/` and Theme tokens (never other composites or sections)
+- **Located in `src/components/composites/`**: Replaces legacy `components/molecules/`
 - **Single purpose**: Do one specific functional job well
 - **Utility-first layout**: Arranged with Tailwind flex, grid, and spacing utilities
-- **Reusable**: Used across various organisms, templates, and views
+- **Reusable**: Used across various sections, layouts, and views
 - **Minimally stateful**: May contain ephemeral UI state (e.g. open/closed, search debounce, clear button visibility)
 - **Zero business logic**: Delegate API calls, mutations, and domain logic to parents or custom hooks
 
 ---
 
-## Common Molecule Types
+## Common Composite Types
 
-| Category | Molecule Examples | Composed Core Primitives |
+| Category | Composite Examples | Composed Core Primitives |
 |---|---|---|
-| **Form Molecules** | FormField, SearchForm, ToggleField | Label + Input + Typography/Text, Button + Input + Icon |
-| **Navigation Molecules** | NavItem, BreadcrumbItem, TabTrigger | Icon + Text + Badge, Link + Separator |
-| **Display Molecules** | MediaObject, CardHeader, Stat, ListItem | Avatar + Heading + Text, Icon + Heading + Button |
-| **Action Molecules** | ButtonGroup, DropdownTrigger, IconButton | Multiple Buttons, Button + Icon + Tooltip |
+| **Form Composites** | FormField, SearchForm, ToggleField | Label + Input + Typography/Text, Button + Input + Icon |
+| **Navigation Composites** | NavItem, BreadcrumbItem, TabTrigger | Icon + Text + Badge, Link + Separator |
+| **Display Composites** | MediaObject, CardHeader, Stat, ListItem | Avatar + Heading + Text, Icon + Heading + Button |
+| **Action Composites** | ButtonGroup, DropdownTrigger, IconButton | Multiple Buttons, Button + Icon + Tooltip |
 
 ---
 
-## 1. FormField Molecule Example
+## 1. FormField Composite Example
 
 Combines `Label`, `Input`, and `Text` primitives from `components/core/` with accessible `aria-describedby` wiring:
 
 ```typescript
-// src/components/molecules/FormField/FormField.tsx
+// src/components/composites/FormField/FormField.tsx
 import React from 'react';
 import { Label } from '@/components/core/Label';
 import { Input, type InputProps } from '@/components/core/Input';
@@ -116,12 +117,12 @@ FormField.displayName = 'FormField';
 
 ---
 
-## 2. SearchForm Molecule Example
+## 2. SearchForm Composite Example
 
 Combines `Input`, `Button`, and `Icon` primitives with live query state and clear action:
 
 ```typescript
-// src/components/molecules/SearchForm/SearchForm.tsx
+// src/components/composites/SearchForm/SearchForm.tsx
 import React, { useState, useCallback } from 'react';
 import { Input } from '@/components/core/Input';
 import { Button } from '@/components/core/Button';
@@ -222,12 +223,12 @@ SearchForm.displayName = 'SearchForm';
 
 ---
 
-## 3. MediaObject Molecule Example
+## 3. MediaObject Composite Example
 
 Combines `Avatar`, `Heading`, and `Text` primitives into an accessible content block:
 
 ```typescript
-// src/components/molecules/MediaObject/MediaObject.tsx
+// src/components/composites/MediaObject/MediaObject.tsx
 import React from 'react';
 import { Avatar, type AvatarProps } from '@/components/core/Avatar';
 import { Text, Heading } from '@/components/core/Typography';
@@ -297,12 +298,12 @@ MediaObject.displayName = 'MediaObject';
 
 ---
 
-## 4. NavItem Molecule Example
+## 4. NavItem Composite Example
 
 Combines `Icon`, `Text`, and `Badge` primitives into an accessible interactive navigation link:
 
 ```typescript
-// src/components/molecules/NavItem/NavItem.tsx
+// src/components/composites/NavItem/NavItem.tsx
 import React from 'react';
 import { Icon } from '@/components/core/Icon';
 import { Badge } from '@/components/core/Badge';
@@ -381,10 +382,10 @@ NavItem.displayName = 'NavItem';
 
 ---
 
-## 5. CardHeader Molecule Example
+## 5. CardHeader Composite Example
 
 ```typescript
-// src/components/molecules/CardHeader/CardHeader.tsx
+// src/components/composites/CardHeader/CardHeader.tsx
 import React from 'react';
 import { Heading, Text } from '@/components/core/Typography';
 import { Icon } from '@/components/core/Icon';
@@ -438,10 +439,10 @@ CardHeader.displayName = 'CardHeader';
 
 ---
 
-## 6. Stat Molecule Example
+## 6. Stat Composite Example
 
 ```typescript
-// src/components/molecules/Stat/Stat.tsx
+// src/components/composites/Stat/Stat.tsx
 import React from 'react';
 import { Text, Heading } from '@/components/core/Typography';
 import { Icon } from '@/components/core/Icon';
@@ -452,9 +453,9 @@ export type TrendDirection = 'up' | 'down' | 'neutral';
 export interface StatProps {
   label: string;
   value: string | number;
+  icon?: string;
   trend?: TrendDirection;
   trendValue?: string;
-  icon?: string;
   helpText?: string;
   className?: string;
 }
@@ -462,40 +463,35 @@ export interface StatProps {
 export const Stat: React.FC<StatProps> = ({
   label,
   value,
+  icon,
   trend,
   trendValue,
-  icon,
   helpText,
   className,
 }) => {
   return (
-    <div className={cn('rounded-lg border border-border bg-card p-4 text-card-foreground shadow-xs', className)}>
-      <div className="flex items-center justify-between gap-2">
+    <div className={cn('rounded-lg border border-border bg-card p-5 shadow-xs', className)}>
+      <div className="flex items-center justify-between">
         <Text size="sm" color="muted" className="font-medium">
           {label}
         </Text>
-        {icon && <Icon name={icon} size="sm" className="text-muted-foreground" />}
+        {icon && (
+          <div className="p-2 rounded-md bg-muted text-muted-foreground">
+            <Icon name={icon} size="sm" />
+          </div>
+        )}
       </div>
 
       <div className="mt-2">
-        <Heading level={2} className="tracking-tight">
+        <Heading level={2} className="text-2xl font-bold tracking-tight">
           {value}
         </Heading>
       </div>
 
       {(trend || trendValue) && (
         <div className="mt-2 flex items-center gap-1.5">
-          {trend && (
-            <Icon
-              name={trend === 'up' ? 'trending-up' : trend === 'down' ? 'trending-down' : 'minus'}
-              size="xs"
-              className={cn(
-                trend === 'up' && 'text-emerald-600 dark:text-emerald-400',
-                trend === 'down' && 'text-destructive',
-                trend === 'neutral' && 'text-muted-foreground'
-              )}
-            />
-          )}
+          {trend === 'up' && <Icon name="trending-up" size="xs" className="text-emerald-500" />}
+          {trend === 'down' && <Icon name="trending-down" size="xs" className="text-destructive" />}
           {trendValue && (
             <span
               className={cn(
@@ -525,25 +521,25 @@ Stat.displayName = 'Stat';
 
 ---
 
-## Best Practices for Molecules
+## Best Practices for Composites
 
-### 1. Only Import Downward from `components/core`
-Molecules compose indivisible core primitives. Never import another molecule into a molecule:
+### 1. Only Import Downward from `src/components/core` and `src/theme`
+Composites compose indivisible core primitives. Never import another composite or upper layer into a composite:
 
 ```typescript
-// ✅ LEGAL: Molecule composing Core primitives
+// ✅ LEGAL: Composite composing Core primitives
 import { Input } from '@/components/core/Input';
 import { Button } from '@/components/core/Button';
 
-// ❌ ILLEGAL: Molecule composing another Molecule
-import { SearchInput } from '@/components/molecules/SearchInput'; // Upward/lateral error
+// ❌ ILLEGAL: Composite composing another Composite
+import { SearchInput } from '@/components/composites/SearchInput'; // Lateral error
 ```
 
 ### 2. Leverage Tailwind Layout Utilities
-Assemble components using standard Tailwind flexbox (`flex items-center gap-2`), grid, and padding tokens. Do not create separate `.module.css` files.
+Assemble components using standard Tailwind flexbox (`flex items-center gap-2`), grid, and spacing tokens. Do not create separate `.module.css` files.
 
 ### 3. Keep Internal State Ephemeral
-Only manage local UI state (like active clear buttons, toggle focus). Never embed business logic, API queries, or route transitions directly in a molecule.
+Only manage local UI state (like active clear buttons, toggle focus). Never embed business logic, API queries, or route transitions directly in a composite.
 
 ---
 
@@ -551,8 +547,8 @@ Only manage local UI state (like active clear buttons, toggle focus). Never embe
 
 - [Atomic Design Hub](../SKILL.md) — Master methodology and subskill routing
 - [Fundamentals](../fundamentals/SKILL.md) — Core hierarchy, directory layouts, and composition rules
-- [Quarks](../quarks/SKILL.md) — Tailwind v4 `@theme` tokens, CSS variables, and primitive values
-- [Atoms (Core UI)](../atoms/SKILL.md) — Indivisible Core UI primitives in `components/core/`
-- [Organisms](../organisms/SKILL.md) — Standalone UI sections (headers, footers, data tables)
-- [Templates](../templates/SKILL.md) — Page layout skeletons with slot-based content
+- [Theme & Tokens](../theme/SKILL.md) — Design tokens under `src/theme/`, Tailwind v4 `@theme` tokens, and CSS variables
+- [Core UI Primitives](../atoms/SKILL.md) — Indivisible Core UI primitives in `src/components/core/`
+- [Sections](../sections/SKILL.md) — Standalone UI sections (headers, footers, data tables)
+- [Layouts](../layouts/SKILL.md) — Page layout skeletons with slot-based content
 - [Integration](../integration/SKILL.md) — Framework integration (React/Next.js, Vue 3, Storybook, Vitest)

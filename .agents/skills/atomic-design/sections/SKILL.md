@@ -1,30 +1,31 @@
 ---
-name: atomic-design-organisms
-description: Complex standalone UI sections like headers, footers, product cards, comment sections, sidebars, and data tables built with Tailwind CSS.
+name: atomic-design-sections
+description: Complex standalone UI sections like headers, footers, product cards, comment sections, sidebars, and data tables in src/components/sections/ built with Tailwind CSS.
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---
 
-# Atomic Design: Organisms
+# Atomic Design: Sections
 
-Master the creation of organisms — complex, distinct sections of an interface composed of molecules and Core UI primitives (`src/components/core/`). Organisms represent standalone UI sections that could exist independently and are styled using **Tailwind CSS utility classes**, responsive design modifiers, and the `cn()` helper without custom `.module.css` files.
+Master the creation of sections (Level 3 — formerly known as Organisms) — complex, distinct sections of an interface composed of composites and Core UI primitives (`src/components/core/`). Sections represent standalone UI sections that could exist independently and are styled using **Tailwind CSS utility classes**, responsive design modifiers, and the `cn()` helper under **`src/components/sections/`** without custom `.module.css` files.
 
 ---
 
-## What Are Organisms?
+## What Are Sections?
 
-Organisms are relatively complex UI components that form distinct sections of an interface:
+Sections are relatively complex UI components that form distinct, meaningful regions of an interface:
 
-- **Composed of molecules and core primitives**: Combines `components/core/` primitives, `components/molecules/`, and sibling organisms
+- **Composed of composites and core primitives**: Combines `components/core/` primitives, `components/composites/`, and sibling sections
+- **Located in `src/components/sections/`**: Replaces legacy `components/organisms/`
 - **Standalone sections**: Distinct UI regions that can function as cohesive interface blocks
 - **Utility-first layout**: Structured with Tailwind flex, grid, sticky positioning, container queries, and responsive variants
 - **Context-aware & Stateful**: Often tied to feature domain needs and custom state hooks (e.g. `useHeader`, `useTableSort`)
-- **Reusable**: Reusable across templates and concrete pages
+- **Reusable**: Reusable across layouts and concrete pages
 
 ---
 
-## Common Organism Types
+## Common Section Types
 
-| Category | Organisms | Composed Parts |
+| Category | Sections | Composed Parts |
 |---|---|---|
 | **Navigation** | Header, Footer, Sidebar | NavItem, SearchForm, Avatar, Icon, Button |
 | **Content Sections** | ProductCard, CommentSection, ArticlePreview | MediaObject, Badge, Button, Heading, Text |
@@ -33,18 +34,18 @@ Organisms are relatively complex UI components that form distinct sections of an
 
 ---
 
-## 1. Header Organism Example
+## 1. Header Section Example
 
-Combines `Avatar`, `Button`, `Icon` from `components/core/` with `NavItem` and `SearchForm` molecules:
+Combines `Avatar`, `Button`, `Icon` from `components/core/` with `NavItem` and `SearchForm` composites from `components/composites/`:
 
 ```typescript
-// src/components/organisms/Header/Header.tsx
+// src/components/sections/Header/Header.tsx
 import React, { useState } from 'react';
 import { Icon } from '@/components/core/Icon';
 import { Button } from '@/components/core/Button';
 import { Avatar } from '@/components/core/Avatar';
-import { NavItem } from '@/components/molecules/NavItem';
-import { SearchForm } from '@/components/molecules/SearchForm';
+import { NavItem } from '@/components/composites/NavItem';
+import { SearchForm } from '@/components/composites/SearchForm';
 import { cn } from '@/lib/utils';
 
 export interface NavLink {
@@ -59,155 +60,129 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  avatar?: string;
+  avatarSrc?: string;
 }
 
 export interface HeaderProps {
-  /** Logo element or brand component */
   logo: React.ReactNode;
-  /** Navigation links */
-  navigation: NavLink[];
-  /** Current active nav item ID */
-  activeNavId?: string;
-  /** Authenticated user */
-  user?: User | null;
-  /** Show search form */
-  showSearch?: boolean;
-  /** Search submit handler */
+  navLinks: NavLink[];
+  activeLinkId?: string;
+  user?: User;
   onSearch?: (query: string) => void;
-  /** Login click handler */
-  onLogin?: () => void;
-  /** Logout click handler */
-  onLogout?: () => void;
-  /** Profile click handler */
-  onProfileClick?: () => void;
-  /** Custom wrapper class */
+  onNotificationsClick?: () => void;
+  notificationCount?: number;
+  onUserMenuClick?: () => void;
   className?: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   logo,
-  navigation,
-  activeNavId,
+  navLinks,
+  activeLinkId,
   user,
-  showSearch = true,
   onSearch,
-  onLogin,
-  onLogout,
-  onProfileClick,
+  onNotificationsClick,
+  notificationCount = 0,
+  onUserMenuClick,
   className,
 }) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className={cn('sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60', className)}>
+    <header className={cn('sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60', className)}>
       <div className="container mx-auto flex h-16 items-center justify-between gap-4 px-4 sm:px-8">
-        {/* Brand Logo */}
+        {/* Brand / Logo */}
         <div className="flex items-center gap-6">
-          <div className="shrink-0">{logo}</div>
+          <div className="flex items-center">{logo}</div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-            {navigation.map((item) => (
+          <nav className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => (
               <NavItem
-                key={item.id}
-                label={item.label}
-                href={item.href}
-                icon={item.icon}
-                badge={item.badge}
-                isActive={item.id === activeNavId}
+                key={link.id}
+                label={link.label}
+                href={link.href}
+                icon={link.icon}
+                badge={link.badge}
+                isActive={link.id === activeLinkId}
               />
             ))}
           </nav>
         </div>
 
-        {/* Search */}
-        {showSearch && onSearch && (
-          <div className="hidden lg:block w-72 max-w-sm">
-            <SearchForm
-              onSubmit={onSearch}
-              placeholder="Search..."
-              size="sm"
-            />
-          </div>
-        )}
-
-        {/* User Actions */}
+        {/* Search Bar & Actions */}
         <div className="flex items-center gap-3">
-          {user ? (
-            <div className="relative">
-              <button
-                className="flex items-center gap-2 rounded-full p-1 text-sm font-medium transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring cursor-pointer"
-                onClick={() => setUserMenuOpen(!userMenuOpen)}
-                aria-expanded={userMenuOpen}
-                aria-haspopup="true"
-              >
-                <Avatar
-                  src={user.avatar}
-                  alt={user.name}
-                  initials={user.name.slice(0, 2).toUpperCase()}
-                  size="sm"
-                />
-                <span className="hidden sm:inline-block font-medium text-foreground">{user.name}</span>
-                <Icon name="chevron-down" size="xs" className="text-muted-foreground" />
-              </button>
-
-              {userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-md border border-border bg-popover p-1 shadow-md text-popover-foreground z-50">
-                  <button
-                    onClick={onProfileClick}
-                    className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground cursor-pointer"
-                  >
-                    <Icon name="user" size="sm" />
-                    <span>Profile</span>
-                  </button>
-                  <button
-                    onClick={onLogout}
-                    className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-sm text-destructive hover:bg-destructive/10 cursor-pointer"
-                  >
-                    <Icon name="log-out" size="sm" />
-                    <span>Logout</span>
-                  </button>
-                </div>
-              )}
+          {onSearch && (
+            <div className="hidden lg:block w-72">
+              <SearchForm onSubmit={onSearch} size="sm" placeholder="Search..." />
             </div>
+          )}
+
+          {/* Notifications */}
+          {onNotificationsClick && (
+            <button
+              type="button"
+              onClick={onNotificationsClick}
+              className="relative flex size-9 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer"
+              aria-label="Notifications"
+            >
+              <Icon name="bell" size="sm" />
+              {notificationCount > 0 && (
+                <span className="absolute top-1 right-1 flex size-2 rounded-full bg-destructive" />
+              )}
+            </button>
+          )}
+
+          {/* User Avatar Menu */}
+          {user ? (
+            <button
+              type="button"
+              onClick={onUserMenuClick}
+              className="flex items-center gap-2 rounded-full p-0.5 hover:ring-2 hover:ring-primary/20 transition-all cursor-pointer"
+              aria-label="User menu"
+            >
+              <Avatar
+                src={user.avatarSrc}
+                alt={user.name}
+                initials={user.name.slice(0, 2).toUpperCase()}
+                size="sm"
+              />
+            </button>
           ) : (
-            <Button variant="default" size="sm" onClick={onLogin}>
-              Login
-            </Button>
+            <Button size="sm">Sign In</Button>
           )}
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden flex items-center justify-center p-2 rounded-md text-foreground hover:bg-accent cursor-pointer"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-expanded={mobileMenuOpen}
-            aria-label="Toggle menu"
+            type="button"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="flex md:hidden size-9 items-center justify-center rounded-md text-muted-foreground hover:bg-accent transition-colors"
+            aria-label="Toggle navigation menu"
+            aria-expanded={isMobileMenuOpen}
           >
-            <Icon name={mobileMenuOpen ? 'x' : 'menu'} size="md" />
+            <Icon name={isMobileMenuOpen ? 'x' : 'menu'} size="md" />
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-background px-4 py-4 space-y-2">
-          {showSearch && onSearch && (
+      {/* Mobile Drawer */}
+      {isMobileMenuOpen && (
+        <div className="border-b border-border bg-background p-4 md:hidden space-y-2">
+          {onSearch && (
             <div className="mb-4">
-              <SearchForm onSubmit={onSearch} placeholder="Search..." size="sm" />
+              <SearchForm onSubmit={onSearch} size="sm" />
             </div>
           )}
-          <nav aria-label="Mobile navigation" className="flex flex-col gap-1">
-            {navigation.map((item) => (
+          <nav className="flex flex-col space-y-1">
+            {navLinks.map((link) => (
               <NavItem
-                key={item.id}
-                label={item.label}
-                href={item.href}
-                icon={item.icon}
-                badge={item.badge}
-                isActive={item.id === activeNavId}
-                onClick={() => setMobileMenuOpen(false)}
+                key={link.id}
+                label={link.label}
+                href={link.href}
+                icon={link.icon}
+                badge={link.badge}
+                isActive={link.id === activeLinkId}
+                onClick={() => setIsMobileMenuOpen(false)}
               />
             ))}
           </nav>
@@ -222,10 +197,10 @@ Header.displayName = 'Header';
 
 ---
 
-## 2. Footer Organism Example
+## 2. Footer Section Example
 
 ```typescript
-// src/components/organisms/Footer/Footer.tsx
+// src/components/sections/Footer/Footer.tsx
 import React from 'react';
 import { Icon } from '@/components/core/Icon';
 import { Text } from '@/components/core/Typography';
@@ -341,12 +316,12 @@ Footer.displayName = 'Footer';
 
 ---
 
-## 3. ProductCard Organism Example
+## 3. ProductCard Section Example
 
 Combines `Button`, `Badge`, `Icon`, and `Typography` primitives from `components/core/`:
 
 ```typescript
-// src/components/organisms/ProductCard/ProductCard.tsx
+// src/components/sections/ProductCard/ProductCard.tsx
 import React from 'react';
 import { Button } from '@/components/core/Button';
 import { Badge } from '@/components/core/Badge';
@@ -473,14 +448,14 @@ ProductCard.displayName = 'ProductCard';
 
 ---
 
-## 4. Sidebar Organism Example
+## 4. Sidebar Section Example
 
 ```typescript
-// src/components/organisms/Sidebar/Sidebar.tsx
+// src/components/sections/Sidebar/Sidebar.tsx
 import React from 'react';
 import { Avatar } from '@/components/core/Avatar';
 import { Text } from '@/components/core/Typography';
-import { NavItem } from '@/components/molecules/NavItem';
+import { NavItem } from '@/components/composites/NavItem';
 import { cn } from '@/lib/utils';
 
 export interface SidebarLink {
@@ -520,18 +495,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <aside
       className={cn(
-        'flex flex-col border-r border-border bg-sidebar text-sidebar-foreground transition-all duration-200',
+        'flex flex-col border-r border-border bg-card transition-all duration-300',
         isCollapsed ? 'w-16' : 'w-64',
         className
       )}
     >
-      {/* User Header */}
+      {/* User Profile Summary */}
       {user && (
-        <div className="flex items-center gap-3 p-4 border-b border-border">
-          <Avatar src={user.avatar} alt={user.name} initials={user.name.slice(0, 2).toUpperCase()} size="sm" />
+        <div className="flex items-center gap-3 border-b border-border p-4">
+          <Avatar src={user.avatar} alt={user.name} size="sm" />
           {!isCollapsed && (
-            <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-semibold text-foreground">{user.name}</div>
+            <div className="flex-1 min-w-0">
+              <div className="font-semibold text-sm truncate">{user.name}</div>
               <Text size="xs" color="muted" truncate>
                 {user.email}
               </Text>
@@ -540,10 +515,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
       )}
 
-      {/* Navigation Groups */}
-      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
+      {/* Nav Link Groups */}
+      <div className="flex-1 space-y-6 overflow-y-auto p-3">
         {sections.map((section, idx) => (
-          <div key={section.title || idx} className="space-y-1">
+          <div key={idx} className="space-y-1">
             {section.title && !isCollapsed && (
               <div className="px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 {section.title}
@@ -574,16 +549,16 @@ Sidebar.displayName = 'Sidebar';
 
 ---
 
-## Best Practices for Organisms
+## Best Practices for Sections
 
-### 1. Composes Core Primitives and Molecules
-Organisms should delegate lower-level rendering to `components/core` primitives (`Button`, `Avatar`, `Badge`, `Icon`) and `components/molecules` (`NavItem`, `SearchForm`, `FormField`).
+### 1. Composes Core Primitives and Composites
+Sections should delegate lower-level rendering to `components/core` primitives (`Button`, `Avatar`, `Badge`, `Icon`) and `components/composites` (`NavItem`, `SearchForm`, `FormField`).
 
 ### 2. Pure Tailwind Styling
 Avoid separate `.module.css` files. Build responsive sections cleanly with Tailwind utilities (`grid`, `flex`, `sticky`, `container`, `@container`).
 
 ### 3. State Decoupling via Custom Hooks
-When an organism requires complex UI state (like pagination, filtering, or multi-step progression), extract state into a dedicated custom hook (`useHeader`, `useDataTable`, `useProductFilter`) to keep the component presentationally clear.
+When a section requires complex UI state (like pagination, filtering, or multi-step progression), extract state into a dedicated custom hook (`useHeader`, `useDataTable`, `useProductFilter`) to keep the component presentationally clear.
 
 ---
 
@@ -591,8 +566,8 @@ When an organism requires complex UI state (like pagination, filtering, or multi
 
 - [Atomic Design Hub](../SKILL.md) — Master methodology and subskill routing
 - [Fundamentals](../fundamentals/SKILL.md) — Core hierarchy, directory layouts, and composition rules
-- [Quarks](../quarks/SKILL.md) — Tailwind v4 `@theme` tokens, CSS variables, and primitive values
-- [Atoms (Core UI)](../atoms/SKILL.md) — Indivisible Core UI primitives in `components/core/`
-- [Molecules](../molecules/SKILL.md) — Functional atom combinations (form fields, search inputs)
-- [Templates](../templates/SKILL.md) — Page layout skeletons with slot-based content
+- [Theme & Tokens](../theme/SKILL.md) — Design tokens under `src/theme/`, Tailwind v4 `@theme` tokens, and CSS variables
+- [Core UI Primitives](../atoms/SKILL.md) — Indivisible Core UI primitives in `src/components/core/`
+- [Composites](../composites/SKILL.md) — Functional core primitive combinations (form fields, search inputs)
+- [Layouts](../layouts/SKILL.md) — Page layout skeletons with slot-based content
 - [Integration](../integration/SKILL.md) — Framework integration (React/Next.js, Vue 3, Storybook, Vitest)
