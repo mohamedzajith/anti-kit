@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/vudovn/ag-kit/main/web/public/images/logo.png" width="128" height="128" alt="AGKIT">
+  <img src="https://raw.githubusercontent.com/mohamedzajith/anti-kit/main/web/public/images/logo.png" width="128" height="128" alt="Anti-Kit">
 </p>
 
 <h1 align="center">Anti-Kit - Web Application</h1>
@@ -46,7 +46,7 @@ When downstream developers run `npx @mohamedzajith/anti-kit init`, they install 
 | Directory | Count | Description |
 | :--- | :--- | :--- |
 | **`agent/`** | 20 | Specialist AI agent configurations (Frontend, Backend, Security, PM, QA, etc.) |
-| **`skills/`** | 45 | Domain-specific context modules with conditional loading rules |
+| **`skills/`** | 47 | Domain-specific context modules with conditional loading rules |
 | **`workflows/`** | 13 | Pre-configured interactive slash commands |
 
 ---
@@ -60,15 +60,12 @@ When downstream developers run `npx @mohamedzajith/anti-kit init`, they install 
 
 ## ☕ Support the Project
 
-If AG Kit has made your AI programming sessions more productive, consider supporting the project:
+If Anti-Kit has made your AI programming sessions more productive, consider supporting the project:
 
-<a href="https://buymeacoffee.com/vudovn" target="_blank"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee" /></a>
-
-**Vietnamese Bank (MBBank QR):**<br/>
-<img src="https://img.vietqr.io/image/mbbank-0779440918-compact.jpg" alt="Donate QR" width="140" style="border-radius: 8px; margin-top: 10px;" />
+<a href="https://github.com/sponsors/mohamedzajith" target="_blank"><img src="https://img.shields.io/badge/Sponsor%20on%20GitHub-ea4aaa?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="Sponsor on GitHub" /></a>
 
 ---
 
 ## 📄 License
 
-Released under the [MIT License](LICENSE) © [Vudovn](https://github.com/vudovn).
+Released under the [MIT License](LICENSE) © [Mohamed Zajith](https://github.com/mohamedzajith).

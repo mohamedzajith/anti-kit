@@ -11,8 +11,10 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/@mohamedzajith/anti-kit"><img src="https://img.shields.io/npm/v/@mohamedzajith/anti-kit.svg?style=flat-square&color=blue" alt="npm version" /></a>
   <a href="https://github.com/mohamedzajith/anti-kit/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/mohamedzajith/anti-kit/ci.yml?branch=main&style=flat-square&label=CI" alt="CI Status" /></a>
-  <a href="https://github.com/mohamedzajith/anti-kit/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mohamedzajith/anti-kit.svg?style=flat-square" alt="License" /></a>
+  <a href="https://github.com/mohamedzajith/anti-kit/releases"><img src="https://img.shields.io/github/v/release/mohamedzajith/anti-kit?style=flat-square&color=green" alt="Latest Release" /></a>
+  <a href="https://github.com/mohamedzajith/anti-kit/issues"><img src="https://img.shields.io/github/issues/mohamedzajith/anti-kit.svg?style=flat-square" alt="GitHub Issues" /></a>
   <a href="https://github.com/mohamedzajith/anti-kit/stargazers"><img src="https://img.shields.io/github/stars/mohamedzajith/anti-kit.svg?style=flat-square" alt="GitHub Stars" /></a>
+  <a href="https://github.com/mohamedzajith/anti-kit/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mohamedzajith/anti-kit.svg?style=flat-square" alt="License" /></a>
 </p>
 
 <p align="center">
@@ -64,6 +66,14 @@ anti-kit init
 ```
 
 Do not add `.agents/` to the project `.gitignore` when Antigravity needs to index rules, skills, or workflows. To keep it local without disabling discovery, add `.agents/` to `.git/info/exclude` instead.
+
+### Clone directly from GitHub
+
+```bash
+git clone https://github.com/mohamedzajith/anti-kit.git
+cd anti-kit
+npm install
+```
 
 ### Verify the workspace
 
@@ -229,6 +239,14 @@ Anti-Kit never requires automatic merge, automatic deployment, or automatic MCP 
 ## References and attribution
 
 Anti-Kit is an original open-source implementation of Markdown-based agent engineering patterns. No proprietary source files are included. Runtime integration decisions are based on public Antigravity documentation and codelabs linked in [.agents/hooks/README.md](.agents/hooks/README.md).
+
+## Community & Contributing
+
+Contributions, feedback, and questions are warmly welcome!
+
+- **Issue Tracker**: [Report bugs or suggest agent features](https://github.com/mohamedzajith/anti-kit/issues)
+- **Discussions**: [Join conversations and share workflows](https://github.com/mohamedzajith/anti-kit/discussions)
+- **Pull Requests**: [Submit pull requests](https://github.com/mohamedzajith/anti-kit/pulls)
 
 ## Support the project
 
