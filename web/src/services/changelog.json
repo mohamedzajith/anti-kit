@@ -1,5 +1,21 @@
 [
     {
+        "version": "2026.10.16",
+        "date": "2026-10-16",
+        "summary": "Release 2026.10.16: integrates the senior-web-app-architect framework into frontend-specialist and the frontend-master workflow, covering B2B/B2C SaaS multi-tenancy, feature-based vertical slices, and CBAC entitlement gating.",
+        "changes": {
+            "Added": [
+                "Integrated senior-web-app-architect framework covering B2B/B2C SaaS tenancy modeling, vertical slices (src/features/<name>/) with public API barrels, commercial entitlement engines (CBAC), zero-bundle-leak code splitting, and pre-launch failure drills.",
+                "Updated frontend-specialist agent skills and capabilities with SaaS architecture and vertical slices.",
+                "Updated /frontend-master workflow Phase 3 (Component & Domain Architecture) to enforce feature slices and commercial entitlement gating."
+            ],
+            "Changed": [
+                "Advanced toolkit version to 2026.10.16 across all packages, locks, and manifest.",
+                "Updated toolkit skill count to 49 across architecture documentation."
+            ]
+        }
+    },
+    {
         "version": "2026.10.15",
         "date": "2026-10-15",
         "summary": "Release 2026.10.15: modernizes the atomic-design skill suite with standard frontend architecture tiers (Theme & Tokens, Core UI Primitives, Composites, Sections, Layouts, and Pages) and Tailwind CSS v4 @theme integration.",

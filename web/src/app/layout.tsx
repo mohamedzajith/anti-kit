@@ -83,10 +83,10 @@ const jsonLd = {
         "priceCurrency": "USD"
       },
       "description":
-        "Modular AI agent engineering kit for Google Antigravity and modern coding assistants. Includes 20 specialist agents, 48 skills, 14 workflows, and a safe-merge CLI.",
+        "Modular AI agent engineering kit for Google Antigravity and modern coding assistants. Includes 20 specialist agents, 49 skills, 14 workflows, and a safe-merge CLI.",
       "url": "https://ag-kit.unikorn.vn/",
       "downloadUrl": "https://www.npmjs.com/package/@mohamedzajith/anti-kit",
-      "softwareVersion": "2026.10.15",
+      "softwareVersion": "2026.10.16",
       "author": {
         "@type": "Organization",
         "name": "Anti-Kit Team",

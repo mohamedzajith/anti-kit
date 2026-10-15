@@ -1,6 +1,15 @@
 # Migrating Anti-Kit
 
-This guide covers upgrades across Anti-Kit releases, including the Antigravity-native runtime layer and subsequent feature releases up to `2026.10.15`.
+This guide covers upgrades across Anti-Kit releases, including the Antigravity-native runtime layer and subsequent feature releases up to `2026.10.16`.
+
+## Upgrading to `2026.10.16`
+
+### What changes in `2026.10.16`
+- **Senior Web App Architect Framework**: Added `.agents/skills/senior-web-app-architect/` providing architecture decision trees for B2B/B2C SaaS multi-tenancy, feature-based development (Vertical Slices under `src/features/<name>/`), commercial entitlement engines (CBAC), and pre-launch failure drills.
+- **Workflow & Agent Alignment**: Integrated `senior-web-app-architect` into `frontend-specialist` and `/frontend-master` Phase 3 (Component & Domain Architecture).
+- **Skill Inventory**: Expanded toolkit to 49 progressive skills.
+
+---
 
 ## Upgrading to `2026.10.15`
 
