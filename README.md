@@ -9,6 +9,13 @@
 </p>
 
 <p align="center">
+  <a href="https://www.npmjs.com/package/@mohamedzajith/anti-kit"><img src="https://img.shields.io/npm/v/@mohamedzajith/anti-kit.svg?style=flat-square&color=blue" alt="npm version" /></a>
+  <a href="https://github.com/mohamedzajith/anti-kit/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/mohamedzajith/anti-kit/ci.yml?branch=main&style=flat-square&label=CI" alt="CI Status" /></a>
+  <a href="https://github.com/mohamedzajith/anti-kit/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mohamedzajith/anti-kit.svg?style=flat-square" alt="License" /></a>
+  <a href="https://github.com/mohamedzajith/anti-kit/stargazers"><img src="https://img.shields.io/github/stars/mohamedzajith/anti-kit.svg?style=flat-square" alt="GitHub Stars" /></a>
+</p>
+
+<p align="center">
   <strong>Primary runtime: Google Antigravity</strong><br/>
   <a href="./README-VI.md">Tiếng Việt</a> · <a href="./MIGRATION.md">Migration guide</a> · <a href="./PRODUCTION_CHECKLIST.md">Production checklist</a> · <a href="./SECURITY.md">Security</a>
 </p>
@@ -226,19 +233,9 @@ Anti-Kit is an original open-source implementation of Markdown-based agent engin
 ## Support the project
 
 <p align="center">
-  <a href="https://buymeacoffee.com/vudovn" target="_blank"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee" /></a>
-</p>
-
-<p align="center"> - or - </p>
-
-<p align="center">
-  <img src="https://img.vietqr.io/image/mbbank-0779440918-compact.jpg" alt="Buy me coffee" width="200" />
-</p>
-
-<p align="center">
-  <code>CA: Gjpatn3d24dCRhUng7F37K6xJba4R8SDBC18xs1Apump</code>
+  <a href="https://github.com/sponsors/mohamedzajith" target="_blank"><img src="https://img.shields.io/badge/Sponsor%20on%20GitHub-ea4aaa?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="Sponsor on GitHub" /></a>
 </p>
 
 ## License
 
-Released under the [MIT License](LICENSE) © [Vudovn](https://github.com/vudovn).
+Released under the [MIT License](LICENSE) © [Mohamed Zajith](https://github.com/mohamedzajith).

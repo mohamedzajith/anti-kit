@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/vudovn/ag-kit/main/web/public/images/logo.png" width="128" height="128" alt="AG Kit">
+  <img src="https://raw.githubusercontent.com/mohamedzajith/anti-kit/main/web/public/images/logo.png" width="128" height="128" alt="Anti-Kit">
 </p>
 
 <h1 align="center">AG KIT</h1>
@@ -52,14 +52,14 @@ CLI được publish hiện hỗ trợ Node.js 18 trở lên; bộ kiểm tra An
 ### Cài vào dự án
 
 ```bash
-npx @vudovn/ag-kit init
+npx @mohamedzajith/anti-kit init
 ```
 
 Hoặc cài CLI toàn cục:
 
 ```bash
-npm install -g @vudovn/ag-kit
-ag-kit init
+npm install -g @mohamedzajith/anti-kit
+anti-kit init
 ```
 
 Không thêm `.agents/` vào `.gitignore` khi cần Antigravity index rules, skills và workflows. Để giữ thư mục này ở local mà không tắt discovery, thêm `.agents/` vào `.git/info/exclude`.
@@ -232,19 +232,9 @@ AG Kit là triển khai mã nguồn mở nguyên bản của các mô hình kỹ
 ## Ủng hộ dự án
 
 <p align="center">
-  <a href="https://buymeacoffee.com/vudovn" target="_blank"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee" /></a>
-</p>
-
-<p align="center"> - hoặc - </p>
-
-<p align="center">
-  <img src="https://img.vietqr.io/image/mbbank-0779440918-compact.jpg" alt="Ủng hộ dự án qua VietQR" width="200" />
-</p>
-
-<p align="center">
-  <code>CA: Gjpatn3d24dCRhUng7F37K6xJba4R8SDBC18xs1Apump</code>
+  <a href="https://github.com/sponsors/mohamedzajith" target="_blank"><img src="https://img.shields.io/badge/Sponsor%20on%20GitHub-ea4aaa?style=for-the-badge&logo=github-sponsors&logoColor=white" alt="Sponsor on GitHub" /></a>
 </p>
 
 ## Giấy phép
 
-Phát hành theo [MIT License](LICENSE) © [Vudovn](https://github.com/vudovn).
+Phát hành theo [MIT License](LICENSE) © [Mohamed Zajith](https://github.com/mohamedzajith).
