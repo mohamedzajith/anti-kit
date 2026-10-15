@@ -4,7 +4,7 @@ description: Senior Frontend Architect who builds maintainable React/Next.js sys
 tools: Read, Grep, Glob, Bash, Edit, Write
 model: inherit
 version: 1.0.0
-skills: clean-code, design-spec, atomic-design, nextjs-react-expert, frontend-architecture, web-design-guidelines, tailwind-patterns, frontend-design, lint-and-validate
+skills: clean-code, design-spec, atomic-design, nextjs-react-expert, frontend-architecture, senior-web-app-architect, web-design-guidelines, tailwind-patterns, frontend-design, lint-and-validate
 ---
 
 # Senior Frontend Architect
@@ -567,7 +567,8 @@ After editing any file:
 ## When You Should Be Used
 
 - Building React/Next.js components or pages
-- Designing frontend architecture and state management
+- Designing frontend architecture, vertical slices (feature-based development), and state management
+- Architecting B2B/B2C SaaS applications, multi-tenant boundaries, and commercial entitlement gating (`senior-web-app-architect`)
 - Optimizing performance (after profiling)
 - Implementing responsive UI or accessibility
 - Setting up styling (Tailwind, design systems)

@@ -3,7 +3,7 @@ name: frontend-master
 description: Full-cycle frontend engineering workflow. Governs anti-slop design reads, DESIGN.md design tokens, component architecture, sensory implementation, and automated UX, accessibility, and performance audits.
 version: 1.0.0
 requires_agents: frontend-specialist, orchestrator
-requires_skills: frontend-design, design-spec, atomic-design, frontend-architecture, nextjs-react-expert, web-design-guidelines, verify-changes
+requires_skills: frontend-design, design-spec, atomic-design, frontend-architecture, nextjs-react-expert, senior-web-app-architect, web-design-guidelines, verify-changes
 artifact_outputs: design-commitment, design-spec, component-architecture, implementation-report, audit-report
 ---
 
@@ -33,7 +33,7 @@ CONTEXT:
 - User Request: $ARGUMENTS
 - Mode: FRONTEND MASTER (End-to-End Excellence)
 - Lead Agent: frontend-specialist
-- Primary Skills: frontend-design, design-spec, frontend-architecture, nextjs-react-expert, web-design-guidelines, verify-changes
+- Primary Skills: frontend-design, design-spec, frontend-architecture, nextjs-react-expert, senior-web-app-architect, web-design-guidelines, verify-changes
 
 WORKFLOW:
 1. PHASE 1: BRIEF INFERENCE & TOPOLOGICAL HYPOTHESIS
@@ -50,12 +50,13 @@ WORKFLOW:
    - Define YAML token front matter: semantic colors (light & dark mode), typography scale, spacing rhythm, elevation, radii, and component tokens.
    - Detail human rationale, do's & don'ts, and sensory direction.
 
-3. PHASE 3: COMPONENT SYSTEM ARCHITECTURE
-   - Decompose into Atomic & Compound hierarchy:
-     * Primitives: Buttons, Badges, Inputs, Icons.
-     * Compounds: Cards, Modals, Popovers, Accordions.
-     * Layout Structures: Headers, Hero sections, Feature streams.
-     * Views: Complete page orchestrators.
+3. PHASE 3: COMPONENT & DOMAIN ARCHITECTURE
+   - Decompose into Atomic & Compound hierarchy (`atomic-design` & `senior-web-app-architect`):
+     * Primitives: Buttons, Badges, Inputs, Icons (`src/components/core/`).
+     * Compounds: Cards, Modals, Popovers, Accordions (`src/components/composites/`).
+     * Layout Structures: Headers, Hero sections, Feature streams (`src/components/sections/` & `src/components/layouts/`).
+     * Domain Features: Vertical slices under `src/features/<name>/` with public API barrel exports (`index.ts`).
+     * Monetization & Entitlements: Decouple commercial subscription entitlements from operational toggles (`<EntitlementGate>`).
    - Separate state tiers: URL state (searchParams), Server state (RSC/caching), and Client UI state (local interactions).
    - Establish WCAG 2.2 AA accessibility contracts: keyboard navigation, focus-visible states, ARIA landmarks, screen reader labels.
 

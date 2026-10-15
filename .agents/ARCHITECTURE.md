@@ -9,7 +9,7 @@
 Anti-Kit is a modular Antigravity workspace system consisting of:
 
 - **20 Specialist Agents** — role-based AI personas and orchestration roles;
-- **48 Skills** — domain knowledge modules with progressive conditional loading;
+- **49 Skills** — domain knowledge modules with progressive conditional loading;
 - **14 Workflows** — slash-command procedures;
 - **6 Rules** — workspace routing, coding, design, safety, and quick-reference constraints;
 - **Antigravity runtime layer** — contract, native hook, MCP helper, plugin builder, Doctor, schemas, and tests.
@@ -52,8 +52,8 @@ Any managed change without registry regeneration fails validation and CI. Google
 ├── manifest.lock.json        # Generated integrity lock
 ├── DEPENDENCY_GRAPH.md       # Generated workflow → agent → skill graph
 ├── agent/                    # 20 specialist role definitions
-├── skills/                   # 47 progressive skills
-├── workflows/                # 13 slash-command procedures
+├── skills/                   # 49 progressive skills
+├── workflows/                # 14 slash-command procedures
 ├── rules/                    # 6 workspace constraints
 ├── memory/                   # Persistent project context
 ├── hooks/                    # Antigravity Doctor, policy, MCP, plugin, schemas, tests
@@ -101,7 +101,7 @@ Specialist AI personas for different domains.
 | ------------------------ | -------------------------- | -------------------------------------------------------- |
 | `orchestrator`           | Multi-agent coordination   | parallel-agents, coordinator-mode, memory-system, context-compression, verify-changes |
 | `project-planner`        | Discovery, task planning   | brainstorming, plan-writing, architecture                |
-| `frontend-specialist`    | Web UI/UX                  | frontend-design, nextjs-react-expert, tailwind-patterns |
+| `frontend-specialist`    | Web UI/UX                  | frontend-design, nextjs-react-expert, senior-web-app-architect, tailwind-patterns |
 | `backend-specialist`     | API, business logic        | api-patterns, nodejs-best-practices, database-design     |
 | `database-architect`     | Schema, SQL                | database-design                                          |
 | `mobile-developer`       | iOS, Android, RN           | mobile-design                                            |
@@ -122,7 +122,7 @@ Specialist AI personas for different domains.
 
 ---
 
-## 🧩 Skills (48)
+## 🧩 Skills (49)
 
 Modular knowledge domains that agents can load on-demand based on task context. Each skill has a `when_to_use` frontmatter field for conditional/intelligent loading.
 
@@ -134,6 +134,7 @@ Modular knowledge domains that agents can load on-demand based on task context. 
 | `atomic-design`         | **NEW** Modernized Atomic Design hierarchy (theme tokens, core primitives, composites, sections, layouts, pages) and strict import boundaries |
 | `nextjs-react-expert`   | React & Next.js performance optimization (Vercel - 58 rules)          |
 | `frontend-architecture` | Frontend code organization — layers, state tiers, services (React/Vue) |
+| `senior-web-app-architect` | Production-grade SaaS architecture, B2B/B2C multi-tenancy, Vertical Slices, CBAC entitlement gating, rendering strategies |
 | `web-design-guidelines` | Web UI audit - 100+ rules for accessibility, UX, performance (Vercel) |
 | `tailwind-patterns`     | Tailwind CSS v4 utilities                                             |
 | `frontend-design`       | UI/UX patterns, design systems                                        |
@@ -369,7 +370,7 @@ For command details and prerequisites, see [scripts/README.md](scripts/README.md
 | Metric              | Value                             |
 | ------------------- | --------------------------------- |
 | **Total Agents**    | 20 (1 major upgrade in 2026.5.13) |
-| **Total Skills**    | 48                                |
+| **Total Skills**    | 49                                |
 | **Total Workflows** | 14 (+1 new in 2026.8.31)          |
 | **Toolkit Utilities** | 7 user-facing + 2 internal modules |
 | **Antigravity Utilities** | 4 runtime utilities              |

@@ -159,6 +159,7 @@
           "frontend-design": "^1.0.0",
           "lint-and-validate": "^1.0.0",
           "nextjs-react-expert": "^1.0.0",
+          "senior-web-app-architect": "^1.0.0",
           "tailwind-patterns": "^1.0.0",
           "web-design-guidelines": "^1.0.0"
         }
@@ -959,6 +960,18 @@
       "scripts": [],
       "version": "1.0.0"
     },
+    "senior-web-app-architect": {
+      "allowedTools": [
+        "Read",
+        "Write",
+        "Edit",
+        "Glob",
+        "Grep"
+      ],
+      "path": "skills/senior-web-app-architect/SKILL.md",
+      "scripts": [],
+      "version": "1.0.0"
+    },
     "seo-fundamentals": {
       "allowedTools": [
         "Read",
@@ -1249,6 +1262,7 @@
           "atomic-design",
           "frontend-architecture",
           "nextjs-react-expert",
+          "senior-web-app-architect",
           "web-design-guidelines",
           "verify-changes"
         ]

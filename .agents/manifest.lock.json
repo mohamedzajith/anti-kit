@@ -1,7 +1,7 @@
 {
   "$schema": "schemas/manifest-lock.schema.json",
   "components": {
-    "ARCHITECTURE.md": "baab6c085d712069703d35ff1f247305c689f19a600a81f0c98fe060be15fa81",
+    "ARCHITECTURE.md": "4ca4fbf02e1cc9f892e289e1f28e215285cde92d30e2c63f292c0bf942bb10df",
     "CHANGELOG.md": "c755627baedbfe4c8909c04e5c77f0eb216caefa7d755b81f81133cba5dbb0b5",
     "README.md": "0cd72c53379d92691d7fbb4cd9ef1741dfbe46b07c34a73b482a780ce23dac7e",
     "VERSION": "b63cb7e2da6c97b173dd51f6e02957e7b18702967e0721f033948789834896cd",
@@ -12,7 +12,7 @@
     "agent/devops-engineer.md": "5be0ea4c3735f07fa7aa0f6a01cc687491f203d62474620b8921c3164b90d66f",
     "agent/documentation-writer.md": "81a9c80c4a2efbcf15422de72fa289d9a9889c8262af6e3ae69eb2a582826a72",
     "agent/explorer-agent.md": "e326feb00e9b609f167aa40ddf62561ded0b0e03fee385da760492c79ccb71d4",
-    "agent/frontend-specialist.md": "e931ede24c330cc6697c98f3a8dd0bd318b090793b0862fdbf20cbaeb9c7acba",
+    "agent/frontend-specialist.md": "a84c9a112e09cefb65aceeada55441c4b1bdf54fa59766b2273df7fd0a80f5a0",
     "agent/game-developer.md": "dcf76d9bc8d220bb801094eed091255118b7aff9203a8a7b98e10128030dcfd8",
     "agent/mobile-developer.md": "cf9d2ebc6015dc3e2aab092711b111a22cb822e36b3f12d4e351818ecfab6677",
     "agent/orchestrator.md": "ad8bc39b0ea88df822df4597a0eec90424eb1cbd4418213c29a6f33ced3e5269",
@@ -196,6 +196,17 @@
     "skills/python-patterns/SKILL.md": "bab8eb299ef8f97bfdf8dc9d68a19ab1f84b9a1e86a852a84b7fa943d97cc2f6",
     "skills/red-team-tactics/SKILL.md": "fc3e8f0fe1f6d569b4d6633def69a1d117708774038f487783fed6e4e41a30b7",
     "skills/rust-pro/SKILL.md": "924138d4a20304953c55b02c1bd2467752b8076da5945952b8e9275bbfdd036f",
+    "skills/senior-web-app-architect/SKILL.md": "cab911cf40845bb26b932c1d95a926a0183b33bf9c2d4c022e9e6ea43b5da59c",
+    "skills/senior-web-app-architect/references/auth-and-security.md": "8cb81c180fae6cc1a251529c42056f26b4e42d4c32de2b3e98b52ad2824a1dba",
+    "skills/senior-web-app-architect/references/data-and-caching.md": "39c43fefeef7b7efd0fa89e01de648721bb42e10e01d167c4d4613c96d983e5e",
+    "skills/senior-web-app-architect/references/feature-based-development.md": "2bdc574b0c6617d2775dcffb87abdf83f25a1f7bc3fb892975e7822c8fb85841",
+    "skills/senior-web-app-architect/references/feature-flags-and-entitlements.md": "35225a820f4ab7e6dcc7a9e9563136466593a22d2cefbe4f0d4b2b2fbc083bb1",
+    "skills/senior-web-app-architect/references/performance.md": "5a2c3e0587263b2010fd0ea4ae2b0b2976c7c66861304e6613782f26f9165ee0",
+    "skills/senior-web-app-architect/references/production-drills.md": "70e738abfe59ad0af1557f07f6d9eefb1186c9ec5ee094b80f1a3dca6d680bc1",
+    "skills/senior-web-app-architect/references/rendering.md": "40882deb64bab7b34ae11453dd340efaab0eefa2c178ee57517eecbfcaf3dbdf",
+    "skills/senior-web-app-architect/references/saas-architecture.md": "f9620f85496fd74f715694a6adc615eb0b57d66a91e90be6efa0d33714ef9738",
+    "skills/senior-web-app-architect/references/seo.md": "774552cc0e42cb6ae3e8113e90565125449397ef8e2758135d8b015f98590a62",
+    "skills/senior-web-app-architect/references/typescript-defaults.md": "f90aa564a644716741d3da1a6842441441dfa17e0fded7b03308317b00af26aa",
     "skills/seo-fundamentals/SKILL.md": "4ab2efde333caa34a75efe7a8bf76b49d7e39abd0ecc6ceef6a1c8042141f2af",
     "skills/seo-fundamentals/scripts/seo_checker.py": "928a82130d31cf0f31f95d3bf6f705632fdff228fa982b4df9d32bc971036266",
     "skills/server-management/SKILL.md": "4f2e4243a8e1e45482479dd033f654f59c56ada89ebf87ec561f86f79f54662d",
@@ -220,7 +231,7 @@
     "workflows/debug.md": "1a6fbfe0ea48a3590d08c8db842b7cf9b7906f953b10e24cd525b7fd6b53070d",
     "workflows/deploy.md": "f3141b4125f8c49c6cb34986a75473589a2b4d53ca9ac092b9677a0c0186c158",
     "workflows/enhance.md": "fd913ca826afb2e2cbd54a4e316cf3ea5d779d56e02ae3b0a8cc99feecdbc736",
-    "workflows/frontend-master.md": "9521ae3e47495238c58726457a512cfe78e1b9d4f2a139e9bdb15ae9ae02d8bd",
+    "workflows/frontend-master.md": "b80876beacbfcc06f157d88e87877f063c337c5ba5445785d8dd976f9bc2d6dc",
     "workflows/orchestrate.md": "00d3469acb4d465b8d7b54fb42524bb36cd45ee2cd2c8b997b2b57b35cdc8f6f",
     "workflows/plan.md": "4766b0ce3958eeb4050ad4099a61aa661747a39c2140eace148d3d5b4c480ddc",
     "workflows/preview.md": "94f948c78916a473838a04b15860b9490b25c2a8b39f0d211f63884ec33a8bd1",
@@ -230,6 +241,6 @@
     "workflows/verify.md": "2dc26bcbe24c7e71571953da75629521ea3d7a0a444a7101e3601b39864971fc"
   },
   "kitVersion": "2026.10.15",
-  "manifestSha256": "1aa92ae1ad7c132f49341f855f3ebb05c78cb692558ab47c0a7c1a02dd5287e5",
+  "manifestSha256": "470a0b39d5d637784c82c063df87c44ce55114d98b204a8041d21a96807d0c84",
   "schemaVersion": "1.0.0"
 }
