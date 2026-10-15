@@ -1,5 +1,23 @@
 # Anti-Kit Toolkit Changelog
 
+## 2026.10.15
+
+### Added
+
+- Modernized `atomic-design` component engineering architecture:
+  - Theme & Tokens (`src/theme/`) replacing legacy Quarks and ad-hoc asset themes, mapped to Tailwind CSS v4 `@theme` directives and semantic CSS variables.
+  - Core UI Primitives (`src/components/core/`) replacing legacy Atoms with indivisible primitives (`Button`, `Input`, `Label`, `Icon`, `Avatar`, `Badge`, `Checkbox`) styled via Tailwind CSS and `cva`.
+  - Composites (`src/components/composites/`) replacing legacy Molecules (`FormField`, `SearchForm`, `MediaObject`, `NavItem`, `CardHeader`, `Stat`).
+  - Sections (`src/components/sections/`) replacing legacy Organisms (`Header`, `Footer`, `Sidebar`, `ProductCard`, `DataTable`).
+  - Layouts (`src/components/layouts/`) replacing legacy Templates (`MainLayout`, `DashboardLayout`, `AuthLayout`, `SlotLayout`).
+  - Pages (`src/app/` or `src/pages/`) preserved as concrete route views.
+- Updated path aliases (`@/theme/*`, `@/core/*`, `@/composites/*`, `@/sections/*`, `@/layouts/*`), Storybook hierarchy tiers, and automated ESLint boundary rules.
+
+### Changed
+
+- Advanced toolkit version to `2026.10.15`.
+- Synchronized component manifest and integrity lock across all agents, skills, workflows, and rules.
+
 ## 2026.10.12
 
 ### Added

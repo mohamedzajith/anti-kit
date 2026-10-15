@@ -9,6 +9,21 @@ Starting with `2026.5.13`, this project uses calendar versioning in `YYYY.M.D` f
 
 No unreleased changes.
 
+## [2026.10.15] - 2026-10-15
+
+### Added
+- Modernized `atomic-design` component engineering architecture:
+  - Theme & Tokens (`src/theme/`) replacing legacy Quarks and ad-hoc asset themes, mapped to Tailwind CSS v4 `@theme` directives and semantic CSS variables.
+  - Core UI Primitives (`src/components/core/`) replacing legacy Atoms with indivisible primitives (`Button`, `Input`, `Label`, `Icon`, `Avatar`, `Badge`, `Checkbox`) styled via Tailwind CSS and `cva`.
+  - Composites (`src/components/composites/`) replacing legacy Molecules (`FormField`, `SearchForm`, `MediaObject`, `NavItem`, `CardHeader`, `Stat`).
+  - Sections (`src/components/sections/`) replacing legacy Organisms (`Header`, `Footer`, `Sidebar`, `ProductCard`, `DataTable`).
+  - Layouts (`src/components/layouts/`) replacing legacy Templates (`MainLayout`, `DashboardLayout`, `AuthLayout`, `SlotLayout`).
+  - Pages (`src/app/` or `src/pages/`) preserved as concrete route views.
+- Updated path aliases (`@/theme/*`, `@/core/*`, `@/composites/*`, `@/sections/*`, `@/layouts/*`), Storybook hierarchy tiers, and automated ESLint boundary rules.
+
+### Changed
+- Advanced toolkit version to `2026.10.15` across all packages, locks, and manifest.
+
 ## [2026.10.12] - 2026-10-12
 
 ### Added
@@ -395,7 +410,8 @@ No unreleased changes.
 - CLI tool for easy installation and updates.
 - Comprehensive documentation and architecture guide.
 
-[Unreleased]: https://github.com/mohamedzajith/anti-kit/compare/v2026.10.12...HEAD
+[Unreleased]: https://github.com/mohamedzajith/anti-kit/compare/v2026.10.15...HEAD
+[2026.10.15]: https://github.com/mohamedzajith/anti-kit/compare/v2026.10.12...v2026.10.15
 [2026.10.12]: https://github.com/mohamedzajith/anti-kit/compare/v2026.8.31...v2026.10.12
 [2026.8.31]: https://github.com/mohamedzajith/anti-kit/compare/v2026.7.27...v2026.8.31
 [2026.7.27]: https://github.com/vudovn/ag-kit/compare/v2026.7.26...v2026.7.27

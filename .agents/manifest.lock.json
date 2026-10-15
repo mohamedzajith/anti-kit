@@ -2,9 +2,9 @@
   "$schema": "schemas/manifest-lock.schema.json",
   "components": {
     "ARCHITECTURE.md": "baab6c085d712069703d35ff1f247305c689f19a600a81f0c98fe060be15fa81",
-    "CHANGELOG.md": "3cddca747812d0263da565bbf92f2d7fef18b707529fe598134dcad5ad368997",
+    "CHANGELOG.md": "c755627baedbfe4c8909c04e5c77f0eb216caefa7d755b81f81133cba5dbb0b5",
     "README.md": "0cd72c53379d92691d7fbb4cd9ef1741dfbe46b07c34a73b482a780ce23dac7e",
-    "VERSION": "d39874eb8352c8b00efc44fa26a250ba8894a65885d6ee7c8014362c227ca911",
+    "VERSION": "b63cb7e2da6c97b173dd51f6e02957e7b18702967e0721f033948789834896cd",
     "agent/backend-specialist.md": "65087ad56011ce55231f2754c3bdbb1c32ee14fa24ae9f389c0a7a67c178f1fd",
     "agent/code-archaeologist.md": "a0c654b885773c425f6a1c3f35ac7a1d509ed32e08a4e2daf373ddc5c6c805f3",
     "agent/database-architect.md": "1649c5ba554eca2674df75c50229cc00463aed1400d3b6d55131d8f4b12f3c76",
@@ -229,7 +229,7 @@
     "workflows/test.md": "bd06ae644376e3cc2661f1a623504247445c86a83dfb0df92ed5f0eccdef60ea",
     "workflows/verify.md": "2dc26bcbe24c7e71571953da75629521ea3d7a0a444a7101e3601b39864971fc"
   },
-  "kitVersion": "2026.10.12",
-  "manifestSha256": "66828befb4b499f931fb02ac7a09b6446cd7c50771b53c465ee71b5efc586f9d",
+  "kitVersion": "2026.10.15",
+  "manifestSha256": "1aa92ae1ad7c132f49341f855f3ebb05c78cb692558ab47c0a7c1a02dd5287e5",
   "schemaVersion": "1.0.0"
 }

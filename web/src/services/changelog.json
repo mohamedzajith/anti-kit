@@ -1,5 +1,20 @@
 [
     {
+        "version": "2026.10.15",
+        "date": "2026-10-15",
+        "summary": "Release 2026.10.15: modernizes the atomic-design skill suite with standard frontend architecture tiers (Theme & Tokens, Core UI Primitives, Composites, Sections, Layouts, and Pages) and Tailwind CSS v4 @theme integration.",
+        "changes": {
+            "Added": [
+                "Modernized atomic-design component engineering tiers: Theme & Tokens (src/theme/) replacing legacy Quarks and asset themes, Composites (src/components/composites/) replacing Molecules, Sections (src/components/sections/) replacing Organisms, and Layouts (src/components/layouts/) replacing Templates.",
+                "Consolidated design tokens in src/theme/ mapped directly to Tailwind CSS v4 @theme directives and semantic CSS variables.",
+                "Updated path aliases (@/theme/*, @/core/*, @/composites/*, @/sections/*, @/layouts/*), Storybook hierarchy tiers, and ESLint boundary rules."
+            ],
+            "Changed": [
+                "Advanced toolkit version to 2026.10.15 across all packages, locks, and manifest."
+            ]
+        }
+    },
+    {
         "version": "2026.10.12",
         "date": "2026-10-12",
         "summary": "Release 2026.10.12: introduces /frontend-master full-cycle workflow, atomic-design component engineering skill suite, and Anti-Kit package rebranding.",

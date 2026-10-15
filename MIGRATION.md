@@ -1,6 +1,20 @@
 # Migrating Anti-Kit
 
-This guide covers upgrades across Anti-Kit releases, including the Antigravity-native runtime layer and subsequent feature releases up to `2026.10.12`.
+This guide covers upgrades across Anti-Kit releases, including the Antigravity-native runtime layer and subsequent feature releases up to `2026.10.15`.
+
+## Upgrading to `2026.10.15`
+
+### What changes in `2026.10.15`
+- **Modernized Atomic Architecture**: Restructured the `atomic-design` skill suite with industry-standard frontend nomenclature:
+  - `src/theme/` (Theme & Tokens) replaces legacy Quarks and scattered `assets/theme` files.
+  - `src/components/core/` (Core UI Primitives) replaces legacy Atoms.
+  - `src/components/composites/` (Composites) replaces legacy Molecules.
+  - `src/components/sections/` (Sections) replaces legacy Organisms.
+  - `src/components/layouts/` (Layouts) replaces legacy Templates.
+- **Tailwind CSS (v4) `@theme`**: All tokens are declared using Tailwind CSS v4 `@theme` directives and semantic CSS variables.
+- **Updated Path Aliases & ESLint Boundaries**: Pre-configured `@/theme/*`, `@/core/*`, `@/composites/*`, `@/sections/*`, and `@/layouts/*`.
+
+---
 
 ## Upgrading to `2026.10.12`
 
