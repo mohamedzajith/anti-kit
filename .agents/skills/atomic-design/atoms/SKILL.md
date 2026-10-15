@@ -1,121 +1,160 @@
 ---
 name: atomic-design-atoms
-description: Indivisible UI components like buttons, inputs, labels, icons, avatars, badges, and typography primitives.
+description: Indivisible Core UI primitives in components/core/ (Button, Input, Label, Icon, Avatar, Badge, Checkbox, Typography) styled with Tailwind CSS (v4) and cva.
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---
 
-# Atomic Design: Atoms
+# Atomic Design: Atoms (Core UI Primitives)
 
-Master the creation of atomic components - the fundamental, indivisible building blocks of your design system. Atoms are the smallest functional units that cannot be broken down further without losing meaning.
+Master the creation of atomic components — the foundational, indivisible building blocks of your design system. In modern architecture, **Atoms represent the Core UI Primitives layer residing under `src/components/core/`**, replacing legacy `components/atoms/` and custom `.module.css` files with **Tailwind CSS (v4)**, `cva` (Class Variance Authority), and the `cn()` utility (`clsx` + `tailwind-merge`).
 
-## What Are Atoms?
+---
 
-Atoms are the basic UI elements that serve as the foundation for everything else in your design system. They are:
+## What Are Core UI Primitives (Atoms)?
 
-- **Indivisible**: Cannot be broken down into smaller functional units
-- **Reusable**: Used throughout the application in various contexts
-- **Stateless**: Typically controlled by parent components
-- **Styled**: Implement design tokens for consistent appearance
-- **Accessible**: Built with a11y in mind from the start
+Core UI Primitives are the indivisible, lowest-level visual components that serve as the foundation for all composites, sections, and layouts:
 
-## Common Atom Types
+- **Indivisible**: Cannot be broken down into smaller functional UI units without losing utility
+- **Lives in `components/core/`**: Structured cleanly as the design system's core component library
+- **Utility-First**: Styled exclusively with Tailwind CSS and `cva` — zero `.module.css` files
+- **Controlled & Stateless**: Driven purely by props, callbacks, and native HTML attributes
+- **Accessible by Default**: Implements WAI-ARIA attributes, keyboard navigation, and focus rings
+- **Composable**: Exposes standard DOM refs (`React.forwardRef`) and merges classNames via `cn()`
 
-### Interactive Atoms
+---
 
-- Buttons
-- Links
-- Inputs (text, checkbox, radio, select)
-- Toggles/Switches
-- Sliders
+## Common Core UI Primitives
 
-### Display Atoms
+| Category | Primitives | Primary Directory Path |
+|---|---|---|
+| **Action & Control** | Button, Link, Toggle, Slider | `src/components/core/Button/`, `Toggle/` |
+| **Form Inputs** | Input, Textarea, Checkbox, Radio, Select, Label | `src/components/core/Input/`, `Checkbox/`, `Label/` |
+| **Display & Status** | Typography (Heading, Text), Badge, Avatar, Spinner, Kbd | `src/components/core/Typography/`, `Badge/`, `Avatar/` |
+| **Layout & Structure** | Separator/Divider, Box, AspectRatio, Skeleton | `src/components/core/Separator/`, `Skeleton/` |
+| **Visual Primitives** | Icon, TooltipTrigger, ColorSwatch | `src/components/core/Icon/` |
 
-- Typography (headings, paragraphs, labels)
-- Icons
-- Images/Avatars
-- Badges/Tags
-- Dividers
-- Spinners/Loaders
+---
 
-### Form Atoms
+## The Core Helper: `cn()`
 
-- Input fields
-- Textareas
-- Checkboxes
-- Radio buttons
-- Select dropdowns
-- Labels
-
-## Button Atom Example
-
-### Basic Implementation
+All core primitives rely on `cn()` (`src/lib/utils.ts`) to merge Tailwind utility classes deterministically without style collisions:
 
 ```typescript
-// atoms/Button/Button.tsx
+// src/lib/utils.ts
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
+
+---
+
+## 1. Button Primitive
+
+### Complete Implementation
+
+```typescript
+// src/components/core/Button/Button.tsx
 import React from 'react';
-import type { ButtonHTMLAttributes } from 'react';
-import styles from './Button.module.css';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'danger';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export const buttonVariants = cva(
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none cursor-pointer',
+  {
+    variants: {
+      variant: {
+        default: 'bg-primary text-primary-foreground shadow hover:bg-primary/90',
+        destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
+        outline: 'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
+        secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
+        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        link: 'text-primary underline-offset-4 hover:underline',
+      },
+      size: {
+        default: 'h-9 px-4 py-2',
+        sm: 'h-8 rounded-md px-3 text-xs',
+        lg: 'h-10 rounded-md px-8 text-base',
+        icon: 'size-9 p-0',
+      },
+      fullWidth: {
+        true: 'w-full',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'default',
+      fullWidth: false,
+    },
+  }
+);
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Visual style variant */
-  variant?: ButtonVariant;
-  /** Size of the button */
-  size?: ButtonSize;
-  /** Full width button */
-  fullWidth?: boolean;
-  /** Loading state */
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
   isLoading?: boolean;
-  /** Left icon */
   leftIcon?: React.ReactNode;
-  /** Right icon */
   rightIcon?: React.ReactNode;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
-      variant = 'primary',
-      size = 'md',
-      fullWidth = false,
+      className,
+      variant,
+      size,
+      fullWidth,
       isLoading = false,
       leftIcon,
       rightIcon,
       disabled,
       children,
-      className,
+      type = 'button',
       ...props
     },
     ref
   ) => {
-    const classNames = [
-      styles.button,
-      styles[variant],
-      styles[size],
-      fullWidth && styles.fullWidth,
-      isLoading && styles.loading,
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ');
-
     return (
       <button
         ref={ref}
-        className={classNames}
+        type={type}
         disabled={disabled || isLoading}
         aria-busy={isLoading}
+        className={cn(buttonVariants({ variant, size, fullWidth, className }))}
         {...props}
       >
         {isLoading ? (
-          <span className={styles.spinner} aria-hidden="true" />
+          <>
+            <svg
+              className="size-4 animate-spin text-current"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v8H4z"
+              />
+            </svg>
+            <span>Loading...</span>
+          </>
         ) : (
           <>
-            {leftIcon && <span className={styles.leftIcon}>{leftIcon}</span>}
-            <span className={styles.content}>{children}</span>
-            {rightIcon && <span className={styles.rightIcon}>{rightIcon}</span>}
+            {leftIcon && <span className="inline-flex shrink-0">{leftIcon}</span>}
+            <span>{children}</span>
+            {rightIcon && <span className="inline-flex shrink-0">{rightIcon}</span>}
           </>
         )}
       </button>
@@ -126,181 +165,86 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = 'Button';
 ```
 
-### Button Styles
+---
 
-```css
-/* atoms/Button/Button.module.css */
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 150ms ease-in-out;
-  text-decoration: none;
-}
-
-.button:focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
-}
-
-.button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Variants */
-.primary {
-  background-color: var(--color-primary-500);
-  color: var(--color-white);
-}
-
-.primary:hover:not(:disabled) {
-  background-color: var(--color-primary-600);
-}
-
-.secondary {
-  background-color: transparent;
-  color: var(--color-primary-500);
-  border: 1px solid var(--color-primary-500);
-}
-
-.secondary:hover:not(:disabled) {
-  background-color: var(--color-primary-50);
-}
-
-.tertiary {
-  background-color: transparent;
-  color: var(--color-primary-500);
-}
-
-.tertiary:hover:not(:disabled) {
-  background-color: var(--color-primary-50);
-}
-
-.danger {
-  background-color: var(--color-danger-500);
-  color: var(--color-white);
-}
-
-.danger:hover:not(:disabled) {
-  background-color: var(--color-danger-600);
-}
-
-/* Sizes */
-.sm {
-  padding: 6px 12px;
-  font-size: 14px;
-  min-height: 32px;
-}
-
-.md {
-  padding: 8px 16px;
-  font-size: 16px;
-  min-height: 40px;
-}
-
-.lg {
-  padding: 12px 24px;
-  font-size: 18px;
-  min-height: 48px;
-}
-
-/* Modifiers */
-.fullWidth {
-  width: 100%;
-}
-
-.loading {
-  position: relative;
-  color: transparent;
-}
-
-.spinner {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border: 2px solid currentColor;
-  border-right-color: transparent;
-  border-radius: 50%;
-  animation: spin 0.75s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Icon spacing */
-.leftIcon,
-.rightIcon {
-  display: flex;
-  align-items: center;
-}
-```
-
-## Input Atom Example
+## 2. Input Primitive
 
 ```typescript
-// atoms/Input/Input.tsx
+// src/components/core/Input/Input.tsx
 import React from 'react';
-import type { InputHTMLAttributes } from 'react';
-import styles from './Input.module.css';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
 
-export type InputSize = 'sm' | 'md' | 'lg';
+export const inputVariants = cva(
+  'flex w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+  {
+    variants: {
+      sizeVariant: {
+        sm: 'h-8 text-xs px-2.5',
+        default: 'h-9 text-sm px-3',
+        lg: 'h-11 text-base px-4',
+      },
+      hasError: {
+        true: 'border-destructive focus-visible:ring-destructive',
+      },
+    },
+    defaultVariants: {
+      sizeVariant: 'default',
+      hasError: false,
+    },
+  }
+);
 
 export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
-  /** Size variant */
-  size?: InputSize;
-  /** Error state */
-  hasError?: boolean;
-  /** Left addon element */
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>,
+    VariantProps<typeof inputVariants> {
   leftAddon?: React.ReactNode;
-  /** Right addon element */
   rightAddon?: React.ReactNode;
 }
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      size = 'md',
-      hasError = false,
-      leftAddon,
-      rightAddon,
-      disabled,
-      className,
-      ...props
-    },
-    ref
-  ) => {
-    const wrapperClasses = [
-      styles.wrapper,
-      styles[size],
-      hasError && styles.error,
-      disabled && styles.disabled,
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ');
+  ({ className, type = 'text', sizeVariant, hasError, leftAddon, rightAddon, disabled, ...props }, ref) => {
+    if (leftAddon || rightAddon) {
+      return (
+        <div
+          className={cn(
+            'flex items-center rounded-md border border-input bg-background shadow-sm transition-colors focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
+            hasError && 'border-destructive focus-within:ring-destructive',
+            disabled && 'cursor-not-allowed opacity-50',
+            className
+          )}
+        >
+          {leftAddon && (
+            <span className="flex items-center pl-3 text-muted-foreground text-sm">
+              {leftAddon}
+            </span>
+          )}
+          <input
+            ref={ref}
+            type={type}
+            disabled={disabled}
+            aria-invalid={!!hasError}
+            className="flex-1 bg-transparent px-3 py-1.5 text-sm placeholder:text-muted-foreground focus:outline-none disabled:cursor-not-allowed"
+            {...props}
+          />
+          {rightAddon && (
+            <span className="flex items-center pr-3 text-muted-foreground text-sm">
+              {rightAddon}
+            </span>
+          )}
+        </div>
+      );
+    }
 
     return (
-      <div className={wrapperClasses}>
-        {leftAddon && <span className={styles.leftAddon}>{leftAddon}</span>}
-        <input
-          ref={ref}
-          className={styles.input}
-          disabled={disabled}
-          aria-invalid={hasError}
-          {...props}
-        />
-        {rightAddon && <span className={styles.rightAddon}>{rightAddon}</span>}
-      </div>
+      <input
+        ref={ref}
+        type={type}
+        disabled={disabled}
+        aria-invalid={!!hasError}
+        className={cn(inputVariants({ sizeVariant, hasError, className }))}
+        {...props}
+      />
     );
   }
 );
@@ -308,122 +252,35 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = 'Input';
 ```
 
-```css
-/* atoms/Input/Input.module.css */
-.wrapper {
-  display: flex;
-  align-items: center;
-  border: 1px solid var(--color-neutral-300);
-  border-radius: 6px;
-  background-color: var(--color-white);
-  transition: border-color 150ms, box-shadow 150ms;
-}
+---
 
-.wrapper:focus-within {
-  border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px var(--color-primary-100);
-}
-
-.input {
-  flex: 1;
-  border: none;
-  background: transparent;
-  outline: none;
-  width: 100%;
-}
-
-.input::placeholder {
-  color: var(--color-neutral-400);
-}
-
-/* Error state */
-.error {
-  border-color: var(--color-danger-500);
-}
-
-.error:focus-within {
-  border-color: var(--color-danger-500);
-  box-shadow: 0 0 0 3px var(--color-danger-100);
-}
-
-/* Disabled state */
-.disabled {
-  background-color: var(--color-neutral-100);
-  cursor: not-allowed;
-}
-
-.disabled .input {
-  cursor: not-allowed;
-}
-
-/* Sizes */
-.sm {
-  min-height: 32px;
-}
-
-.sm .input {
-  padding: 6px 12px;
-  font-size: 14px;
-}
-
-.md {
-  min-height: 40px;
-}
-
-.md .input {
-  padding: 8px 12px;
-  font-size: 16px;
-}
-
-.lg {
-  min-height: 48px;
-}
-
-.lg .input {
-  padding: 12px 16px;
-  font-size: 18px;
-}
-
-/* Addons */
-.leftAddon,
-.rightAddon {
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  color: var(--color-neutral-500);
-}
-```
-
-## Label Atom Example
+## 3. Label Primitive
 
 ```typescript
-// atoms/Label/Label.tsx
+// src/components/core/Label/Label.tsx
 import React from 'react';
-import type { LabelHTMLAttributes } from 'react';
-import styles from './Label.module.css';
+import { cn } from '@/lib/utils';
 
-export interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
-  /** Indicates required field */
+export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   required?: boolean;
-  /** Disabled state styling */
   disabled?: boolean;
 }
 
 export const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
-  ({ required = false, disabled = false, children, className, ...props }, ref) => {
-    const classNames = [
-      styles.label,
-      disabled && styles.disabled,
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ');
-
+  ({ className, required = false, disabled = false, children, ...props }, ref) => {
     return (
-      <label ref={ref} className={classNames} {...props}>
+      <label
+        ref={ref}
+        className={cn(
+          'text-sm font-medium leading-none select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-foreground',
+          disabled && 'cursor-not-allowed opacity-50',
+          className
+        )}
+        {...props}
+      >
         {children}
         {required && (
-          <span className={styles.required} aria-hidden="true">
+          <span className="ml-1 text-destructive font-bold" aria-hidden="true">
             *
           </span>
         )}
@@ -435,49 +292,48 @@ export const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
 Label.displayName = 'Label';
 ```
 
-## Icon Atom Example
+---
+
+## 4. Icon Primitive
 
 ```typescript
-// atoms/Icon/Icon.tsx
+// src/components/core/Icon/Icon.tsx
 import React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
 
-export type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export const iconVariants = cva('inline-block shrink-0 fill-current', {
+  variants: {
+    size: {
+      xs: 'size-3.5',
+      sm: 'size-4',
+      md: 'size-5',
+      lg: 'size-6',
+      xl: 'size-8',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
 
-const sizeMap: Record<IconSize, number> = {
-  xs: 12,
-  sm: 16,
-  md: 20,
-  lg: 24,
-  xl: 32,
-};
-
-export interface IconProps extends React.SVGAttributes<SVGElement> {
-  /** Icon name/identifier */
+export interface IconProps
+  extends React.SVGAttributes<SVGElement>,
+    VariantProps<typeof iconVariants> {
   name: string;
-  /** Icon size */
-  size?: IconSize;
-  /** Custom color */
-  color?: string;
-  /** Accessible label */
   label?: string;
 }
 
 export const Icon: React.FC<IconProps> = ({
   name,
-  size = 'md',
-  color = 'currentColor',
+  size,
   label,
   className,
   ...props
 }) => {
-  const pixelSize = sizeMap[size];
-
   return (
     <svg
-      className={className}
-      width={pixelSize}
-      height={pixelSize}
-      fill={color}
+      className={cn(iconVariants({ size, className }))}
       aria-label={label}
       aria-hidden={!label}
       role={label ? 'img' : 'presentation'}
@@ -491,64 +347,72 @@ export const Icon: React.FC<IconProps> = ({
 Icon.displayName = 'Icon';
 ```
 
-## Avatar Atom Example
+---
+
+## 5. Avatar Primitive
 
 ```typescript
-// atoms/Avatar/Avatar.tsx
+// src/components/core/Avatar/Avatar.tsx
 import React from 'react';
-import styles from './Avatar.module.css';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
 
-export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export const avatarVariants = cva(
+  'relative flex shrink-0 overflow-hidden rounded-full bg-muted font-medium text-muted-foreground select-none items-center justify-center',
+  {
+    variants: {
+      size: {
+        xs: 'size-6 text-xs',
+        sm: 'size-8 text-xs',
+        md: 'size-10 text-sm',
+        lg: 'size-12 text-base',
+        xl: 'size-16 text-lg',
+      },
+    },
+    defaultVariants: {
+      size: 'md',
+    },
+  }
+);
 
-export interface AvatarProps {
-  /** Image source URL */
+export interface AvatarProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof avatarVariants> {
   src?: string;
-  /** Alt text for image */
   alt: string;
-  /** Fallback initials */
   initials?: string;
-  /** Size variant */
-  size?: AvatarSize;
-  /** Additional class name */
-  className?: string;
 }
 
 export const Avatar: React.FC<AvatarProps> = ({
   src,
   alt,
   initials,
-  size = 'md',
+  size,
   className,
+  ...props
 }) => {
   const [imageError, setImageError] = React.useState(false);
-
-  const classNames = [styles.avatar, styles[size], className]
-    .filter(Boolean)
-    .join(' ');
 
   const showImage = src && !imageError;
   const showInitials = !showImage && initials;
 
   return (
-    <div className={classNames} role="img" aria-label={alt}>
+    <div
+      role="img"
+      aria-label={alt}
+      className={cn(avatarVariants({ size, className }))}
+      {...props}
+    >
       {showImage && (
         <img
           src={src}
           alt={alt}
-          className={styles.image}
+          className="aspect-square size-full object-cover"
           onError={() => setImageError(true)}
         />
       )}
-      {showInitials && (
-        <span className={styles.initials} aria-hidden="true">
-          {initials}
-        </span>
-      )}
-      {!showImage && !showInitials && (
-        <span className={styles.placeholder} aria-hidden="true">
-          ?
-        </span>
-      )}
+      {showInitials && <span>{initials}</span>}
+      {!showImage && !showInitials && <span>?</span>}
     </div>
   );
 };
@@ -556,70 +420,69 @@ export const Avatar: React.FC<AvatarProps> = ({
 Avatar.displayName = 'Avatar';
 ```
 
-## Badge Atom Example
+---
+
+## 6. Badge Primitive
 
 ```typescript
-// atoms/Badge/Badge.tsx
+// src/components/core/Badge/Badge.tsx
 import React from 'react';
-import styles from './Badge.module.css';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
 
-export type BadgeVariant =
-  | 'default'
-  | 'primary'
-  | 'success'
-  | 'warning'
-  | 'danger'
-  | 'info';
+export const badgeVariants = cva(
+  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  {
+    variants: {
+      variant: {
+        default: 'border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80',
+        secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        destructive: 'border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80',
+        outline: 'text-foreground border-border',
+        success: 'border-transparent bg-emerald-500/15 text-emerald-700 dark:text-emerald-400',
+        warning: 'border-transparent bg-amber-500/15 text-amber-700 dark:text-amber-400',
+      },
+      size: {
+        sm: 'px-2 py-0.2 text-[10px]',
+        md: 'px-2.5 py-0.5 text-xs',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'md',
+    },
+  }
+);
 
-export type BadgeSize = 'sm' | 'md';
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLSpanElement>,
+    VariantProps<typeof badgeVariants> {}
 
-export interface BadgeProps {
-  /** Visual variant */
-  variant?: BadgeVariant;
-  /** Size variant */
-  size?: BadgeSize;
-  /** Badge content */
-  children: React.ReactNode;
-  /** Additional class name */
-  className?: string;
-}
-
-export const Badge: React.FC<BadgeProps> = ({
-  variant = 'default',
-  size = 'md',
-  children,
-  className,
-}) => {
-  const classNames = [styles.badge, styles[variant], styles[size], className]
-    .filter(Boolean)
-    .join(' ');
-
-  return <span className={classNames}>{children}</span>;
+export const Badge: React.FC<BadgeProps> = ({ className, variant, size, ...props }) => {
+  return <span className={cn(badgeVariants({ variant, size, className }))} {...props} />;
 };
 
 Badge.displayName = 'Badge';
 ```
 
-## Checkbox Atom Example
+---
+
+## 7. Checkbox Primitive
 
 ```typescript
-// atoms/Checkbox/Checkbox.tsx
+// src/components/core/Checkbox/Checkbox.tsx
 import React from 'react';
-import type { InputHTMLAttributes } from 'react';
-import styles from './Checkbox.module.css';
+import { cn } from '@/lib/utils';
 
 export interface CheckboxProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
-  /** Indeterminate state */
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
   indeterminate?: boolean;
-  /** Label text */
   label?: string;
 }
 
 export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ indeterminate = false, label, disabled, className, ...props }, ref) => {
+  ({ className, indeterminate = false, label, disabled, id, ...props }, ref) => {
     const inputRef = React.useRef<HTMLInputElement>(null);
-
     React.useImperativeHandle(ref, () => inputRef.current!);
 
     React.useEffect(() => {
@@ -628,244 +491,223 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
       }
     }, [indeterminate]);
 
-    const wrapperClasses = [
-      styles.wrapper,
-      disabled && styles.disabled,
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ');
-
-    const checkbox = (
-      <span className={styles.checkbox}>
+    const checkboxElement = (
+      <div className="relative inline-flex items-center">
         <input
           ref={inputRef}
           type="checkbox"
-          className={styles.input}
+          id={id}
           disabled={disabled}
+          className={cn(
+            'peer size-4 shrink-0 rounded border border-primary shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 text-primary accent-primary cursor-pointer',
+            className
+          )}
           {...props}
         />
-        <span className={styles.control} aria-hidden="true">
-          <svg className={styles.check} viewBox="0 0 12 10">
-            <polyline points="1.5 6 4.5 9 10.5 1" />
-          </svg>
-          <svg className={styles.indeterminate} viewBox="0 0 12 2">
-            <line x1="1" y1="1" x2="11" y2="1" />
-          </svg>
-        </span>
-      </span>
+      </div>
     );
 
     if (label) {
       return (
-        <label className={wrapperClasses}>
-          {checkbox}
-          <span className={styles.label}>{label}</span>
+        <label
+          htmlFor={id}
+          className={cn(
+            'inline-flex items-center gap-2 text-sm font-medium leading-none cursor-pointer select-none text-foreground',
+            disabled && 'cursor-not-allowed opacity-50'
+          )}
+        >
+          {checkboxElement}
+          <span>{label}</span>
         </label>
       );
     }
 
-    return checkbox;
+    return checkboxElement;
   }
 );
 
 Checkbox.displayName = 'Checkbox';
 ```
 
-## Typography Atoms
+---
+
+## 8. Typography Primitives
 
 ```typescript
-// atoms/Typography/Text.tsx
+// src/components/core/Typography/Text.tsx
 import React from 'react';
-import styles from './Typography.module.css';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
 
-export type TextSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type TextWeight = 'normal' | 'medium' | 'semibold' | 'bold';
-export type TextColor = 'default' | 'muted' | 'primary' | 'success' | 'danger';
+export const textVariants = cva('text-foreground leading-relaxed', {
+  variants: {
+    size: {
+      xs: 'text-xs',
+      sm: 'text-sm',
+      md: 'text-base',
+      lg: 'text-lg',
+      xl: 'text-xl',
+    },
+    weight: {
+      normal: 'font-normal',
+      medium: 'font-medium',
+      semibold: 'font-semibold',
+      bold: 'font-bold',
+    },
+    color: {
+      default: 'text-foreground',
+      muted: 'text-muted-foreground',
+      primary: 'text-primary',
+      destructive: 'text-destructive',
+      success: 'text-emerald-600 dark:text-emerald-400',
+    },
+    truncate: {
+      true: 'truncate',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+    weight: 'normal',
+    color: 'default',
+    truncate: false,
+  },
+});
 
-export interface TextProps {
-  as?: 'p' | 'span' | 'div';
-  size?: TextSize;
-  weight?: TextWeight;
-  color?: TextColor;
-  truncate?: boolean;
-  children: React.ReactNode;
-  className?: string;
+export interface TextProps
+  extends React.HTMLAttributes<HTMLElement>,
+    VariantProps<typeof textVariants> {
+  as?: 'p' | 'span' | 'div' | 'label';
 }
 
 export const Text: React.FC<TextProps> = ({
   as: Component = 'p',
-  size = 'md',
-  weight = 'normal',
-  color = 'default',
-  truncate = false,
-  children,
+  size,
+  weight,
+  color,
+  truncate,
   className,
+  children,
+  ...props
 }) => {
-  const classNames = [
-    styles.text,
-    styles[`size-${size}`],
-    styles[`weight-${weight}`],
-    styles[`color-${color}`],
-    truncate && styles.truncate,
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
-
-  return <Component className={classNames}>{children}</Component>;
+  return (
+    <Component
+      className={cn(textVariants({ size, weight, color, truncate, className }))}
+      {...props}
+    >
+      {children}
+    </Component>
+  );
 };
 
-// atoms/Typography/Heading.tsx
-export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+// src/components/core/Typography/Heading.tsx
+export const headingVariants = cva('font-bold tracking-tight text-foreground', {
+  variants: {
+    level: {
+      1: 'text-4xl lg:text-5xl font-extrabold',
+      2: 'text-3xl lg:text-4xl border-b pb-2',
+      3: 'text-2xl',
+      4: 'text-xl',
+      5: 'text-lg',
+      6: 'text-base',
+    },
+  },
+  defaultVariants: {
+    level: 1,
+  },
+});
 
-export interface HeadingProps {
-  level: HeadingLevel;
-  as?: `h${HeadingLevel}`;
-  children: React.ReactNode;
-  className?: string;
+export interface HeadingProps
+  extends React.HTMLAttributes<HTMLHeadingElement>,
+    VariantProps<typeof headingVariants> {
+  level?: 1 | 2 | 3 | 4 | 5 | 6;
+  as?: `h1` | `h2` | `h3` | `h4` | `h5` | `h6`;
 }
 
 export const Heading: React.FC<HeadingProps> = ({
-  level,
+  level = 1,
   as,
-  children,
   className,
+  children,
+  ...props
 }) => {
   const Component = as || (`h${level}` as const);
-  const classNames = [styles.heading, styles[`h${level}`], className]
-    .filter(Boolean)
-    .join(' ');
-
-  return <Component className={classNames}>{children}</Component>;
+  return (
+    <Component className={cn(headingVariants({ level, className }))} {...props}>
+      {children}
+    </Component>
+  );
 };
 ```
 
-## Best Practices
+---
 
-### 1. Use forwardRef for DOM Access
+## Unified Barrel Export for Core Primitives
+
+Export all core primitives from `src/components/core/index.ts`:
 
 ```typescript
-// GOOD: Allows parent to access DOM node
+// src/components/core/index.ts
+export * from './Button/Button';
+export * from './Input/Input';
+export * from './Label/Label';
+export * from './Icon/Icon';
+export * from './Avatar/Avatar';
+export * from './Badge/Badge';
+export * from './Checkbox/Checkbox';
+export * from './Typography/Text';
+export * from './Typography/Heading';
+```
+
+---
+
+## Best Practices for Core Primitives
+
+### 1. Always use `cva` and `cn()`
+Define static variants cleanly and allow caller overrides through `className` without specificity battles.
+
+```typescript
+// GOOD: Uses cva + cn
+export const Button = ({ variant, size, className, ...props }) => (
+  <button className={cn(buttonVariants({ variant, size, className }))} {...props} />
+);
+
+// BAD: String concatenation or inline styles
+export const Button = ({ variant, className }) => (
+  <button className={`btn-${variant} ${className}`} />
+);
+```
+
+### 2. Forward Refs on All DOM Elements
+Consumers need ref access for form libraries (react-hook-form), focus management, and animations.
+
+```typescript
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (props, ref) => <input ref={ref} {...props} />
 );
-
-// BAD: No way for parent to access DOM
-export const Input = (props: InputProps) => <input {...props} />;
 ```
 
-### 2. Extend Native HTML Attributes
+### 3. Strictly Presentation-Only
+Never make API calls, access routing contexts, or trigger side effects inside a Core primitive. All interactive state belongs in parent Composites or Sections.
 
-```typescript
-// GOOD: Supports all native button attributes
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary';
-}
-
-// BAD: Missing native attributes
-interface ButtonProps {
-  onClick?: () => void;
-  disabled?: boolean;
-}
-```
-
-### 3. Provide Sensible Defaults
-
-```typescript
-// GOOD: Works out of the box
-export const Button = ({
-  variant = 'primary',
-  size = 'md',
-  type = 'button', // Prevent accidental form submissions
-  ...props
-}) => { ... };
-
-// BAD: Requires explicit props
-export const Button = ({ variant, size, ...props }) => { ... };
-```
-
-### 4. Keep Atoms Presentation-Only
-
-```typescript
-// GOOD: No business logic
-const Button = ({ onClick, children }) => (
-  <button onClick={onClick}>{children}</button>
-);
-
-// BAD: Atom has API call
-const SubmitButton = () => {
-  const handleClick = async () => {
-    await api.submit(); // Business logic in atom!
-  };
-  return <button onClick={handleClick}>Submit</button>;
-};
-```
+---
 
 ## Anti-Patterns to Avoid
 
-### 1. Atoms with Internal State
+| Anti-Pattern | Bad Example | Correct Pattern |
+|---|---|---|
+| **Custom CSS Island** | Creating `Button.module.css` | Use Tailwind CSS utility classes and `cva` |
+| **Direct Hex Colors** | `bg-[#2196f3]` | Use semantic theme tokens (`bg-primary`, `text-primary-foreground`) |
+| **Upward Import** | `import { SearchBar } from '@/components/composites'` | Never import upward; Core primitives only import Theme tokens |
+| **Hardcoded Sizing** | Fixed `w-[320px]` in Core button | Allow parent layout / fullWidth prop to govern width |
 
-```typescript
-// BAD: Atom manages its own state
-const Input = () => {
-  const [value, setValue] = useState('');
-  return <input value={value} onChange={(e) => setValue(e.target.value)} />;
-};
-
-// GOOD: Controlled by parent
-const Input = ({ value, onChange }) => (
-  <input value={value} onChange={onChange} />
-);
-```
-
-### 2. Atoms with Complex Logic
-
-```typescript
-// BAD: Complex validation in atom
-const EmailInput = ({ value, onChange }) => {
-  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-  return <input value={value} className={isValid ? '' : 'error'} />;
-};
-
-// GOOD: Validation handled by parent/molecule
-const Input = ({ value, onChange, hasError }) => (
-  <input value={value} className={hasError ? 'error' : ''} />
-);
-```
-
-### 3. Hardcoded Styles
-
-```typescript
-// BAD: Hardcoded colors
-const Button = () => (
-  <button style={{ backgroundColor: '#2196f3' }}>Click</button>
-);
-
-// GOOD: Uses design tokens
-const Button = () => (
-  <button style={{ backgroundColor: 'var(--color-primary-500)' }}>
-    Click
-  </button>
-);
-```
-
-## When to Use This Skill
-
-- Creating new basic UI components
-- Refactoring existing components to atoms
-- Building a design system foundation
-- Ensuring consistency across components
-- Improving component reusability
+---
 
 ## Related Subskills
 
 - [Atomic Design Hub](../SKILL.md) — Master methodology and subskill routing
 - [Fundamentals](../fundamentals/SKILL.md) — Core hierarchy, directory layouts, and composition rules
-- [Quarks](../quarks/SKILL.md) — Design tokens, CSS variables, and primitive values
-- [Atoms](../atoms/SKILL.md) — Indivisible UI primitives (buttons, inputs, icons)
-- [Molecules](../molecules/SKILL.md) — Functional atom combinations (form fields, search inputs)
-- [Organisms](../organisms/SKILL.md) — Standalone UI sections (headers, footers, data tables)
-- [Templates](../templates/SKILL.md) — Page layout skeletons with slot-based content
-- [Integration](../integration/SKILL.md) — Framework integration (React, Vue 3, Angular, Storybook)
-
+- [Theme & Tokens](../theme/SKILL.md) — Design tokens under `src/theme/`, Tailwind v4 `@theme` tokens, and CSS variables
+- [Composites](../composites/SKILL.md) — Functional combinations of core primitives (form fields, search inputs)
+- [Sections](../sections/SKILL.md) — Standalone UI sections (headers, footers, data tables)
+- [Layouts](../layouts/SKILL.md) — Page layout skeletons with slot-based content
+- [Integration](../integration/SKILL.md) — Framework integration (React/Next.js, Vue 3, Storybook, Vitest)

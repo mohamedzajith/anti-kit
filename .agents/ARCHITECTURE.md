@@ -131,7 +131,7 @@ Modular knowledge domains that agents can load on-demand based on task context. 
 | Skill                   | Description                                                           |
 | ----------------------- | --------------------------------------------------------------------- |
 | `design-spec`           | DESIGN.md token format — required design source-of-truth before UI    |
-| `atomic-design`         | **NEW** Atomic Design hierarchy (quarks, atoms, molecules, organisms, templates, pages) and strict import boundaries |
+| `atomic-design`         | **NEW** Modernized Atomic Design hierarchy (theme tokens, core primitives, composites, sections, layouts, pages) and strict import boundaries |
 | `nextjs-react-expert`   | React & Next.js performance optimization (Vercel - 58 rules)          |
 | `frontend-architecture` | Frontend code organization — layers, state tiers, services (React/Vue) |
 | `web-design-guidelines` | Web UI audit - 100+ rules for accessibility, UX, performance (Vercel) |
