@@ -1,65 +1,50 @@
 ---
 name: atomic-design-molecules
-description: Functional combinations of atoms like form fields, search inputs, media objects, nav items, and stat widgets.
+description: Functional combinations of core primitives like form fields, search inputs, media objects, nav items, and stat widgets styled with Tailwind CSS.
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---
 
 # Atomic Design: Molecules
 
-Master the creation of molecule components - functional groups of atoms that work together as a unit. Molecules combine multiple atoms to create more complex, purposeful UI elements.
+Master the creation of molecule components — functional groups of Core UI primitives (`src/components/core/`) that work together as a single unit. In this modernized architecture, molecules combine multiple core primitives using **Tailwind CSS utility layouts and `cn()`** — completely free of custom `.module.css` files.
+
+---
 
 ## What Are Molecules?
 
 Molecules are the first level of composition in Atomic Design. They are:
 
-- **Composed of atoms only**: Never include other molecules
-- **Single purpose**: Do one thing well
-- **Functional units**: Atoms working together for a specific task
-- **Reusable**: Used across different organisms and contexts
-- **Minimally stateful**: May have limited internal state for UI concerns
+- **Composed of Core Primitives only**: Import exclusively from `src/components/core/` (never other molecules)
+- **Single purpose**: Do one specific functional job well
+- **Utility-first layout**: Arranged with Tailwind flex, grid, and spacing utilities
+- **Reusable**: Used across various organisms, templates, and views
+- **Minimally stateful**: May contain ephemeral UI state (e.g. open/closed, search debounce, clear button visibility)
+- **Zero business logic**: Delegate API calls, mutations, and domain logic to parents or custom hooks
+
+---
 
 ## Common Molecule Types
 
-### Form Molecules
+| Category | Molecule Examples | Composed Core Primitives |
+|---|---|---|
+| **Form Molecules** | FormField, SearchForm, ToggleField | Label + Input + Typography/Text, Button + Input + Icon |
+| **Navigation Molecules** | NavItem, BreadcrumbItem, TabTrigger | Icon + Text + Badge, Link + Separator |
+| **Display Molecules** | MediaObject, CardHeader, Stat, ListItem | Avatar + Heading + Text, Icon + Heading + Button |
+| **Action Molecules** | ButtonGroup, DropdownTrigger, IconButton | Multiple Buttons, Button + Icon + Tooltip |
 
-- Form fields (label + input + error)
-- Search forms (input + button)
-- Toggle groups (label + toggle)
-- Date pickers (input + calendar trigger)
-- File uploaders (dropzone + button)
+---
 
-### Navigation Molecules
+## 1. FormField Molecule Example
 
-- Nav items (icon + text + indicator)
-- Breadcrumb items (link + separator)
-- Pagination controls (buttons + page indicator)
-- Tab items (icon + label)
-
-### Display Molecules
-
-- Media objects (avatar + text)
-- Card headers (title + subtitle + action)
-- List items (checkbox + content + actions)
-- Stat displays (label + value + trend)
-
-### Action Molecules
-
-- Button groups (multiple buttons)
-- Dropdown triggers (button + icon)
-- Icon buttons (icon + tooltip)
-- Action menus (button + menu items)
-
-## FormField Molecule Example
-
-### Complete Implementation
+Combines `Label`, `Input`, and `Text` primitives from `components/core/` with accessible `aria-describedby` wiring:
 
 ```typescript
-// molecules/FormField/FormField.tsx
+// src/components/molecules/FormField/FormField.tsx
 import React from 'react';
-import { Label } from '@/components/atoms/Label';
-import { Input, type InputProps } from '@/components/atoms/Input';
-import { Text } from '@/components/atoms/Typography';
-import styles from './FormField.module.css';
+import { Label } from '@/components/core/Label';
+import { Input, type InputProps } from '@/components/core/Input';
+import { Text } from '@/components/core/Typography';
+import { cn } from '@/lib/utils';
 
 export interface FormFieldProps extends InputProps {
   /** Field label */
@@ -95,7 +80,7 @@ export const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
     const describedBy = [helpTextId, errorId].filter(Boolean).join(' ') || undefined;
 
     return (
-      <div className={`${styles.field} ${className || ''}`}>
+      <div className={cn('flex flex-col gap-1.5', className)}>
         <Label htmlFor={fieldId} required={required} disabled={inputProps.disabled}>
           {label}
         </Label>
@@ -111,13 +96,13 @@ export const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
         />
 
         {helpText && !error && (
-          <Text id={helpTextId} size="sm" color="muted" className={styles.helpText}>
+          <Text id={helpTextId} size="xs" color="muted" className="mt-0.5">
             {helpText}
           </Text>
         )}
 
         {error && (
-          <Text id={errorId} size="sm" color="danger" className={styles.error} role="alert">
+          <Text id={errorId} size="xs" color="destructive" className="mt-0.5 font-medium" role="alert">
             {error}
           </Text>
         )}
@@ -129,35 +114,19 @@ export const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
 FormField.displayName = 'FormField';
 ```
 
-```css
-/* molecules/FormField/FormField.module.css */
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
+---
 
-.helpText {
-  margin-top: 2px;
-}
+## 2. SearchForm Molecule Example
 
-.error {
-  margin-top: 2px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-```
-
-## SearchForm Molecule Example
+Combines `Input`, `Button`, and `Icon` primitives with live query state and clear action:
 
 ```typescript
-// molecules/SearchForm/SearchForm.tsx
+// src/components/molecules/SearchForm/SearchForm.tsx
 import React, { useState, useCallback } from 'react';
-import { Input } from '@/components/atoms/Input';
-import { Button } from '@/components/atoms/Button';
-import { Icon } from '@/components/atoms/Icon';
-import styles from './SearchForm.module.css';
+import { Input } from '@/components/core/Input';
+import { Button } from '@/components/core/Button';
+import { Icon } from '@/components/core/Icon';
+import { cn } from '@/lib/utils';
 
 export interface SearchFormProps {
   /** Placeholder text */
@@ -171,9 +140,11 @@ export interface SearchFormProps {
   /** Loading state */
   isLoading?: boolean;
   /** Size variant */
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'default' | 'lg';
   /** Show clear button */
   clearable?: boolean;
+  /** Custom wrapper class */
+  className?: string;
 }
 
 export const SearchForm: React.FC<SearchFormProps> = ({
@@ -182,8 +153,9 @@ export const SearchForm: React.FC<SearchFormProps> = ({
   onSubmit,
   onChange,
   isLoading = false,
-  size = 'md',
+  size = 'default',
   clearable = true,
+  className,
 }) => {
   const [query, setQuery] = useState(defaultValue);
 
@@ -210,29 +182,35 @@ export const SearchForm: React.FC<SearchFormProps> = ({
   }, [onChange]);
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit} role="search">
-      <Input
-        type="search"
-        value={query}
-        onChange={handleChange}
-        placeholder={placeholder}
-        size={size}
-        leftAddon={<Icon name="search" size="sm" />}
-        rightAddon={
-          clearable && query ? (
-            <button
-              type="button"
-              onClick={handleClear}
-              className={styles.clearButton}
-              aria-label="Clear search"
-            >
-              <Icon name="x" size="sm" />
-            </button>
-          ) : undefined
-        }
-        aria-label="Search query"
-      />
-      <Button type="submit" size={size} isLoading={isLoading}>
+    <form
+      className={cn('flex items-center gap-2', className)}
+      onSubmit={handleSubmit}
+      role="search"
+    >
+      <div className="relative flex-1">
+        <Input
+          type="search"
+          value={query}
+          onChange={handleChange}
+          placeholder={placeholder}
+          sizeVariant={size}
+          leftAddon={<Icon name="search" size="sm" />}
+          rightAddon={
+            clearable && query ? (
+              <button
+                type="button"
+                onClick={handleClear}
+                className="flex items-center justify-center p-1 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                aria-label="Clear search"
+              >
+                <Icon name="x" size="xs" />
+              </button>
+            ) : undefined
+          }
+          aria-label="Search query"
+        />
+      </div>
+      <Button type="submit" size={size === 'default' ? 'default' : size} isLoading={isLoading}>
         Search
       </Button>
     </form>
@@ -242,60 +220,29 @@ export const SearchForm: React.FC<SearchFormProps> = ({
 SearchForm.displayName = 'SearchForm';
 ```
 
-```css
-/* molecules/SearchForm/SearchForm.module.css */
-.form {
-  display: flex;
-  gap: 8px;
-  align-items: stretch;
-}
+---
 
-.clearButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  color: var(--color-neutral-500);
-  transition: color 150ms;
-}
+## 3. MediaObject Molecule Example
 
-.clearButton:hover {
-  color: var(--color-neutral-700);
-}
-```
-
-## MediaObject Molecule Example
+Combines `Avatar`, `Heading`, and `Text` primitives into an accessible content block:
 
 ```typescript
-// molecules/MediaObject/MediaObject.tsx
+// src/components/molecules/MediaObject/MediaObject.tsx
 import React from 'react';
-import { Avatar, type AvatarProps } from '@/components/atoms/Avatar';
-import { Text, Heading } from '@/components/atoms/Typography';
-import styles from './MediaObject.module.css';
+import { Avatar, type AvatarProps } from '@/components/core/Avatar';
+import { Text, Heading } from '@/components/core/Typography';
+import { cn } from '@/lib/utils';
 
 export interface MediaObjectProps {
-  /** Avatar image source */
   avatarSrc?: string;
-  /** Avatar alt text */
   avatarAlt: string;
-  /** Avatar initials fallback */
   avatarInitials?: string;
-  /** Avatar size */
   avatarSize?: AvatarProps['size'];
-  /** Primary text/title */
   title: React.ReactNode;
-  /** Secondary text/subtitle */
   subtitle?: React.ReactNode;
-  /** Additional metadata */
   meta?: React.ReactNode;
-  /** Right-aligned action element */
   action?: React.ReactNode;
-  /** Alignment of content */
   align?: 'top' | 'center' | 'bottom';
-  /** Additional class name */
   className?: string;
 }
 
@@ -311,12 +258,14 @@ export const MediaObject: React.FC<MediaObjectProps> = ({
   align = 'center',
   className,
 }) => {
-  const classNames = [styles.mediaObject, styles[`align-${align}`], className]
-    .filter(Boolean)
-    .join(' ');
+  const alignClass = {
+    top: 'items-start',
+    center: 'items-center',
+    bottom: 'items-end',
+  }[align];
 
   return (
-    <div className={classNames}>
+    <div className={cn('flex gap-3', alignClass, className)}>
       <Avatar
         src={avatarSrc}
         alt={avatarAlt}
@@ -324,21 +273,21 @@ export const MediaObject: React.FC<MediaObjectProps> = ({
         size={avatarSize}
       />
 
-      <div className={styles.content}>
-        <div className={styles.title}>{title}</div>
+      <div className="flex-1 min-w-0">
+        <div className="font-medium text-sm text-foreground truncate">{title}</div>
         {subtitle && (
-          <Text size="sm" color="muted" className={styles.subtitle}>
+          <Text size="sm" color="muted" truncate>
             {subtitle}
           </Text>
         )}
         {meta && (
-          <Text size="xs" color="muted" className={styles.meta}>
+          <Text size="xs" color="muted" className="mt-0.5">
             {meta}
           </Text>
         )}
       </div>
 
-      {action && <div className={styles.action}>{action}</div>}
+      {action && <div className="shrink-0">{action}</div>}
     </div>
   );
 };
@@ -346,30 +295,28 @@ export const MediaObject: React.FC<MediaObjectProps> = ({
 MediaObject.displayName = 'MediaObject';
 ```
 
-## NavItem Molecule Example
+---
+
+## 4. NavItem Molecule Example
+
+Combines `Icon`, `Text`, and `Badge` primitives into an accessible interactive navigation link:
 
 ```typescript
-// molecules/NavItem/NavItem.tsx
+// src/components/molecules/NavItem/NavItem.tsx
 import React from 'react';
-import { Icon } from '@/components/atoms/Icon';
-import { Badge } from '@/components/atoms/Badge';
-import styles from './NavItem.module.css';
+import { Icon } from '@/components/core/Icon';
+import { Badge } from '@/components/core/Badge';
+import { cn } from '@/lib/utils';
 
 export interface NavItemProps {
-  /** Navigation icon */
   icon?: string;
-  /** Item label */
   label: string;
-  /** Link destination */
   href: string;
-  /** Active state */
   isActive?: boolean;
-  /** Badge count */
   badge?: number;
-  /** Disabled state */
   disabled?: boolean;
-  /** Click handler */
   onClick?: (e: React.MouseEvent) => void;
+  className?: string;
 }
 
 export const NavItem: React.FC<NavItemProps> = ({
@@ -380,15 +327,8 @@ export const NavItem: React.FC<NavItemProps> = ({
   badge,
   disabled = false,
   onClick,
+  className,
 }) => {
-  const classNames = [
-    styles.navItem,
-    isActive && styles.active,
-    disabled && styles.disabled,
-  ]
-    .filter(Boolean)
-    .join(' ');
-
   const handleClick = (e: React.MouseEvent) => {
     if (disabled) {
       e.preventDefault();
@@ -400,15 +340,35 @@ export const NavItem: React.FC<NavItemProps> = ({
   return (
     <a
       href={href}
-      className={classNames}
       onClick={handleClick}
       aria-current={isActive ? 'page' : undefined}
       aria-disabled={disabled}
+      className={cn(
+        'group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors select-none',
+        isActive
+          ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
+          : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground',
+        disabled && 'pointer-events-none opacity-50',
+        className
+      )}
     >
-      {icon && <Icon name={icon} size="sm" className={styles.icon} />}
-      <span className={styles.label}>{label}</span>
+      {icon && (
+        <Icon
+          name={icon}
+          size="sm"
+          className={cn(
+            'transition-colors',
+            isActive ? 'text-primary-foreground' : 'text-muted-foreground group-hover:text-accent-foreground'
+          )}
+        />
+      )}
+      <span className="flex-1 truncate">{label}</span>
       {badge !== undefined && badge > 0 && (
-        <Badge variant="primary" size="sm" className={styles.badge}>
+        <Badge
+          variant={isActive ? 'secondary' : 'default'}
+          size="sm"
+          className="ml-auto"
+        >
           {badge > 99 ? '99+' : badge}
         </Badge>
       )}
@@ -419,28 +379,24 @@ export const NavItem: React.FC<NavItemProps> = ({
 NavItem.displayName = 'NavItem';
 ```
 
-## CardHeader Molecule Example
+---
+
+## 5. CardHeader Molecule Example
 
 ```typescript
-// molecules/CardHeader/CardHeader.tsx
+// src/components/molecules/CardHeader/CardHeader.tsx
 import React from 'react';
-import { Heading, Text } from '@/components/atoms/Typography';
-import { Icon } from '@/components/atoms/Icon';
-import { Button } from '@/components/atoms/Button';
-import styles from './CardHeader.module.css';
+import { Heading, Text } from '@/components/core/Typography';
+import { Icon } from '@/components/core/Icon';
+import { Button } from '@/components/core/Button';
+import { cn } from '@/lib/utils';
 
 export interface CardHeaderProps {
-  /** Card title */
   title: string;
-  /** Optional subtitle */
   subtitle?: string;
-  /** Title icon */
   icon?: string;
-  /** Action button label */
   actionLabel?: string;
-  /** Action button click handler */
   onAction?: () => void;
-  /** Additional class name */
   className?: string;
 }
 
@@ -453,15 +409,15 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
   className,
 }) => {
   return (
-    <div className={`${styles.header} ${className || ''}`}>
-      <div className={styles.left}>
-        {icon && <Icon name={icon} size="md" className={styles.icon} />}
-        <div className={styles.titles}>
-          <Heading level={3} className={styles.title}>
+    <div className={cn('flex items-center justify-between gap-4 p-4 border-b border-border', className)}>
+      <div className="flex items-center gap-3 min-w-0">
+        {icon && <Icon name={icon} size="md" className="text-primary shrink-0" />}
+        <div className="min-w-0">
+          <Heading level={4} className="truncate">
             {title}
           </Heading>
           {subtitle && (
-            <Text size="sm" color="muted">
+            <Text size="sm" color="muted" truncate>
               {subtitle}
             </Text>
           )}
@@ -469,7 +425,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
       </div>
 
       {actionLabel && onAction && (
-        <Button variant="tertiary" size="sm" onClick={onAction}>
+        <Button variant="outline" size="sm" onClick={onAction}>
           {actionLabel}
         </Button>
       )}
@@ -480,199 +436,27 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
 CardHeader.displayName = 'CardHeader';
 ```
 
-## ListItem Molecule Example
+---
+
+## 6. Stat Molecule Example
 
 ```typescript
-// molecules/ListItem/ListItem.tsx
+// src/components/molecules/Stat/Stat.tsx
 import React from 'react';
-import { Checkbox } from '@/components/atoms/Checkbox';
-import { Text } from '@/components/atoms/Typography';
-import { Icon } from '@/components/atoms/Icon';
-import styles from './ListItem.module.css';
-
-export interface ListItemProps {
-  /** Item ID for selection */
-  id: string;
-  /** Primary content */
-  primary: React.ReactNode;
-  /** Secondary content */
-  secondary?: React.ReactNode;
-  /** Left icon */
-  icon?: string;
-  /** Whether item is selectable */
-  selectable?: boolean;
-  /** Selection state */
-  selected?: boolean;
-  /** Selection change handler */
-  onSelect?: (id: string, selected: boolean) => void;
-  /** Right-aligned action buttons */
-  actions?: React.ReactNode;
-  /** Click handler */
-  onClick?: () => void;
-}
-
-export const ListItem: React.FC<ListItemProps> = ({
-  id,
-  primary,
-  secondary,
-  icon,
-  selectable = false,
-  selected = false,
-  onSelect,
-  actions,
-  onClick,
-}) => {
-  const classNames = [
-    styles.listItem,
-    onClick && styles.clickable,
-    selected && styles.selected,
-  ]
-    .filter(Boolean)
-    .join(' ');
-
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onSelect?.(id, e.target.checked);
-  };
-
-  return (
-    <div className={classNames} onClick={onClick} role={onClick ? 'button' : undefined}>
-      {selectable && (
-        <Checkbox
-          checked={selected}
-          onChange={handleCheckboxChange}
-          aria-label={`Select ${primary}`}
-          onClick={(e) => e.stopPropagation()}
-        />
-      )}
-
-      {icon && <Icon name={icon} size="md" className={styles.icon} />}
-
-      <div className={styles.content}>
-        <div className={styles.primary}>{primary}</div>
-        {secondary && (
-          <Text size="sm" color="muted" className={styles.secondary}>
-            {secondary}
-          </Text>
-        )}
-      </div>
-
-      {actions && (
-        <div className={styles.actions} onClick={(e) => e.stopPropagation()}>
-          {actions}
-        </div>
-      )}
-    </div>
-  );
-};
-
-ListItem.displayName = 'ListItem';
-```
-
-## ButtonGroup Molecule Example
-
-```typescript
-// molecules/ButtonGroup/ButtonGroup.tsx
-import React from 'react';
-import { Button, type ButtonProps } from '@/components/atoms/Button';
-import styles from './ButtonGroup.module.css';
-
-export interface ButtonGroupItem {
-  id: string;
-  label: string;
-  icon?: string;
-  disabled?: boolean;
-}
-
-export interface ButtonGroupProps {
-  /** Button items */
-  items: ButtonGroupItem[];
-  /** Selected item ID(s) */
-  value?: string | string[];
-  /** Selection change handler */
-  onChange?: (value: string | string[]) => void;
-  /** Allow multiple selection */
-  multiple?: boolean;
-  /** Size variant */
-  size?: ButtonProps['size'];
-  /** Disabled state */
-  disabled?: boolean;
-}
-
-export const ButtonGroup: React.FC<ButtonGroupProps> = ({
-  items,
-  value = [],
-  onChange,
-  multiple = false,
-  size = 'md',
-  disabled = false,
-}) => {
-  const selectedIds = Array.isArray(value) ? value : [value].filter(Boolean);
-
-  const handleClick = (itemId: string) => {
-    if (!onChange) return;
-
-    if (multiple) {
-      const newValue = selectedIds.includes(itemId)
-        ? selectedIds.filter((id) => id !== itemId)
-        : [...selectedIds, itemId];
-      onChange(newValue);
-    } else {
-      onChange(itemId);
-    }
-  };
-
-  return (
-    <div className={styles.group} role="group">
-      {items.map((item) => {
-        const isSelected = selectedIds.includes(item.id);
-
-        return (
-          <Button
-            key={item.id}
-            variant={isSelected ? 'primary' : 'secondary'}
-            size={size}
-            disabled={disabled || item.disabled}
-            onClick={() => handleClick(item.id)}
-            aria-pressed={isSelected}
-            className={styles.button}
-          >
-            {item.label}
-          </Button>
-        );
-      })}
-    </div>
-  );
-};
-
-ButtonGroup.displayName = 'ButtonGroup';
-```
-
-## Stat Molecule Example
-
-```typescript
-// molecules/Stat/Stat.tsx
-import React from 'react';
-import { Text, Heading } from '@/components/atoms/Typography';
-import { Icon } from '@/components/atoms/Icon';
-import styles from './Stat.module.css';
+import { Text, Heading } from '@/components/core/Typography';
+import { Icon } from '@/components/core/Icon';
+import { cn } from '@/lib/utils';
 
 export type TrendDirection = 'up' | 'down' | 'neutral';
 
 export interface StatProps {
-  /** Stat label */
   label: string;
-  /** Stat value */
   value: string | number;
-  /** Previous value for comparison */
-  previousValue?: string | number;
-  /** Trend direction */
   trend?: TrendDirection;
-  /** Trend percentage */
   trendValue?: string;
-  /** Stat icon */
   icon?: string;
-  /** Help text */
   helpText?: string;
+  className?: string;
 }
 
 export const Stat: React.FC<StatProps> = ({
@@ -682,61 +466,53 @@ export const Stat: React.FC<StatProps> = ({
   trendValue,
   icon,
   helpText,
+  className,
 }) => {
-  const getTrendColor = (direction?: TrendDirection) => {
-    switch (direction) {
-      case 'up':
-        return 'success';
-      case 'down':
-        return 'danger';
-      default:
-        return 'muted';
-    }
-  };
-
-  const getTrendIcon = (direction?: TrendDirection) => {
-    switch (direction) {
-      case 'up':
-        return 'trending-up';
-      case 'down':
-        return 'trending-down';
-      default:
-        return 'minus';
-    }
-  };
-
   return (
-    <div className={styles.stat}>
-      <div className={styles.header}>
-        {icon && <Icon name={icon} size="sm" className={styles.icon} />}
-        <Text size="sm" color="muted">
+    <div className={cn('rounded-lg border border-border bg-card p-4 text-card-foreground shadow-xs', className)}>
+      <div className="flex items-center justify-between gap-2">
+        <Text size="sm" color="muted" className="font-medium">
           {label}
         </Text>
+        {icon && <Icon name={icon} size="sm" className="text-muted-foreground" />}
       </div>
 
-      <div className={styles.value}>
-        <Heading level={2}>{value}</Heading>
+      <div className="mt-2">
+        <Heading level={2} className="tracking-tight">
+          {value}
+        </Heading>
       </div>
 
       {(trend || trendValue) && (
-        <div className={styles.trend}>
+        <div className="mt-2 flex items-center gap-1.5">
           {trend && (
             <Icon
-              name={getTrendIcon(trend)}
+              name={trend === 'up' ? 'trending-up' : trend === 'down' ? 'trending-down' : 'minus'}
               size="xs"
-              color={`var(--color-${getTrendColor(trend)}-500)`}
+              className={cn(
+                trend === 'up' && 'text-emerald-600 dark:text-emerald-400',
+                trend === 'down' && 'text-destructive',
+                trend === 'neutral' && 'text-muted-foreground'
+              )}
             />
           )}
           {trendValue && (
-            <Text size="sm" color={getTrendColor(trend)}>
+            <span
+              className={cn(
+                'text-xs font-medium',
+                trend === 'up' && 'text-emerald-600 dark:text-emerald-400',
+                trend === 'down' && 'text-destructive',
+                trend === 'neutral' && 'text-muted-foreground'
+              )}
+            >
               {trendValue}
-            </Text>
+            </span>
           )}
         </div>
       )}
 
       {helpText && (
-        <Text size="xs" color="muted" className={styles.helpText}>
+        <Text size="xs" color="muted" className="mt-1">
           {helpText}
         </Text>
       )}
@@ -747,154 +523,36 @@ export const Stat: React.FC<StatProps> = ({
 Stat.displayName = 'Stat';
 ```
 
-## Best Practices
+---
 
-### 1. Keep Molecules Focused
+## Best Practices for Molecules
 
-```typescript
-// GOOD: Single, clear purpose
-const SearchForm = () => (
-  <form>
-    <Input placeholder="Search..." />
-    <Button>Search</Button>
-  </form>
-);
-
-// BAD: Doing too much
-const SearchWithFiltersAndResults = () => (
-  <div>
-    <Input />
-    <Button>Search</Button>
-    <FilterDropdown />       {/* Should be separate molecule */}
-    <ResultsList />          {/* Should be organism */}
-    <Pagination />           {/* Should be separate molecule */}
-  </div>
-);
-```
-
-### 2. Only Import from Atoms
+### 1. Only Import Downward from `components/core`
+Molecules compose indivisible core primitives. Never import another molecule into a molecule:
 
 ```typescript
-// GOOD: Only uses atoms
-import { Button } from '@/components/atoms/Button';
-import { Input } from '@/components/atoms/Input';
-import { Icon } from '@/components/atoms/Icon';
+// ✅ LEGAL: Molecule composing Core primitives
+import { Input } from '@/components/core/Input';
+import { Button } from '@/components/core/Button';
 
-// BAD: Importing from other molecules
-import { FormField } from '@/components/molecules/FormField'; // Wrong level!
-import { Button } from '@/components/atoms/Button';
+// ❌ ILLEGAL: Molecule composing another Molecule
+import { SearchInput } from '@/components/molecules/SearchInput'; // Upward/lateral error
 ```
 
-### 3. Compose Props Carefully
+### 2. Leverage Tailwind Layout Utilities
+Assemble components using standard Tailwind flexbox (`flex items-center gap-2`), grid, and padding tokens. Do not create separate `.module.css` files.
 
-```typescript
-// GOOD: Clear prop forwarding
-interface SearchFormProps {
-  onSubmit: (query: string) => void;
-  inputProps?: Partial<InputProps>;
-  buttonProps?: Partial<ButtonProps>;
-}
+### 3. Keep Internal State Ephemeral
+Only manage local UI state (like active clear buttons, toggle focus). Never embed business logic, API queries, or route transitions directly in a molecule.
 
-// BAD: Confusing prop naming
-interface SearchFormProps {
-  inputPlaceholder?: string;
-  inputDisabled?: boolean;
-  inputSize?: string;
-  buttonVariant?: string;
-  buttonDisabled?: boolean;
-  // ... endless prop forwarding
-}
-```
-
-### 4. Manage Internal State Minimally
-
-```typescript
-// GOOD: Minimal UI state
-const SearchForm = ({ onSubmit }) => {
-  const [query, setQuery] = useState('');
-
-  return (
-    <form onSubmit={() => onSubmit(query)}>
-      <Input value={query} onChange={(e) => setQuery(e.target.value)} />
-      <Button type="submit">Search</Button>
-    </form>
-  );
-};
-
-// BAD: Too much internal state
-const SearchForm = () => {
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState([]);  // Should be in parent
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetchResults(query).then(setResults);  // Business logic in molecule!
-  }, [query]);
-};
-```
-
-## Anti-Patterns to Avoid
-
-### 1. Molecules Containing Molecules
-
-```typescript
-// BAD: Molecule importing another molecule
-// molecules/ComplexForm/ComplexForm.tsx
-import { FormField } from '../FormField';  // Wrong!
-import { SearchForm } from '../SearchForm'; // Wrong!
-
-// GOOD: Keep at atom level, or promote to organism
-// organisms/ComplexForm/ComplexForm.tsx
-import { FormField } from '@/components/molecules/FormField';
-import { SearchForm } from '@/components/molecules/SearchForm';
-```
-
-### 2. Business Logic in Molecules
-
-```typescript
-// BAD: API calls in molecule
-const SearchForm = ({ apiEndpoint }) => {
-  const handleSubmit = async (query) => {
-    const results = await fetch(`${apiEndpoint}?q=${query}`);
-    // Processing results here...
-  };
-};
-
-// GOOD: Delegate to parent
-const SearchForm = ({ onSubmit }) => {
-  const handleSubmit = (query) => {
-    onSubmit(query); // Parent handles API logic
-  };
-};
-```
-
-### 3. Over-Abstraction
-
-```typescript
-// BAD: Unnecessary molecule for single atom
-const IconWrapper = ({ icon }) => <Icon name={icon} />;
-
-// GOOD: Just use the atom directly
-<Icon name="search" />
-```
-
-## When to Use This Skill
-
-- Combining atoms for specific functionality
-- Creating reusable form components
-- Building navigation elements
-- Creating card and list components
-- Establishing patterns for common UI combinations
+---
 
 ## Related Subskills
 
 - [Atomic Design Hub](../SKILL.md) — Master methodology and subskill routing
 - [Fundamentals](../fundamentals/SKILL.md) — Core hierarchy, directory layouts, and composition rules
-- [Quarks](../quarks/SKILL.md) — Design tokens, CSS variables, and primitive values
-- [Atoms](../atoms/SKILL.md) — Indivisible UI primitives (buttons, inputs, icons)
-- [Molecules](../molecules/SKILL.md) — Functional atom combinations (form fields, search inputs)
+- [Quarks](../quarks/SKILL.md) — Tailwind v4 `@theme` tokens, CSS variables, and primitive values
+- [Atoms (Core UI)](../atoms/SKILL.md) — Indivisible Core UI primitives in `components/core/`
 - [Organisms](../organisms/SKILL.md) — Standalone UI sections (headers, footers, data tables)
 - [Templates](../templates/SKILL.md) — Page layout skeletons with slot-based content
-- [Integration](../integration/SKILL.md) — Framework integration (React, Vue 3, Angular, Storybook)
-
+- [Integration](../integration/SKILL.md) — Framework integration (React/Next.js, Vue 3, Storybook, Vitest)

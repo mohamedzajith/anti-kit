@@ -1,634 +1,297 @@
 ---
 name: atomic-design-fundamentals
-description: Core Atomic Design methodology, 6-tier hierarchy (quarks, atoms, molecules, organisms, templates, pages), organization strategies, and composition rules.
+description: Core Atomic Design methodology modernized with Tailwind CSS (v4), 6-tier hierarchy (quarks, core primitives, molecules, organisms, templates, pages), organization strategies, and composition rules.
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---
 
 # Atomic Design Fundamentals
 
-Master Brad Frost's Atomic Design methodology (extended with quarks) for building scalable, maintainable component-based user interfaces. This skill covers the core hierarchy, principles, and organization strategies for modern design systems.
+Master Brad Frost's Atomic Design methodology modernized for **Tailwind CSS (v4)** and component-driven architecture. In this modernized framework, design tokens map to **Quarks via Tailwind `@theme`**, and traditional Atoms are structured as **Core UI Primitives under `src/components/core/`**.
+
+---
 
 ## Overview
 
-Atomic Design is a methodology for creating design systems inspired by chemistry. Just as atoms combine to form molecules, which combine to form organisms, UI components follow a similar hierarchical structure. We extend this with **quarks** - the sub-atomic level of design tokens:
+Atomic Design models user interfaces hierarchically, inspired by chemistry. Just as atoms combine to form molecules, which combine to form organisms, UI components follow a strict hierarchical structure:
 
-0. **Quarks** - Design tokens (colors, spacing, typography scales, shadows)
-1. **Atoms** - Basic building blocks (buttons, inputs, labels)
-2. **Molecules** - Groups of atoms functioning together (search form, card)
-3. **Organisms** - Complex UI sections (header, footer, sidebar)
-4. **Templates** - Page-level layouts without real content
-5. **Pages** - Templates with real representative content
+0. **Quarks (Level 0)** — Design tokens declared via Tailwind CSS v4 `@theme` & CSS variables (colors, spacing, typography scales, shadows, radii)
+1. **Core Primitives / Atoms (Level 1)** — Indivisible UI primitives in `components/core/` (Button, Input, Label, Badge, Avatar, Checkbox, Icon) built with Tailwind & `cva`
+2. **Molecules (Level 2)** — Groups of core primitives functioning together (SearchForm, FormField, NavItem, MediaObject)
+3. **Organisms (Level 3)** — Complex, standalone UI sections (Header, Footer, Sidebar, DataTable, ProductCard)
+4. **Templates (Level 4)** — Layout skeletons with responsive grids/slots without hardcoded data
+5. **Pages (Level 5)** — Concrete route views populated with live data, route parameters, and API queries
+
+---
 
 ## The Six Stages
 
-### 0. Quarks
+### 0. Quarks (Level 0)
 
-The sub-atomic building blocks - design tokens and primitive values that atoms consume. Quarks are not UI components themselves; they are the raw values that define your design language.
-
-**Examples:**
-
-- Color tokens (primary-500, neutral-100)
-- Spacing scales (4px, 8px, 16px)
-- Typography tokens (font sizes, weights, line heights)
-- Border radii
-- Shadow definitions
-- Animation durations and easing functions
-- Breakpoints
-
-**Characteristics:**
-
-- Pure values, not visual components
-- Cannot import from any other level
-- Define the design language
-- Enable theming and consistency
-- Single source of truth for design decisions
-
-### 1. Atoms
-
-The smallest functional UI units of your interface. Atoms consume quarks for styling but cannot be broken down further without losing meaning.
+The foundational design values and constants that define your design language. Quarks are pure values declared via Tailwind CSS v4 `@theme` or CSS variables, not DOM components:
 
 **Examples:**
-
-- Buttons
-- Input fields
-- Labels
-- Icons
-- Typography elements (headings, paragraphs)
-- Color swatches
-- Avatars
+- Semantic color tokens (`--color-primary`, `--color-destructive`, `--color-background`)
+- Spacing scales (`--spacing-xs`, `--spacing-md`, `--spacing-xl`)
+- Typography clamps & font families (`--font-sans`, `--font-mono`)
+- Border radii (`--radius-sm`, `--radius-md`, `--radius-lg`)
+- Elevation shadows (`--shadow-sm`, `--shadow-md`)
 
 **Characteristics:**
+- Pure tokens and values, no DOM elements
+- Cannot import from any component layer
+- Single source of truth for design tokens
 
-- Self-contained and independent
-- No business logic
-- Highly reusable
-- Accept styling props
-- Framework-agnostic when possible
+---
 
-### 2. Molecules
+### 1. Core Primitives / Atoms (Level 1)
 
-Combinations of atoms working together as a unit. Molecules have a single responsibility but are composed of multiple atoms.
+The smallest functional, indivisible UI units of your interface. In modern architecture, **Core Primitives live in `src/components/core/`**, replacing legacy `components/atoms/` and custom `.module.css` files:
 
 **Examples:**
-
-- Search form (input + button)
-- Form field (label + input + error message)
-- Media object (avatar + text)
-- Card header (icon + title + action button)
-- Navigation link (icon + text)
+- `<Button>`
+- `<Input>`
+- `<Label>`
+- `<Icon>`
+- `<Badge>`
+- `<Avatar>`
+- `<Checkbox>`
+- `<Typography>` (Heading, Text)
 
 **Characteristics:**
+- Reside under `src/components/core/`
+- Styled exclusively with Tailwind CSS utility classes and `cva`
+- Strictly controlled and stateless (no business logic)
+- Extends native HTML element attributes and forwards refs
+- Merges classNames via `cn()` helper
 
-- Composed of atoms only
-- Single purpose or function
-- Reusable across contexts
-- May have minimal internal state
+---
 
-### 3. Organisms
+### 2. Molecules (Level 2)
 
-Complex, standalone sections of an interface. Organisms represent distinct sections that could exist independently.
+Focused combinations of core primitives working together as a single functional unit:
 
 **Examples:**
-
-- Header (logo + navigation + user menu)
-- Footer (links + social icons + copyright)
-- Product card (image + title + price + add to cart)
-- Comment section (avatar + content + actions)
-- Sidebar navigation
+- `FormField` (`Label` + `Input` + error `Text`)
+- `SearchForm` (`Input` + `Button` + `Icon`)
+- `MediaObject` (`Avatar` + `Heading` + `Text`)
+- `CardHeader` (`Icon` + title `Heading` + action `Button`)
+- `NavItem` (`Icon` + label `Text` + active state)
 
 **Characteristics:**
+- Composed of Core primitives and Tailwind utility layouts
+- Single focused purpose
+- May contain ephemeral UI state (e.g. open/closed, focus, hover)
 
-- Composed of molecules and atoms
-- Represent distinct UI sections
-- May contain business logic
-- Context-specific but reusable
+---
 
-### 4. Templates
+### 3. Organisms (Level 3)
 
-Page-level layouts that define content structure without actual content. Templates show the skeletal structure of a page.
+Complex, self-contained sections of an interface that could stand independently:
 
 **Examples:**
-
-- Blog post template (header + content area + sidebar + footer)
-- Dashboard layout (navigation + main content + widgets)
-- Product page layout (gallery + details + related products)
-- Landing page structure
+- `Header` (Logo + `NavItem` list + `SearchForm` + user `Avatar`)
+- `Footer` (Links grid + copyright + newsletter form)
+- `ProductCard` (Image + title + price badge + add-to-cart `Button`)
+- `DataTable` (Header row + pagination + row action buttons)
+- `Sidebar` (Brand header + grouped navigation links + user menu)
 
 **Characteristics:**
+- Composed of Molecules, Core primitives, and sibling Organisms
+- Distinct, reusable full sections
+- May consume custom hooks for composite state management
 
-- Composed of organisms
-- Define page structure
-- Use placeholder content
-- Establish content hierarchy
+---
 
-### 5. Pages
+### 4. Templates (Level 4)
 
-Specific instances of templates with real, representative content. Pages are what users actually see and interact with.
+Page-level skeletal layouts that position organisms into responsive grids and viewports using slots or children:
 
 **Examples:**
-
-- Homepage with actual hero content
-- Product detail with real product data
-- User profile with actual user information
-- Blog post with real article content
+- `MainLayout` (Header + main slot + Footer)
+- `DashboardLayout` (Collapsible Sidebar + top bar + main content grid)
+- `AuthLayout` (Split screen with brand visual panel + form slot)
 
 **Characteristics:**
+- Layout-only skeletons with slots / children
+- Responsive layout containers (`min-h-screen`, `grid`, `flex-1`)
+- No hardcoded copy, domain state, or API calls
 
-- Templates filled with real content
-- Represent actual user experience
-- Used for testing and validation
-- May reveal design issues
+---
+
+### 5. Pages (Level 5)
+
+Concrete route instances that hydrate templates with live data, route params, and user state:
+
+**Examples:**
+- `HomePage` with real hero copy and featured products
+- `DashboardPage` with live analytics charts and user metrics
+- `UserProfilePage` with form validation and profile mutations
+
+---
 
 ## Directory Structure
 
-### Standard Structure
+### Modern Recommended Structure
 
 ```text
 src/
-  quarks/                    # Design tokens
-    index.ts
-    colors.ts
-    spacing.ts
-    typography.ts
-    shadows.ts
-    borders.ts
-  components/
-    atoms/
-      Button/
-        Button.tsx
-        Button.test.tsx
-        Button.stories.tsx
-        index.ts
-      Input/
-      Label/
-      Icon/
-    molecules/
-      SearchForm/
-      FormField/
-      Card/
-    organisms/
-      Header/
-      Footer/
-      ProductCard/
-    templates/
-      MainLayout/
-      DashboardLayout/
-    pages/
-      HomePage/
-      ProductPage/
+├── app/
+│   ├── globals.css               # Level 0: Quarks / Tailwind v4 @theme directive
+│   ├── layout.tsx                # App root layout
+│   └── page.tsx                  # Level 5: Concrete Page
+├── lib/
+│   └── utils.ts                  # cn() helper: clsx + tailwind-merge
+├── components/
+│   ├── core/                     # Level 1: Core UI Primitives (replacing components/atoms/)
+│   │   ├── Button/
+│   │   │   ├── Button.tsx        # Styled with cva & Tailwind classes
+│   │   │   ├── Button.types.ts
+│   │   │   ├── Button.test.tsx
+│   │   │   └── index.ts
+│   │   ├── Input/
+│   │   ├── Label/
+│   │   ├── Badge/
+│   │   ├── Avatar/
+│   │   ├── Checkbox/
+│   │   ├── Icon/
+│   │   ├── Typography/
+│   │   └── index.ts              # Core primitives barrel
+│   ├── molecules/                # Level 2: Molecules
+│   │   ├── FormField/
+│   │   │   ├── FormField.tsx     # Composes Label + Input from @/components/core
+│   │   │   └── index.ts
+│   │   ├── SearchForm/
+│   │   ├── NavItem/
+│   │   └── index.ts              # Molecules barrel
+│   ├── organisms/                # Level 3: Organisms
+│   │   ├── Header/
+│   │   ├── Footer/
+│   │   ├── ProductCard/
+│   │   └── index.ts              # Organisms barrel
+│   ├── templates/                # Level 4: Templates
+│   │   ├── MainLayout/
+│   │   ├── DashboardLayout/
+│   │   └── index.ts              # Templates barrel
+│   └── index.ts                  # Unified components barrel
 ```
 
-### Alternative Flat Structure
+---
 
-```text
-src/
-  quarks/
-    colors.ts
-    spacing.ts
-    typography.ts
-  components/
-    atoms/
-      Button.tsx
-      Input.tsx
-      Label.tsx
-    molecules/
-      SearchForm.tsx
-      FormField.tsx
-    organisms/
-      Header.tsx
-      Footer.tsx
-    templates/
-      MainLayout.tsx
-    pages/
-      HomePage.tsx
-```
+## Import Patterns & Barrel Exports
 
-### Feature-Based Hybrid
-
-```text
-src/
-  quarks/                    # Shared design tokens
-    index.ts
-    colors.ts
-    spacing.ts
-  features/
-    products/
-      components/
-        atoms/
-        molecules/
-        organisms/
-      templates/
-      pages/
-    checkout/
-      components/
-        atoms/
-        molecules/
-        organisms/
-  shared/
-    components/
-      atoms/
-      molecules/
-```
-
-## Component Naming Conventions
-
-### File Naming
-
-```text
-# PascalCase for component files
-Button.tsx
-SearchForm.tsx
-ProductCard.tsx
-
-# Index files for clean imports
-index.ts
-
-# Test files
-Button.test.tsx
-Button.spec.tsx
-
-# Story files (Storybook)
-Button.stories.tsx
-```
-
-### Component Naming
+### 1. Core Primitives Barrel
 
 ```typescript
-// Atoms - simple, descriptive names
-Button
-Input
-Label
-Avatar
-Icon
+// src/components/core/index.ts
+export { Button, buttonVariants } from './Button/Button';
+export type { ButtonProps } from './Button/Button';
 
-// Molecules - action or composition-based names
-SearchForm
-FormField
-MediaObject
-NavItem
+export { Input, inputVariants } from './Input/Input';
+export type { InputProps } from './Input/Input';
 
-// Organisms - section or feature-based names
-Header
-Footer
-ProductCard
-CommentSection
-UserProfile
-
-// Templates - layout-focused names
-MainLayout
-DashboardLayout
-AuthLayout
-
-// Pages - page-specific names
-HomePage
-ProductDetailPage
-CheckoutPage
+export { Label } from './Label/Label';
+export { Icon } from './Icon/Icon';
+export { Avatar, avatarVariants } from './Avatar/Avatar';
+export { Badge, badgeVariants } from './Badge/Badge';
+export { Checkbox } from './Checkbox/Checkbox';
+export { Text, Heading } from './Typography';
 ```
 
-## Import Patterns
-
-### Barrel Exports
+### 2. Upward Composition Import
 
 ```typescript
-// src/components/atoms/index.ts
-export { Button } from './Button';
-export { Input } from './Input';
-export { Label } from './Label';
-export { Icon } from './Icon';
-
-// src/components/molecules/index.ts
-export { SearchForm } from './SearchForm';
-export { FormField } from './FormField';
-
-// src/components/index.ts
-export * from './atoms';
-export * from './molecules';
-export * from './organisms';
+// src/components/molecules/FormField/FormField.tsx
+import { Label } from '@/components/core/Label';
+import { Input } from '@/components/core/Input';
+import { Text } from '@/components/core/Typography';
 ```
 
-### Usage
-
 ```typescript
-// Clean imports from barrel files
-import { Button, Input, Label } from '@/components/atoms';
-import { SearchForm, FormField } from '@/components/molecules';
+// Clean consumption from upper layers
+import { Button, Input, Badge } from '@/components/core';
+import { FormField, SearchForm } from '@/components/molecules';
 import { Header, Footer } from '@/components/organisms';
-
-// Or from unified barrel
-import { Button, SearchForm, Header } from '@/components';
 ```
+
+---
 
 ## Composition Rules
 
 ### Strict Hierarchy
 
 ```text
-Quarks     -> Used by: Atoms, Molecules, Organisms, Templates, Pages
-Atoms      -> Used by: Molecules, Organisms, Templates, Pages
-Molecules  -> Used by: Organisms, Templates, Pages
-Organisms  -> Used by: Templates, Pages
-Templates  -> Used by: Pages
-Pages      -> Not used by other components
+Quarks (Tailwind Tokens) -> Used by: Core, Molecules, Organisms, Templates, Pages
+Core Primitives          -> Used by: Molecules, Organisms, Templates, Pages
+Molecules                -> Used by: Organisms, Templates, Pages
+Organisms                -> Used by: Templates, Pages
+Templates                -> Used by: Pages
+Pages                    -> Root view (not imported by other UI layers)
 ```
 
 ### Valid Compositions
 
-```typescript
-// Atom using quarks for styling
-import { colors, spacing } from '@/quarks';
+```tsx
+// 1. Core primitive using Tailwind theme tokens via cva
+// src/components/core/Button/Button.tsx
+export const buttonVariants = cva(
+  'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors bg-primary text-primary-foreground hover:bg-primary/90'
+);
 
-const Button = styled.button`
-  background: ${colors.primary[500]};  {/* Quark */}
-  padding: ${spacing.md};              {/* Quark */}
-`;
-
-// Molecule using atoms only
-const SearchForm = () => (
-  <form>
-    <Input placeholder="Search..." />  {/* Atom */}
-    <Button>Search</Button>            {/* Atom */}
+// 2. Molecule composing Core primitives
+// src/components/molecules/SearchForm/SearchForm.tsx
+export const SearchForm = ({ onSearch }: { onSearch: (q: string) => void }) => (
+  <form className="flex items-center gap-2">
+    <Input placeholder="Search..." className="w-64" />
+    <Button type="submit">Search</Button>
   </form>
 );
 
-// Organism using molecules and atoms
-const Header = () => (
-  <header>
-    <Logo />                           {/* Atom */}
-    <Navigation />                     {/* Molecule */}
-    <SearchForm />                     {/* Molecule */}
-    <UserMenu />                       {/* Molecule */}
+// 3. Organism composing Molecules and Core primitives
+// src/components/organisms/Header/Header.tsx
+export const Header = () => (
+  <header className="flex items-center justify-between border-b px-6 py-4">
+    <div className="font-bold text-xl">Brand</div>
+    <SearchForm onSearch={(q) => console.log(q)} />
+    <Avatar src="/avatar.png" alt="User" />
   </header>
 );
-
-// Template using organisms
-const MainLayout = ({ children }) => (
-  <div>
-    <Header />                         {/* Organism */}
-    <main>{children}</main>
-    <Footer />                         {/* Organism */}
-  </div>
-);
 ```
 
-### Invalid Compositions (Anti-patterns)
+### Invalid Compositions (Strictly Forbidden)
 
 ```typescript
-// BAD: Atom importing from molecule
-// atoms/Button.tsx
-import { FormField } from '../molecules'; // WRONG!
+// ❌ ILLEGAL: Core primitive importing a Molecule
+// src/components/core/Button/Button.tsx
+import { FormField } from '@/components/molecules/FormField'; // ERROR: Upward import
 
-// BAD: Molecule importing from organism
-// molecules/SearchForm.tsx
-import { Header } from '../organisms'; // WRONG!
+// ❌ ILLEGAL: Molecule importing an Organism
+// src/components/molecules/SearchForm/SearchForm.tsx
+import { Header } from '@/components/organisms/Header'; // ERROR: Upward import
 
-// BAD: Skipping levels without justification
-// organisms/Header.tsx
-import { MainLayout } from '../templates'; // WRONG!
+// ❌ ILLEGAL: Core primitive using custom CSS module instead of Tailwind
+// src/components/core/Button/Button.tsx
+import styles from './Button.module.css'; // ERROR: Anti-pattern, use Tailwind + cva
 ```
 
-## Design Tokens Integration
+---
 
-### Token Structure
+## Common Pitfalls & Best Practices
 
-```typescript
-// design-tokens/colors.ts
-export const colors = {
-  primary: {
-    50: '#e3f2fd',
-    100: '#bbdefb',
-    500: '#2196f3',
-    900: '#0d47a1',
-  },
-  neutral: {
-    0: '#ffffff',
-    100: '#f5f5f5',
-    900: '#212121',
-  },
-};
+| Pitfall | Problem | Solution |
+|---|---|---|
+| **Custom CSS Islands** | Breaking design consistency with `.module.css` | Use Tailwind CSS utility classes and `cva` |
+| **Over-Atomization** | Wrapping single HTML tags in redundant micro-atoms | Keep primitives practical (`Button`, `Input`, `Badge`) |
+| **Business Logic in Core** | Placing API calls or routing in `components/core` | Keep Core primitives pure and presentational; lift logic to hooks or pages |
+| **Direct Hex Colors** | Hardcoding `#3b82f6` in utility classes | Use semantic tokens: `bg-primary`, `border-border`, `text-muted-foreground` |
 
-// design-tokens/spacing.ts
-export const spacing = {
-  xs: '4px',
-  sm: '8px',
-  md: '16px',
-  lg: '24px',
-  xl: '32px',
-};
-
-// design-tokens/typography.ts
-export const typography = {
-  fontFamily: {
-    sans: 'Inter, system-ui, sans-serif',
-    mono: 'Fira Code, monospace',
-  },
-  fontSize: {
-    xs: '12px',
-    sm: '14px',
-    base: '16px',
-    lg: '18px',
-    xl: '24px',
-  },
-};
-```
-
-### Using Tokens in Atoms
-
-```typescript
-import { colors, spacing, typography } from '@/design-tokens';
-
-const Button = styled.button`
-  background-color: ${colors.primary[500]};
-  padding: ${spacing.sm} ${spacing.md};
-  font-family: ${typography.fontFamily.sans};
-  font-size: ${typography.fontSize.base};
-`;
-```
-
-## Best Practices
-
-### 1. Start with Atoms
-
-Build your design system from the ground up:
-
-```typescript
-// 1. Define core atoms first
-const Button = ({ variant, size, children }) => { ... };
-const Input = ({ type, placeholder }) => { ... };
-const Label = ({ htmlFor, children }) => { ... };
-
-// 2. Compose into molecules
-const FormField = ({ label, ...inputProps }) => (
-  <div>
-    <Label>{label}</Label>
-    <Input {...inputProps} />
-  </div>
-);
-
-// 3. Build organisms from molecules
-const LoginForm = () => (
-  <form>
-    <FormField label="Email" type="email" />
-    <FormField label="Password" type="password" />
-    <Button>Login</Button>
-  </form>
-);
-```
-
-### 2. Props Flow Downward
-
-```typescript
-// Atoms receive primitive props
-interface ButtonProps {
-  variant: 'primary' | 'secondary';
-  size: 'sm' | 'md' | 'lg';
-  disabled?: boolean;
-  onClick?: () => void;
-  children: React.ReactNode;
-}
-
-// Molecules receive atoms' props via spread
-interface SearchFormProps {
-  onSubmit: (query: string) => void;
-  inputProps?: Partial<InputProps>;
-  buttonProps?: Partial<ButtonProps>;
-}
-
-// Organisms receive domain-specific props
-interface HeaderProps {
-  user?: User;
-  onLogout: () => void;
-  navigation: NavItem[];
-}
-```
-
-### 3. Avoid Business Logic in Atoms
-
-```typescript
-// BAD: Atom with business logic
-const PriceButton = ({ productId }) => {
-  const price = useProductPrice(productId); // WRONG!
-  return <Button>${price}</Button>;
-};
-
-// GOOD: Atom receives processed data
-const PriceButton = ({ price, onClick }) => (
-  <Button onClick={onClick}>${price}</Button>
-);
-
-// Business logic lives in organisms or higher
-const ProductCard = ({ productId }) => {
-  const { price } = useProduct(productId);
-  return <PriceButton price={price} onClick={handleBuy} />;
-};
-```
-
-### 4. Document Component Purpose
-
-```typescript
-/**
- * Button - Atomic component for user actions
- *
- * @level Atom
- * @example
- * <Button variant="primary" size="md">Click me</Button>
- */
-export const Button: React.FC<ButtonProps> = ({ ... }) => { ... };
-
-/**
- * SearchForm - Search input with submit button
- *
- * @level Molecule
- * @composition Input, Button
- * @example
- * <SearchForm onSubmit={(query) => search(query)} />
- */
-export const SearchForm: React.FC<SearchFormProps> = ({ ... }) => { ... };
-```
-
-## Common Pitfalls
-
-### 1. Over-Atomization
-
-```typescript
-// BAD: Too granular - unnecessary atoms
-const ButtonText = ({ children }) => <span>{children}</span>;
-const ButtonContainer = ({ children }) => <div>{children}</div>;
-
-// GOOD: Appropriate granularity
-const Button = ({ children }) => (
-  <button className="btn">{children}</button>
-);
-```
-
-### 2. Under-Atomization
-
-```typescript
-// BAD: Too much in one component
-const MegaForm = () => (
-  <form>
-    <div><label>Name</label><input /></div>
-    <div><label>Email</label><input /></div>
-    <div><label>Message</label><textarea /></div>
-    <button>Submit</button>
-  </form>
-);
-
-// GOOD: Properly decomposed
-const ContactForm = () => (
-  <form>
-    <FormField label="Name" type="text" />
-    <FormField label="Email" type="email" />
-    <TextAreaField label="Message" />
-    <Button type="submit">Submit</Button>
-  </form>
-);
-```
-
-### 3. Circular Dependencies
-
-```typescript
-// BAD: Atoms importing from molecules
-// atoms/Icon.tsx
-import { IconButton } from '../molecules'; // Creates circular dep!
-
-// GOOD: Keep imports flowing downward
-// molecules/IconButton.tsx
-import { Icon } from '../atoms';
-import { Button } from '../atoms';
-```
-
-### 4. Inconsistent Naming
-
-```typescript
-// BAD: Inconsistent naming patterns
-atoms/btn.tsx
-atoms/InputField.tsx
-atoms/text-label.tsx
-
-// GOOD: Consistent PascalCase
-atoms/Button.tsx
-atoms/Input.tsx
-atoms/Label.tsx
-```
-
-## When to Use This Skill
-
-- Setting up a new design system
-- Organizing an existing component library
-- Onboarding team members to atomic design
-- Auditing component structure
-- Planning component architecture
-- Creating documentation for design systems
-- Refactoring monolithic components
+---
 
 ## Related Subskills
 
 - [Atomic Design Hub](../SKILL.md) — Master methodology and subskill routing
-- [Fundamentals](../fundamentals/SKILL.md) — Core hierarchy, directory layouts, and composition rules
-- [Quarks](../quarks/SKILL.md) — Design tokens, CSS variables, and primitive values
-- [Atoms](../atoms/SKILL.md) — Indivisible UI primitives (buttons, inputs, icons)
+- [Quarks](../quarks/SKILL.md) — Tailwind v4 `@theme` tokens, CSS variables, and primitive values
+- [Atoms (Core UI)](../atoms/SKILL.md) — Indivisible Core UI primitives in `components/core/`
 - [Molecules](../molecules/SKILL.md) — Functional atom combinations (form fields, search inputs)
 - [Organisms](../organisms/SKILL.md) — Standalone UI sections (headers, footers, data tables)
 - [Templates](../templates/SKILL.md) — Page layout skeletons with slot-based content
-- [Integration](../integration/SKILL.md) — Framework integration (React, Vue 3, Angular, Storybook)
-
+- [Integration](../integration/SKILL.md) — Framework integration (React/Next.js, Vue 3, Storybook, Vitest)

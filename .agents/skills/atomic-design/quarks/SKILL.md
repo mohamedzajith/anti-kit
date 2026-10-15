@@ -496,58 +496,64 @@ export const Button = styled.button<{ variant?: 'primary' | 'secondary' }>`
 `;
 ```
 
-### CSS Modules with Variables
+### Tailwind CSS (v4) @theme Integration (Recommended)
 
-```tsx
-// atoms/Button/Button.tsx
-import styles from './Button.module.css';
-
-export const Button = ({ variant = 'primary', children }) => (
-  <button className={`${styles.button} ${styles[variant]}`}>
-    {children}
-  </button>
-);
-```
+In modern Atomic Design, Quarks are declared directly as design tokens in Tailwind CSS v4 using the `@theme` directive or CSS variables, eliminating separate ad-hoc styling files:
 
 ```css
-/* atoms/Button/Button.module.css */
-.button {
-  padding: var(--spacing-2) var(--spacing-4);
-  font-size: var(--font-size-base);
-  border-radius: var(--border-radius-md);
-  transition: var(--duration-normal) var(--easing-in-out);
-}
+/* src/app/globals.css */
+@theme {
+  --color-primary: oklch(0.6 0.22 260);
+  --color-primary-foreground: oklch(0.98 0 0);
+  --color-secondary: oklch(0.95 0.02 260);
+  --color-secondary-foreground: oklch(0.2 0.05 260);
+  --color-destructive: oklch(0.6 0.24 25);
+  --color-destructive-foreground: oklch(0.98 0 0);
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.15 0.02 260);
 
-.primary {
-  background-color: var(--color-primary-500);
-  color: var(--color-neutral-0);
-}
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
 
-.primary:hover {
-  background-color: var(--color-primary-600);
-}
-
-.secondary {
-  background-color: transparent;
-  color: var(--color-primary-500);
-  border: 1px solid var(--color-primary-500);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-full: 9999px;
 }
 ```
 
-### Tailwind CSS Integration
+### Core Primitive Token Consumption
 
-```javascript
-// tailwind.config.js
-const { colors, spacing, fontSize, borderRadius } = require('./src/quarks');
+Core primitives in `src/components/core/` consume these Quarks via Tailwind utility classes and `cva`:
 
-module.exports = {
-  theme: {
-    colors,
-    spacing,
-    fontSize,
-    borderRadius,
-  },
-};
+```tsx
+// src/components/core/Button/Button.tsx
+import { cva } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+
+export const buttonVariants = cva(
+  'inline-flex items-center justify-center font-medium rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+  {
+    variants: {
+      variant: {
+        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+      },
+      size: {
+        sm: 'h-8 px-3 text-xs',
+        default: 'h-9 px-4 text-sm',
+        lg: 'h-10 px-6 text-base',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'default',
+    },
+  }
+);
 ```
 
 ## Theming with Quarks
@@ -743,7 +749,7 @@ export const spacing = {
 - [Atomic Design Hub](../SKILL.md) — Master methodology and subskill routing
 - [Fundamentals](../fundamentals/SKILL.md) — Core hierarchy, directory layouts, and composition rules
 - [Quarks](../quarks/SKILL.md) — Design tokens, CSS variables, and primitive values
-- [Atoms](../atoms/SKILL.md) — Indivisible UI primitives (buttons, inputs, icons)
+- [Atoms (Core UI)](../atoms/SKILL.md) — Indivisible Core UI primitives in `components/core/` (buttons, inputs, icons)
 - [Molecules](../molecules/SKILL.md) — Functional atom combinations (form fields, search inputs)
 - [Organisms](../organisms/SKILL.md) — Standalone UI sections (headers, footers, data tables)
 - [Templates](../templates/SKILL.md) — Page layout skeletons with slot-based content
