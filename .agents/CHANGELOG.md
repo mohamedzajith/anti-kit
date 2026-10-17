@@ -1,5 +1,23 @@
 # Anti-Kit Toolkit Changelog
 
+## 2026.10.17
+
+### Added
+
+- Enhanced `design-spec` skill (`.agents/skills/design-spec/`):
+  - Section 8: Dedicated specification and practical recipes for mapping `DESIGN.md` tokens into Tailwind CSS base styles and themes.
+  - Token-to-Tailwind mapping matrix across colors, typography, rounded, spacing, and components.
+  - Modern Tailwind CSS v4 setup utilizing `@theme` directives for CSS custom properties and `@layer base` for foundational HTML resets (`body`, `h1`–`h6`, `a`, `:focus-visible`).
+  - Tailwind CSS v3 compatibility patterns mapping tokens into `tailwind.config.js` and `@layer base`.
+  - Guidelines for token synchronization and WCAG AA contrast enforcement.
+
+### Changed
+
+- Bumped `design-spec` skill SemVer version to `1.1.0`.
+- Updated design workflow in `design-spec` with explicit step for bridging tokens into Tailwind base and theme before UI implementation.
+- Advanced toolkit version to `2026.10.17`.
+- Synchronized component manifest and integrity lock across all agents, skills, workflows, and rules.
+
 ## 2026.10.16
 
 ### Added

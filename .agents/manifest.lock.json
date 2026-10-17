@@ -2,9 +2,9 @@
   "$schema": "schemas/manifest-lock.schema.json",
   "components": {
     "ARCHITECTURE.md": "4ca4fbf02e1cc9f892e289e1f28e215285cde92d30e2c63f292c0bf942bb10df",
-    "CHANGELOG.md": "6684762a71f0241e2277c00f9e66e91eab5407cc397f96f4c132cbb5a0961dbc",
+    "CHANGELOG.md": "10f38fc3abb10f973a48112ff905262b9f02b8456fe5a1c167120acd41f2065b",
     "README.md": "0cd72c53379d92691d7fbb4cd9ef1741dfbe46b07c34a73b482a780ce23dac7e",
-    "VERSION": "f2021b5a2a4b1c047726deed29f400e583c2c2d5d626873a2f2a36e224737afb",
+    "VERSION": "84078880372ae23a581676459c5b00e1ff9b6d6fe9bccaceb1b73e3f1ad917f8",
     "agent/backend-specialist.md": "65087ad56011ce55231f2754c3bdbb1c32ee14fa24ae9f389c0a7a67c178f1fd",
     "agent/code-archaeologist.md": "a0c654b885773c425f6a1c3f35ac7a1d509ed32e08a4e2daf373ddc5c6c805f3",
     "agent/database-architect.md": "1649c5ba554eca2674df75c50229cc00463aed1400d3b6d55131d8f4b12f3c76",
@@ -240,7 +240,7 @@
     "workflows/test.md": "bd06ae644376e3cc2661f1a623504247445c86a83dfb0df92ed5f0eccdef60ea",
     "workflows/verify.md": "2dc26bcbe24c7e71571953da75629521ea3d7a0a444a7101e3601b39864971fc"
   },
-  "kitVersion": "2026.10.16",
-  "manifestSha256": "d3577f05f2b322bc4019c1cf28859c4773e99310ea677bd5b24ac89557fdc1b8",
+  "kitVersion": "2026.10.17",
+  "manifestSha256": "a02a0773285ff2a69327348bbe2f20bc69fa59b48209de7ff5ed508aa5651438",
   "schemaVersion": "1.0.0"
 }

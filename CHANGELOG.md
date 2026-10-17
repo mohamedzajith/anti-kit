@@ -9,6 +9,21 @@ Starting with `2026.5.13`, this project uses calendar versioning in `YYYY.M.D` f
 
 No unreleased changes.
 
+## [2026.10.17] - 2026-10-17
+
+### Added
+- Enhanced `design-spec` skill (`.agents/skills/design-spec/`):
+  - Section 8: Dedicated specification and practical recipes for mapping `DESIGN.md` tokens into Tailwind CSS base styles and themes.
+  - Token-to-Tailwind mapping matrix across colors, typography, rounded, spacing, and components.
+  - Modern Tailwind CSS v4 setup utilizing `@theme` directives for CSS custom properties and `@layer base` for foundational HTML resets (`body`, `h1`–`h6`, `a`, `:focus-visible`).
+  - Tailwind CSS v3 compatibility patterns mapping tokens into `tailwind.config.js` and `@layer base`.
+  - Guidelines for token synchronization and WCAG AA contrast enforcement.
+
+### Changed
+- Bumped `design-spec` skill SemVer version to `1.1.0`.
+- Updated design workflow in `design-spec` with explicit step for bridging tokens into Tailwind base and theme before UI implementation.
+- Advanced toolkit version to `2026.10.17` across all packages, locks, and manifest.
+
 ## [2026.10.16] - 2026-10-16
 
 ### Added
@@ -426,7 +441,8 @@ No unreleased changes.
 - CLI tool for easy installation and updates.
 - Comprehensive documentation and architecture guide.
 
-[Unreleased]: https://github.com/mohamedzajith/anti-kit/compare/v2026.10.16...HEAD
+[Unreleased]: https://github.com/mohamedzajith/anti-kit/compare/v2026.10.17...HEAD
+[2026.10.17]: https://github.com/mohamedzajith/anti-kit/compare/v2026.10.16...v2026.10.17
 [2026.10.16]: https://github.com/mohamedzajith/anti-kit/compare/v2026.10.15...v2026.10.16
 [2026.10.15]: https://github.com/mohamedzajith/anti-kit/compare/v2026.10.12...v2026.10.15
 [2026.10.12]: https://github.com/mohamedzajith/anti-kit/compare/v2026.8.31...v2026.10.12

@@ -1,5 +1,21 @@
 [
     {
+        "version": "2026.10.17",
+        "date": "2026-10-17",
+        "summary": "Release 2026.10.17: enhances design-spec with comprehensive guidance and concrete recipes for mapping DESIGN.md tokens into Tailwind CSS base styles (@layer base) and theme systems (@theme & tailwind.config).",
+        "changes": {
+            "Added": [
+                "Section 8 (Tailwind CSS Base & Theme Mapping) in design-spec covering the token-to-Tailwind matrix across colors, typography, rounded, spacing, and components.",
+                "Tailwind CSS v4 integration recipes using @theme custom properties and @layer base element resets for body, headings (h1-h6), links, and focus rings.",
+                "Tailwind CSS v3 configuration patterns with tailwind.config.js and @layer base utility mappings."
+            ],
+            "Changed": [
+                "Bumped design-spec skill SemVer version to 1.1.0 and updated core design workflow to include bridging tokens to Tailwind base & theme.",
+                "Advanced toolkit release version to 2026.10.17 across all packages, locks, and manifest."
+            ]
+        }
+    },
+    {
         "version": "2026.10.16",
         "date": "2026-10-16",
         "summary": "Release 2026.10.16: integrates the senior-web-app-architect framework into frontend-specialist and the frontend-master workflow, covering B2B/B2C SaaS multi-tenancy, feature-based vertical slices, and CBAC entitlement gating.",

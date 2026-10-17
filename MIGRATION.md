@@ -1,6 +1,15 @@
 # Migrating Anti-Kit
 
-This guide covers upgrades across Anti-Kit releases, including the Antigravity-native runtime layer and subsequent feature releases up to `2026.10.16`.
+This guide covers upgrades across Anti-Kit releases, including the Antigravity-native runtime layer and subsequent feature releases up to `2026.10.17`.
+
+## Upgrading to `2026.10.17`
+
+### What changes in `2026.10.17`
+- **Tailwind CSS Base & Theme Mapping**: Updated `design-spec` (`.agents/skills/design-spec/`) with Section 8, specifying how `DESIGN.md` tokens bridge into Tailwind CSS base element styles (`@layer base`) and themes (`@theme` in Tailwind v4 and `tailwind.config.js` in v3).
+- **Core Design Workflow**: Added an explicit step requiring agents to bridge design tokens into stylesheet base styles before building UI components.
+- **Skill SemVer Alignment**: Advanced `design-spec` skill to version `1.1.0`.
+
+---
 
 ## Upgrading to `2026.10.16`
 
