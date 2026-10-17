@@ -1,9 +1,9 @@
 ---
 name: design-spec
-description: How to author a DESIGN.md file — the machine-readable design-token + human-rationale format that must exist before any UI is built. YAML front-matter token schema (colors, typography, spacing, rounded, components), type system, token references, and canonical section order.
-when_to_use: "BEFORE writing any UI code (web or mobile). Read when creating or updating a project's DESIGN.md, defining design tokens, or when a UI task needs a design source-of-truth. Pair with frontend-design (web aesthetics) or mobile-design (mobile)."
+description: How to author a DESIGN.md file — the machine-readable design-token + human-rationale format that must exist before any UI is built. YAML front-matter token schema (colors, typography, spacing, rounded, components), type system, token references, canonical section order, and mapping to Tailwind CSS base and theme.
+when_to_use: "BEFORE writing any UI code (web or mobile). Read when creating or updating a project's DESIGN.md, defining design tokens, mapping tokens into Tailwind CSS base/theme, or when a UI task needs a design source-of-truth. Pair with frontend-design (web aesthetics) or mobile-design (mobile)."
 allowed-tools: Read, Write, Edit, Glob, Grep
-version: 1.0.0
+version: 1.1.0
 ---
 
 # DESIGN.md Specification
@@ -176,10 +176,191 @@ Accessibility-first: high contrast, generous touch targets.
 
 ---
 
+## 8. Mapping DESIGN.md to Tailwind CSS Base & Theme
+
+Once `DESIGN.md` is authored, the tokens must be bound to your application stylesheet before building UI components. This bridges design tokens into CSS variables, Tailwind utility classes, and base element styles.
+
+### Token-to-Tailwind Mapping Matrix
+
+| DESIGN.md Token | Tailwind v4 (`@theme`) | Tailwind v3 (`tailwind.config.js`) | `@layer base` Role |
+|---|---|---|---|
+| `colors.<name>` | `--color-<name>: <value>;` | `theme.extend.colors.<name>` | Background, surface, text, and border defaults |
+| `typography.<role>` | `--font-<role>: ...;` | `theme.extend.fontFamily` / `fontSize` | Heading (`h1`–`h6`), body, and code resets |
+| `rounded.<scale>` | `--radius-<scale>: <value>;` | `theme.extend.borderRadius.<scale>` | Default radius on buttons, inputs, cards |
+| `spacing.<scale>` | `--spacing-<scale>: <value>;` | `theme.extend.spacing.<scale>` | Consistent rhythm & layout containers |
+| `components.<name>` | Component utility or CVA variant | Custom component class | Base component appearance |
+
+---
+
+### Modern Tailwind CSS (v4) Setup: `@theme` + `@layer base`
+
+In Tailwind CSS v4, define tokens inside the `@theme` directive, then establish base element styling in `@layer base` within your primary CSS file (e.g., `src/app/globals.css` or `src/theme/theme.css`):
+
+```css
+@import "tailwindcss";
+
+/* 1. Map DESIGN.md tokens to Tailwind CSS theme variables */
+@theme {
+  --color-primary: #1A1C1E;
+  --color-tertiary: #B8422E;
+  --color-neutral: #F7F5F2;
+  --color-surface: #FFFFFF;
+  --color-border: #E5E7EB;
+
+  --font-sans: "Public Sans", system-ui, -apple-system, sans-serif;
+  --font-display: "Public Sans", system-ui, -apple-system, sans-serif;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 32px;
+}
+
+/* 2. Establish foundational base styles for HTML elements */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border, currentColor);
+  }
+
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-neutral);
+    color: var(--color-primary);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Headings bound to typography tokens */
+  h1 {
+    font-family: var(--font-display);
+    font-size: 3rem;       /* 48px from typography.h1 */
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--color-primary);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 2.25rem;    /* 36px */
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--color-primary);
+  }
+
+  h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;     /* 24px */
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-primary);
+  }
+
+  /* Base interactive & focus styling */
+  a {
+    color: var(--color-tertiary);
+    text-decoration: inherit;
+    transition: color 0.15s ease-in-out;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-tertiary);
+    outline-offset: 2px;
+  }
+}
+```
+
+---
+
+### Tailwind CSS (v3) Setup: `tailwind.config.js` + `@layer base`
+
+For projects utilizing Tailwind CSS v3, configure the theme object in `tailwind.config.js` and apply element defaults via `@layer base` in `globals.css`:
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        primary: "#1A1C1E",
+        tertiary: "#B8422E",
+        neutral: "#F7F5F2",
+      },
+      fontFamily: {
+        sans: ["Public Sans", "system-ui", "sans-serif"],
+      },
+      borderRadius: {
+        sm: "4px",
+        md: "8px",
+        lg: "16px",
+      },
+      spacing: {
+        sm: "8px",
+        md: "16px",
+        lg: "32px",
+      },
+    },
+  },
+  plugins: [],
+};
+```
+
+```css
+/* src/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-neutral text-primary font-sans;
+  }
+
+  h1 {
+    @apply text-5xl font-semibold leading-tight tracking-tight text-primary;
+  }
+
+  a {
+    @apply text-tertiary hover:underline;
+  }
+}
+```
+
+---
+
+### Synchronizing Rules
+
+1. **Tokens Before Styles**: Never write ad-hoc CSS hex values in components. Add them to `DESIGN.md` first, expose them through `@theme` or Tailwind config, then consume via utility classes (`bg-primary`, `text-tertiary`, `rounded-md`).
+2. **Base Layer Scoping**: `@layer base` should ONLY contain element-level resets and global typography defaults matching `DESIGN.md`. Component variations belong in atomic primitives (`src/components/core/`) or `@layer components`.
+3. **Contrast Verification**: Ensure colors assigned to `body` background and text satisfy WCAG AA contrast (4.5:1 minimum for regular text).
+
+---
+
 ## Workflow
 
 1. Read the brief and infer the design direction (see `frontend-design` / `mobile-design`).
 2. **ALWAYS read [collection.md](collection.md) first** — 70+ real-world DESIGN.md files. Find the 1–2 closest in vibe/industry to the brief, open their `DESIGN.md` on GitHub, and study how they structure tokens. Adapt, never blindly copy.
 3. **Write `DESIGN.md` at the project root** — tokens first, then rationale prose.
-4. Build UI strictly against the tokens. Descriptive names in prose must map to token names.
-5. Keep DESIGN.md in sync when the visual language changes — it stays the source of truth.
+4. **Bridge tokens into Tailwind CSS base & theme** — map tokens to `@theme` (or `tailwind.config.js`) and bind typography/palette defaults in `@layer base`.
+5. **Build UI strictly against the tokens** — descriptive names in prose must map to token names. Use utility classes and atomic primitives.
+6. **Keep DESIGN.md in sync** when the visual language changes — it stays the source of truth.

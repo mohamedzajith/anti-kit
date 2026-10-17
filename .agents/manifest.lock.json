@@ -129,7 +129,7 @@
     "skills/database-design/schema-design.md": "0a83addd1e9963e3d958eb00474d7dc72881c4290a97bac03bf09553607e3f6f",
     "skills/database-design/scripts/schema_validator.py": "30002411da4b6b82471d7e33ac3906daec72e69fab0fd29dd8c201b6a5777748",
     "skills/deployment-procedures/SKILL.md": "cddf606b695ef344537072860a524e6d59dbb7e8d430fec620689b31372d4931",
-    "skills/design-spec/SKILL.md": "ca2d60c173c15622baab0fdde86a9437a462234809e0d40a08a1d86fc8927ee9",
+    "skills/design-spec/SKILL.md": "2c263dfec76c9adc7090efae1104acd22091a0a89dd6ba812b178f33782fc02d",
     "skills/design-spec/collection.md": "3a3f86e594a4cc229a11b387634282af6de0c85cbaea85202da1e41d43ad1979",
     "skills/documentation-templates/SKILL.md": "7bd982463b301a37286a8ee7fd8761904898e8b91b9974d70fabe28b34464587",
     "skills/frontend-architecture/SKILL.md": "59e1b096240f3f6b9a0f4347ea042fb72e8c06870ee06cb2f6e83d7edcd014f1",
@@ -241,6 +241,6 @@
     "workflows/verify.md": "2dc26bcbe24c7e71571953da75629521ea3d7a0a444a7101e3601b39864971fc"
   },
   "kitVersion": "2026.10.16",
-  "manifestSha256": "f50778d0894253844f0601c85ecfdef9baa078ebde96b36d8c0c8e7681ffa73e",
+  "manifestSha256": "d3577f05f2b322bc4019c1cf28859c4773e99310ea677bd5b24ac89557fdc1b8",
   "schemaVersion": "1.0.0"
 }
